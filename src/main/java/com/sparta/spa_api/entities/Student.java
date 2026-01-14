@@ -2,15 +2,9 @@ package com.sparta.spa_api.entities;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "student")
 public class Student {
-
-  @Column(name = "hasGraduated", nullable = false)
-  private boolean hasGraduated;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,26 +14,23 @@ public class Student {
   @Column(name = "student_name", length = 45)
   private String student_name;
 
+  @Column(name = "has_graduated", nullable = false)
+  private boolean hasGraduated;
+
+  @ManyToOne
   @JoinColumn(name = "course_id", nullable = false)
-  private Integer course_id;
+  private Course course;
 
-  public Student(String student_name, Integer id, boolean hasGraduated, Integer course_id) {
+  public Student() {}
+
+  public Student(String student_name, boolean hasGraduated, Course course) {
     this.student_name = student_name;
-    this.id = id;
     this.hasGraduated = hasGraduated;
-    this.course_id = course_id;
+    this.course = course;
   }
 
-  public Student() {
-
-  }
-
-  public Integer getCoursesId() {
-    return this.course_id;
-  }
-
-  public void setCoursesId(Integer course_id) {
-    this.course_id = course_id;
+  public Integer getId() {
+    return id;
   }
 
   public String getStudent_name() {
@@ -50,11 +41,19 @@ public class Student {
     this.student_name = student_name;
   }
 
-  public Integer getId() {
-    return id;
+  public boolean isHasGraduated() {
+    return hasGraduated;
   }
 
-  public void setId(Integer id) {
-    this.id = id;
+  public void setHasGraduated(boolean hasGraduated) {
+    this.hasGraduated = hasGraduated;
   }
+
+  public Course getCourse() {
+    return course;
   }
+
+  public void setCourse(Course course) {
+    this.course = course;
+  }
+}

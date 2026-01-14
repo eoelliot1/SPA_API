@@ -10,47 +10,40 @@ import java.util.List;
 @Entity
 @Table(name = "course")
 public class Course {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id", nullable = false)
-    private Integer course_id;
+    private Integer id;
 
     @Column(name = "course_name", length = 45)
     private String course_name;
 
     @OneToMany(
-            mappedBy = "course_id",
+            mappedBy = "course",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-
     private List<Student> students = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "course_id",
+            mappedBy = "course",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<Trainers> trainers = new ArrayList<>();
 
-    public Course(String course_name, List<Student> students, List<Trainers> trainers, Integer course_id) {
+    public Course() {}
+
+    public Course(String course_name) {
         this.course_name = course_name;
-        this.students = students;
-        this.trainers = trainers;
-        this.course_id = course_id;
     }
 
-    public Course() {
-
+    public Course(String softwareTesting, List<Student> course1Students, List<Trainers> course1Trainers, int i) {
     }
-
 
     public Integer getId() {
-        return course_id;
-    }
-
-    public void setId(Integer course_id) {
-        this.course_id = course_id;
+        return id;
     }
 
     public String getCourse_name() {
@@ -65,15 +58,7 @@ public class Course {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
     public List<Trainers> getTrainers() {
         return trainers;
-    }
-
-    public void setTrainers(List<Trainers> trainers) {
-        this.trainers = trainers;
     }
 }

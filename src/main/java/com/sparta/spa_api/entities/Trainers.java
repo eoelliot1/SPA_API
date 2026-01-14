@@ -2,12 +2,10 @@ package com.sparta.spa_api.entities;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "trainers")
 public class Trainers {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -16,24 +14,19 @@ public class Trainers {
     @Column(name = "trainer_name", length = 45)
     private String trainer_name;
 
+    @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
-    private Integer course_id;
+    private Course course;
 
-    public Trainers(Integer course_id, String trainer_name) {
-        this.course_id = course_id;
+    public Trainers() {}
+
+    public Trainers(String trainer_name, Course course) {
         this.trainer_name = trainer_name;
+        this.course = course;
     }
 
-    public Trainers() {
-
-    }
-
-    public Integer getCourseID() {
-        return course_id;
-    }
-
-    public void setCoursesID(Integer course_id) {
-        this.course_id = course_id;
+    public Integer getId() {
+        return id;
     }
 
     public String getTrainer_name() {
@@ -44,11 +37,11 @@ public class Trainers {
         this.trainer_name = trainer_name;
     }
 
-    public Integer getId() {
-        return id;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }
