@@ -19,7 +19,7 @@ public class Course {
     private String course_name;
 
     @OneToMany(
-            mappedBy = "course",
+            mappedBy = "course_id",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
@@ -27,7 +27,7 @@ public class Course {
     private List<Student> students = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "course",
+            mappedBy = "course_id",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )

@@ -13,15 +13,15 @@ public class Student {
   private boolean hasGraduated;
 
   @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", nullable = false)
+  private Integer id;
 
-    @Column(name = "student_name", length = 45)
-    private String student_name;
+  @Column(name = "student_name", length = 45)
+  private String student_name;
 
-    @JoinColumn(name = "course_id", nullable = false)
-    private Integer course_id;
+  @JoinColumn(name = "course_id", nullable = false)
+  private Integer course_id;
 
   public Student(String student_name, Integer id, boolean hasGraduated, Integer course_id) {
     this.student_name = student_name;
