@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -72,6 +73,13 @@ public class CourseService {
 
         Course saved = courseRepository.save(course);
         return courseMapper.toDTO(saved);
+    }
+
+    public List<CourseDTO> searchCoursesByName(String name) {
+        return courseRepository.findByCourse_nameContainingIgnoreCase(name)
+                .stream()
+                .map(courseMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
 }

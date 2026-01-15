@@ -3,9 +3,11 @@ package com.sparta.spa_api.controller;
 import com.sparta.spa_api.dtos.CourseDTO;
 import com.sparta.spa_api.services.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/courses")
@@ -40,7 +42,7 @@ public class CourseController {
 
     @Operation(summary = "Add a new course", description = "Create a new course in the database")
     @PostMapping
-    public ResponseEntity<CourseDTO> addCourse(@RequestBody CourseDTO courseDTO) {
+    public ResponseEntity<CourseDTO> addCourse(@Valid @RequestBody CourseDTO courseDTO) {
         CourseDTO savedCourse = service.saveCourse(courseDTO);
         return ResponseEntity.status(201).body(savedCourse);
     }
@@ -52,7 +54,7 @@ public class CourseController {
         try {
             CourseDTO updatedCourse = service.updateCourse(Integer.valueOf(id), courseDTO);
             return ResponseEntity.ok(updatedCourse);
-        } catch (IllegalArgumentException e) {
+        } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -63,5 +65,13 @@ public class CourseController {
         service.deleteCourse(id);
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(summary = "Search courses by name")
+    @GetMapping("/search")
+    public ResponseEntity<List<CourseDTO>> searchCourses(
+            @RequestParam String name) {
+        return ResponseEntity.ok(service.searchCoursesByName(name));
+    }
+
 
 }
