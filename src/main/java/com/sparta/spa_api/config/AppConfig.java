@@ -40,7 +40,7 @@ public class AppConfig {
             courseRepository.save(course1);
             courseRepository.save(course2);
 
-            // ===== STUDENTS =====
+            // ===== STUDENTS ======
             Student student1 = new Student("Alice Johnson", false, course1);
             Student student2 = new Student("Bob Smith", true, course1);
 
