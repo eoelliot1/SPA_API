@@ -29,7 +29,7 @@ public class CourseController {
 
     @Operation(summary = "Get a course by ID", description = "Retrieve a course from the database using their unique ID")
     @GetMapping("/{id}")
-    public ResponseEntity<CourseDTO> getCourseById(@PathVariable String id) {
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable int id) {
         CourseDTO course = service.getCourseById(id);
         if (course != null) {
             return ResponseEntity.ok(course);
@@ -59,13 +59,9 @@ public class CourseController {
 
     @Operation(summary = "Delete a course", description = "Delete a course from the database using their unique ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCourse(@PathVariable String id) {
-        boolean deleted = service.deleteCourse(id);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteCourse(@PathVariable int id) {
+        service.deleteCourse(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

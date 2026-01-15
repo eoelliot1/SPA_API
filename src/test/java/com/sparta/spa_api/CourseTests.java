@@ -115,15 +115,15 @@ public class CourseTests {
     // ------------------------
     // 1.2.5 Delete course
     // ------------------------
+
     @Test
     @DisplayName("Admin can delete a course")
     void deleteCourseHappyPathTest() {
 
         Mockito.when(mockRepository.existsById(1)).thenReturn(true);
 
-        boolean result = sut.deleteCourse(1);
+        sut.deleteCourse(1); // no return value
 
-        Assertions.assertTrue(result);
         Mockito.verify(mockRepository).deleteById(1);
     }
 
@@ -142,7 +142,7 @@ public class CourseTests {
     // User Story 3.4
     @Test
     @DisplayName("Course information can be updated")
-    void updateCourseHappyPathTest() {
+    void updateCourseInformationHappyPathTest() {
 
         Course course = new Course("Old Course Name");
         CourseDTO courseDTO = new CourseDTO();
