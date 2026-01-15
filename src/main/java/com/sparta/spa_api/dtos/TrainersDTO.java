@@ -1,7 +1,6 @@
 package com.sparta.spa_api.dtos;
 
 import com.sparta.spa_api.entities.Course;
-import com.sparta.spa_api.entities.CourseDto;
 
 public class TrainersDTO {
 
