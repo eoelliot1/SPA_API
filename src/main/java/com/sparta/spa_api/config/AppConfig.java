@@ -1,7 +1,6 @@
 package com.sparta.spa_api.config;
 
 import com.sparta.spa_api.entities.Course;
-import com.sparta.spa_api.entities.Student;
 import com.sparta.spa_api.entities.Trainers;
 import com.sparta.spa_api.repository.CourseRepository;
 import com.sparta.spa_api.repository.StudentRepository;
@@ -26,10 +25,10 @@ public class AppConfig {
             System.out.println("DataLoader running...");
             if (studentRepository.count() == 0) {
                 // ===== STUDENTS =====
-                Student student1 = new Student("Alice Johnson", 1, false, 1);
-                Student student2 = new Student("Bob Smith", 2, true, 1);
-                Student student3 = new Student("Charlie Brown", 3, false, 2);
-                Student student4 = new Student("Daisy Miller", 4, true, 2);
+                Student student1 = new Student("Alice Johnson",  false, 1);
+                Student student2 = new Student("Bob Smith",  true, 1);
+                Student student3 = new Student("Charlie Brown",  false, 2);
+                Student student4 = new Student("Daisy Miller",  true, 2);
 
                 List<Student> course1Students = new ArrayList<>();
                 course1Students.add(student1);

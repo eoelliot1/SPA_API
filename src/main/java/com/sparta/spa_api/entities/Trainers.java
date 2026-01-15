@@ -17,10 +17,10 @@ public class Trainers {
     private String trainer_name;
 
     @JoinColumn(name = "course_id", nullable = false)
-    private Integer course_id;
+    private Integer courseId;
 
     public Trainers(Integer course_id, String trainer_name) {
-        this.course_id = course_id;
+        this.courseId = courseId;
         this.trainer_name = trainer_name;
     }
 
@@ -29,11 +29,11 @@ public class Trainers {
     }
 
     public Integer getCourseID() {
-        return course_id;
+        return courseId;
     }
 
-    public void setCoursesID(Integer course_id) {
-        this.course_id = course_id;
+    public void setCoursesID(Integer courseId) {
+        this.courseId = courseId;
     }
 
     public String getTrainer_name() {

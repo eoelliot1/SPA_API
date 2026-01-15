@@ -1,7 +1,6 @@
 package com.sparta.spa_api;
 
 import com.sparta.spa_api.entities.Course;
-import com.sparta.spa_api.entities.Student;
 import com.sparta.spa_api.entities.Trainers;
 import com.sparta.spa_api.repository.CourseRepository;
 import com.sparta.spa_api.repository.StudentRepository;
