@@ -10,6 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -94,7 +96,7 @@ public class CourseTests {
     // ------------------------
     @Test
     @DisplayName("Admin can update a course")
-    void updateCourseHappyPathTest() {
+    void adminUpdateCourseHappyPathTest() {
 
         Course course = new Course("Old Name");
         CourseDTO dto = new CourseDTO();
