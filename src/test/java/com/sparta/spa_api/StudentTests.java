@@ -1,4 +1,4 @@
-package com.sparta.spa_api;
-
-public class StudentTests {
-}
+//package com.sparta.spa_api;
+//
+//public class StudentTests {
+//}
