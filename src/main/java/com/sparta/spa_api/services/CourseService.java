@@ -63,16 +63,6 @@ public class CourseService {
         return false;
     }
 
-//    public CourseDTO updateCourse(Integer course_id, CourseDTO courseDTO) {
-//        String id = String.valueOf(courseDTO.getCourse_id());
-//        if (!courseRepository.existsById(Integer.valueOf(id))) {
-//            throw new NoSuchElementException("Course with ID " + id + " does not exist.");
-//        }
-//        Course entity = courseMapper.toEntity(courseDTO);
-//        Course saved = courseRepository.save(entity);
-//        return courseMapper.toDTO(saved);
-//    }
-
 
     public CourseDTO updateCourse(Integer courseId, CourseDTO courseDTO) {
         Course course = courseRepository.findById(courseId)
