@@ -137,6 +137,19 @@ public class TrainerService {
         trainersRepository.deleteById(id);
     }
 
+    public List<StudentDTO> getStudentsByTrainerId(int id) {
+        Trainers trainer = trainersRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("No Trainer with id: " + id));
+
+        Course course = trainer.getCourse();
+        ArrayList<StudentDTO> studentArray = new ArrayList<>();
+
+        for(Student student : course.getStudents()) {
+            studentArray.add(studentMapper.toDTO(student));
+        }
+        return studentArray;
+    }
+
 
 
 
