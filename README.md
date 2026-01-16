@@ -84,7 +84,7 @@ Swagger provides:
 
 ---
 
-## 🧪 Testing
+## Testing
 
 * Unit tests are written using JUnit 5 and Mockito
 * Service layer logic is tested in isolation by mocking repositories
