@@ -17,11 +17,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up JDK 24
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '24'
+          java-version: '21'
           cache: maven
 
       - name: Verify Maven installation
@@ -30,13 +30,6 @@ jobs:
       - name: Build project and run unit tests
         id: tests
         run: mvn clean test -Dtest=HelperClassTest -DforkCount=1 -B
-
-      - name: Archive test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Test-Reports
-          path: target/surefire-reports/
 
   auto-merge:
     needs: build-and-test
