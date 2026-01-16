@@ -44,7 +44,7 @@ public class TrainersController {
         //Course courseDTO = trainerDTO.getCourse_id();
         //courseDTO.setCourse_name(newCourseName);
         try {
-             CourseDTO updatedCourse = service.setCourse_name(trainerDTO, newCourseName);
+             CourseDTO updatedCourse = service.setCourseName(trainerDTO, newCourseName);
              return ResponseEntity.status(201).body(updatedCourse);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();

@@ -108,10 +108,10 @@ public class TrainerService {
         @3.4
 
      */
-    public CourseDTO setCourse_name(TrainersDTO trainerDTO, String newName) {
+    public CourseDTO setCourseName(TrainersDTO trainerDTO, String newName) {
         Trainers entity = trainersMapper.toEntity(trainerDTO);
         Course course = entity.getCourse();
-        course.setCourse_name(newName);
+        course.setCourseName(newName);
 
         if(!trainersRepository.existsById(course.getId())) {
             throw new NoSuchElementException("Course with id " + course.getId() + " does not exist");

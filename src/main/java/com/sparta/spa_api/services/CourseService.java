@@ -69,17 +69,17 @@ public class CourseService {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new NoSuchElementException("Course not found"));
 
-        course.setCourse_name(courseDTO.getCourse_name());
+        course.setCourseName(courseDTO.getCourseName());
 
         Course saved = courseRepository.save(course);
         return courseMapper.toDTO(saved);
     }
 
-//    public List<CourseDTO> searchCoursesByName(String name) {
-//        return courseRepository.findByCourse_nameContainingIgnoreCase(name)
-//                .stream()
-//                .map(courseMapper::toDTO)
-//                .collect(Collectors.toList());
-//    }
+    public List<CourseDTO> searchCoursesByName(String name) {
+        return courseRepository.findByCourseNameContainingIgnoreCase(name)
+                .stream()
+                .map(courseMapper::toDTO)
+                .collect(Collectors.toList());
+    }
 
 }

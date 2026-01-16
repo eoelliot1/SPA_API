@@ -11,6 +11,6 @@ import java.util.List;
 @RepositoryRestResource(exported = false)
 
 public interface CourseRepository extends JpaRepository<Course,Integer> {
-//    List<Course> findByCourse_nameContainingIgnoreCase(String name);
+    List<Course> findByCourseNameContainingIgnoreCase(String name);
 
 }

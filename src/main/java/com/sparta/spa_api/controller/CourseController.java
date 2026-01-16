@@ -3,12 +3,15 @@ package com.sparta.spa_api.controller;
 import com.sparta.spa_api.dtos.CourseDTO;
 import com.sparta.spa_api.services.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Tag(name = "course-controller", description = "Operations on course table")
 @RestController
 @RequestMapping("/courses")
 public class CourseController {
@@ -22,7 +25,7 @@ public class CourseController {
 
 
     @Operation(summary = "Get all courses", description = "Retrieve a list of all courses")
-    @GetMapping(value = "/")
+    @GetMapping
     public ResponseEntity<List<CourseDTO>> getAllCourses() {
         List<CourseDTO> courses = service.getAllCourses();
         return ResponseEntity.ok(courses);
@@ -40,19 +43,21 @@ public class CourseController {
         }
     }
 
-    @Operation(summary = "Add a new course", description = "Create a new course in the database")
-    @PostMapping
-    public ResponseEntity<CourseDTO> addCourse(@Valid @RequestBody CourseDTO courseDTO) {
-        CourseDTO savedCourse = service.saveCourse(courseDTO);
-        return ResponseEntity.status(201).body(savedCourse);
-    }
 
+    @Operation(summary = "Adds a course", description = "Creates a new course in the db")
+    @PostMapping
+    public ResponseEntity<CourseDTO> addCourse(@RequestBody CourseDTO courseDTO)
+    {
+        courseDTO.setId(null);
+        CourseDTO savedCourse = service.saveCourse(courseDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCourse);
+    }
     @Operation(summary = "Update a course", description = "Update an existing course in the database")
     @PutMapping("/{id}")
-    public ResponseEntity<CourseDTO> updateCourse(@PathVariable String id, @RequestBody CourseDTO courseDTO) {
-        courseDTO.setCourse_id(Integer.valueOf(id));
+    public ResponseEntity<CourseDTO> updateCourse(@PathVariable int id, @RequestBody CourseDTO courseDTO) {
+        courseDTO.setId(id);
         try {
-            CourseDTO updatedCourse = service.updateCourse(Integer.valueOf(id), courseDTO);
+            CourseDTO updatedCourse = service.updateCourse(id, courseDTO);
             return ResponseEntity.ok(updatedCourse);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
@@ -65,13 +70,13 @@ public class CourseController {
         service.deleteCourse(id);
         return ResponseEntity.noContent().build();
     }
-//
-//    @Operation(summary = "Search courses by name")
-//    @GetMapping("/search")
-//    public ResponseEntity<List<CourseDTO>> searchCourses(
-//            @RequestParam String name) {
-//        return ResponseEntity.ok(service.searchCoursesByName(name));
-//    }
-//
+
+    @Operation(summary = "Search courses by name")
+    @GetMapping("/search")
+    public ResponseEntity<List<CourseDTO>> searchCourses(
+            @RequestParam String name) {
+        return ResponseEntity.ok(service.searchCoursesByName(name));
+    }
+
 
 }
