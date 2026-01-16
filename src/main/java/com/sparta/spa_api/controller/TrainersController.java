@@ -63,7 +63,7 @@ public class TrainersController {
     }
 
     @Operation(summary = "Update my course name", description = "Retrieve the trainer's course and update's the name")
-    @PostMapping("{id}/courses/setCourseName")
+    @PutMapping("{id}/courses/setCourseName")
     public ResponseEntity<CourseDTO> updateCourseName(@PathVariable int id, @RequestBody String newCourseName) {
         CourseDTO Course = service.getCourse(id);
 
@@ -76,7 +76,7 @@ public class TrainersController {
     }
 
     @Operation(summary = "Update my trainer name", description = "Update's the trainers name.")
-    @PostMapping( "/name/{id}")
+    @PutMapping( "/name/{id}")
     public ResponseEntity<TrainersDTO> updateTrainerName(@PathVariable int id, @RequestBody String newTrainerName) {
         try {
             TrainersDTO trainer = service.setTrainerName(id, newTrainerName);
@@ -87,7 +87,7 @@ public class TrainersController {
     }
 
     @Operation(summary = "Update my trainer id", description = "Update's the trainers id.")
-    @PostMapping( "/{id}")
+    @PutMapping( "/{id}")
     public ResponseEntity<TrainersDTO> updateTrainerId(@RequestBody TrainersDTO trainerDTO, @PathVariable Integer newID) {
         try {
             TrainersDTO updatedTrainer = service.setTrainerId(trainerDTO, newID);

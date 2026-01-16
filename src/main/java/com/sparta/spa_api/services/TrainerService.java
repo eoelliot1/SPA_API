@@ -100,7 +100,6 @@ public class TrainerService {
         Trainers trainer = trainersRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("No Trainer with id: " + id));
         trainer.setTrainer_name(newName);
-        System.out.println("BIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIG CASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSH");
         return trainersMapper.toDTO(trainer);
     }
 
