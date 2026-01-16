@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface TrainersMapper {
-    Trainers toDTO(Trainers trainers);
-    Trainers toEntity(Trainers trainers);
+    TrainersDTO toDTO(Trainers trainers);
+    Trainers toEntity(TrainersDTO trainersDTO);
 }
 

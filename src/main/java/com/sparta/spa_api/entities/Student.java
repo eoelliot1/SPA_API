@@ -12,7 +12,7 @@ public class Student {
   private Integer id;
 
   @Column(name = "student_name", length = 45)
-  private String student_name;
+  private String studentName;
 
   @Column(name = "has_graduated", nullable = false)
   private boolean hasGraduated;
@@ -23,8 +23,8 @@ public class Student {
 
   public Student() {}
 
-  public Student(String student_name, boolean hasGraduated, Course course) {
-    this.student_name = student_name;
+  public Student(String studentName, boolean hasGraduated, Course course) {
+    this.studentName = studentName;
     this.hasGraduated = hasGraduated;
     this.course = course;
   }
@@ -34,11 +34,11 @@ public class Student {
   }
 
   public String getStudent_name() {
-    return student_name;
+    return studentName;
   }
 
   public void setStudent_name(String student_name) {
-    this.student_name = student_name;
+    this.studentName = studentName;
   }
 
   public boolean isHasGraduated() {

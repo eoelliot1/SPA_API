@@ -1,48 +1,44 @@
 package com.sparta.spa_api.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparta.spa_api.entities.Student;
-import com.sparta.spa_api.entities.Trainers;
+import jakarta.validation.constraints.NotBlank;
+
 
 import java.util.List;
 
 public class CourseDTO {
-    private Integer course_id;
-    private String course_name;
-    private List<Student> course1Students;
-    private List<Trainers> course1Trainers;
+    private Integer id;
 
-    public Integer getCourse_id() {
-        return course_id;
+    @NotBlank(message = "Course name is required")
+    private String courseName;
+
+    @JsonIgnore
+    private List<Student> students;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setCourse_id(Integer course_id) {
-        this.course_id = course_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getCourse_name() {
-        return course_name;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setCourse_name(String course_name) {
-        this.course_name = course_name;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
-    public List<Student> getCourse1Students() {
-        return course1Students;
+    public List<Student> getStudents() {
+        return students;
     }
 
-    public void setCourse1Students(List<Student> course1Students) {
-        this.course1Students = course1Students;
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
-
-    public List<Trainers> getCourse1Trainers() {
-        return course1Trainers;
-    }
-
-    public void setCourse1Trainers(List<Trainers> course1Trainers) {
-        this.course1Trainers = course1Trainers;
-    }
-
 
 
 }
