@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@Tag(name = "course-controller", description = "Operations on course table")
+@Tag(name = "Course Details", description = "Operations on course table")
 @RestController
 @RequestMapping("/courses")
 public class CourseController {

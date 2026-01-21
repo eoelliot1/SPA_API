@@ -5,6 +5,7 @@ import com.sparta.spa_api.dtos.StudentDTO;
 import com.sparta.spa_api.dtos.StudentMapper;
 import com.sparta.spa_api.entities.Course;
 import com.sparta.spa_api.entities.Student;
+import com.sparta.spa_api.repository.CourseRepository;
 import com.sparta.spa_api.repository.StudentRepository;
 import com.sparta.spa_api.services.StudentService;
 import org.junit.jupiter.api.Assertions;
@@ -20,9 +21,10 @@ public class StudentTests {
     private final StudentRepository mockStudentRepo = Mockito.mock(StudentRepository.class);
     private final StudentMapper mockMapper = Mockito.mock(StudentMapper.class);
     private final CourseMapper mockCourseMapper = Mockito.mock(CourseMapper.class);
+    private final CourseRepository courseRepository = Mockito.mock(CourseRepository.class);
 
     private final StudentService sut =
-            new StudentService(mockStudentRepo, mockMapper, mockCourseMapper);
+            new StudentService(mockStudentRepo, mockMapper, courseRepository);
 
     // ===== Constructor Tests =====
 
