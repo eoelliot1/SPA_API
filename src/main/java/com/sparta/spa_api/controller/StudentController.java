@@ -5,6 +5,7 @@ import com.sparta.spa_api.dtos.StudentDTO;
 import com.sparta.spa_api.entities.Student;
 import com.sparta.spa_api.services.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,17 @@ public class StudentController {
         this.service = service;
     }
 
+
+    @Operation(summary = "Get all Students", description = "Retrieve a list of all students")
+    @GetMapping
+    public ResponseEntity<List<StudentDTO>> getAllStudents()  {
+        return ResponseEntity.ok(service.getAllStudents());
+    }
+
+
+
+
+
     @Operation(summary = "Get student by ID", description = "Retrieve student by ID")
     @GetMapping("/{id}")
     public ResponseEntity<StudentDTO> getStudentById(@PathVariable  Integer id){
@@ -33,8 +45,8 @@ public class StudentController {
 
     @Operation(summary = "Update a student", description = "Modify an existing student's details in the database")
     @PutMapping("/{id}")
-    public ResponseEntity<StudentDTO> updateStudent(@PathVariable Integer id, @PathVariable String student_name, @RequestBody Student student) {
-        student.setStudent_name(student_name);
+    public ResponseEntity<StudentDTO> updateStudent(@PathVariable Integer id, @PathVariable String studentName, @Valid  @RequestBody Student student) {
+        student.setStudentName(studentName);
         try {
             StudentDTO updatedStudent = service.updateStudent(student);
             return ResponseEntity.ok(updatedStudent);
@@ -56,12 +68,7 @@ public class StudentController {
 
     }
 
-    @Operation(summary = "Get all Students", description = "Retrieve a list of all students")
-    @GetMapping
-    public ResponseEntity<List<StudentDTO>> getAllStudents() {
-        List<StudentDTO> students = service.getAllStudents();
-        return ResponseEntity.ok(students);
-    }
+
 
     @Operation(summary = "Get graduation status", description = "Check graduation status")
     @GetMapping("/{id}/graduated")

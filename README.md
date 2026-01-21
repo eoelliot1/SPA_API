@@ -1,5 +1,5 @@
 # Sparta Global Academy – API
-
+dsbsd
 ## Project Overview
 
 This project is a production ready API built using Spring Boot for managing the Sparta Global Academy domain. The API allows administrators, trainers, and trainees to manage courses, trainers, and trainees through our endpoints.
