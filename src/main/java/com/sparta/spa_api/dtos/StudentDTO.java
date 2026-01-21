@@ -1,10 +1,14 @@
 package com.sparta.spa_api.dtos;
 
+import com.sparta.spa_api.entities.Student;
+
 public class StudentDTO {
     private Integer id;
     private String studentName;
-    private Integer courseID;
+    private Integer courseId;
     private boolean hasGraduated;
+
+
 
     public Integer getId() {
         return id;
@@ -22,19 +26,20 @@ public class StudentDTO {
         this.studentName = studentName;
     }
 
-    public Integer getCourseID() {
-        return courseID;
+    public Integer getCourseId() {  // fixed name
+        return courseId;
     }
 
-    public void setCourseID(Integer courseID) {
-        this.courseID = courseID;
+
+    public void setCourseId(Integer courseId) {  // fixed typo
+        this.courseId = courseId;
     }
 
-    public boolean isHasGraduated() {
+    public boolean isGraduated() {  // standard boolean getter
         return hasGraduated;
     }
 
-    public void setHasGraduated(boolean hasGraduated) {
+    public void setGraduated(boolean hasGraduated) {
         this.hasGraduated = hasGraduated;
     }
 }

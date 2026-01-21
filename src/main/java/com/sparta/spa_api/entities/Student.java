@@ -33,11 +33,11 @@ public class Student {
     return id;
   }
 
-  public String getStudent_name() {
+  public String getStudentName() {
     return studentName;
   }
 
-  public void setStudent_name(String student_name) {
+  public void setStudentName(String studentName) {
     this.studentName = studentName;
   }
 
@@ -52,6 +52,11 @@ public class Student {
   public Course getCourse() {
     return course;
   }
+
+  public Integer getCourseId(){
+    return course.getId();
+  }
+
 
   public void setCourse(Course course) {
     this.course = course;
