@@ -1,10 +1,6 @@
 package com.sparta.spa_api.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,22 +10,22 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "course_id", nullable = false)
+    @Column(name = "course_id")
     private Integer id;
 
-    @Column(name = "course_name", length = 45)
+    @Column(name = "course_name", length = 45, nullable = false)
     private String courseName;
 
     @OneToMany(
             mappedBy = "course",
-            cascade = CascadeType.MERGE,
+            cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<Student> students = new ArrayList<>();
 
     @OneToMany(
             mappedBy = "course",
-            cascade = CascadeType.MERGE,
+            cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<Trainers> trainers = new ArrayList<>();
@@ -40,13 +36,20 @@ public class Course {
         this.courseName = courseName;
     }
 
-
-    public Integer getId() {
-        return id;
+    // Helper methods
+    public void addStudent(Student student) {
+        students.add(student);
+        student.setCourse(this);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void addTrainer(Trainers trainer) {
+        trainers.add(trainer);
+        trainer.setCourse(this);
+    }
+
+    // Getters & setters
+    public Integer getId() {
+        return id;
     }
 
     public String getCourseName() {
