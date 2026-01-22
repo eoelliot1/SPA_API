@@ -1,33 +1,81 @@
 package com.sparta.spa_api.config;
 
 import com.sparta.spa_api.entities.Course;
+import com.sparta.spa_api.entities.Spartan;
 import com.sparta.spa_api.entities.Student;
 import com.sparta.spa_api.entities.Trainers;
 import com.sparta.spa_api.repository.CourseRepository;
+import com.sparta.spa_api.repository.SpartanRepository;
 import com.sparta.spa_api.repository.StudentRepository;
 import com.sparta.spa_api.repository.TrainersRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+
 
 @Configuration
 public class AppConfig {
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+                .formLogin(form -> form.defaultSuccessUrl("/todos/").permitAll())
+                .csrf(csrf -> csrf.disable());
+        return http.build();
+    }
 
     @Bean
     @Transactional
     public CommandLineRunner loadData(
             CourseRepository courseRepository,
             TrainersRepository trainersRepository,
-            StudentRepository studentRepository
+            StudentRepository studentRepository,
+            SpartanRepository spartanRepo,
+            PasswordEncoder encoder
     ) {
         return args -> {
-            System.out.println("DataLoader running...");
 
-            if (studentRepository.count() > 0) {
-                System.out.println("Seed skipped");
+            if (spartanRepo.count() > 0) {
+                System.out.println("Spartans already seeded");
                 return;
             }
+
+            // ===== AUTH USERS (LOGIN ACCOUNTS) =====
+            Spartan admin = new Spartan(
+                    "admin@spartaglobal.com",
+                    encoder.encode("adminpass"),
+                    "ADMIN"
+            );
+
+            Spartan trainerUser = new Spartan(
+                    "trainer@spartaglobal.com",
+                    encoder.encode("trainerpass"),
+                    "TRAINER"
+            );
+
+            Spartan studentUser = new Spartan(
+                    "student@spartaglobal.com",
+                    encoder.encode("studentpass"),
+                    "STUDENT"
+            );
+
+            spartanRepo.saveAll(
+                    List.of(admin, trainerUser, studentUser)
+            );
+
+            System.out.println("Seeded Spartans for login");
 
             // ===== COURSES =====
             Course course1 = new Course("Software Testing");
