@@ -2,16 +2,14 @@ package com.sparta.spa_api.controller;
 
 import com.sparta.spa_api.dtos.CourseDTO;
 import com.sparta.spa_api.dtos.TrainersDTO;
+import com.sparta.spa_api.dtos.StudentDTO;
 import com.sparta.spa_api.services.TrainerService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Trainer Details", description = "CRUD operations performed on Trainer table")
+import java.util.List;
+
 @RestController
 @RequestMapping("/trainers")
 public class TrainersController {
@@ -22,77 +20,40 @@ public class TrainersController {
         this.service = service;
     }
 
-    @Operation(summary = "Get Trainers by ID", description = "Retrieve the trainer.")
+    @Operation(summary = "Get Trainer by ID")
     @GetMapping("/{id}")
     public ResponseEntity<TrainersDTO> getTrainer(@PathVariable int id) {
-        TrainersDTO trainer = service.getTrainer(id);
-
-        if(trainer != null) {
-            return ResponseEntity.status(200).body(trainer);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(service.getTrainerById(id));
     }
 
-    @Operation(summary = "Get Trainers Course ID", description = "Retrieve the trainer's course.")
-    @GetMapping("/{id}/courses/")
-    public ResponseEntity<CourseDTO> getTraineresCourse(@PathVariable int id) {
-        CourseDTO Course = service.getCourse(id);
-
-        if(Course != null) {
-            return ResponseEntity.status(201).body(Course);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @Operation(summary = "Get Trainer's Course")
+    @GetMapping("/{id}/course")
+    public ResponseEntity<CourseDTO> getTrainerCourse(@PathVariable int id) {
+        return ResponseEntity.ok(service.getTrainerCourse(id));
     }
 
-    //Works
-    @Operation(summary = "Delete Trainers by ID", description = "Delete a trainer by ID")
+    @Operation(summary = "Get Students for Trainer")
+    @GetMapping("/{id}/students")
+    public ResponseEntity<List<StudentDTO>> getStudents(@PathVariable int id) {
+        return ResponseEntity.ok(service.getStudentsByTrainerId(id));
+    }
+
+    @Operation(summary = "Create Trainer")
+    @PostMapping
+    public ResponseEntity<TrainersDTO> createTrainer(@RequestBody TrainersDTO dto) {
+        return ResponseEntity.status(201).body(service.saveTrainer(dto));
+    }
+
+    @Operation(summary = "Update Trainer")
+    @PutMapping("/{id}")
+    public ResponseEntity<TrainersDTO> updateTrainer(@PathVariable int id, @RequestBody TrainersDTO dto) {
+        return ResponseEntity.ok(service.updateTrainer(id, dto));
+    }
+
+    @Operation(summary = "Delete Trainer")
     @DeleteMapping("/{id}")
-    public ResponseEntity<CourseDTO> deleteTrainerById(@PathVariable int id) {
-        try {
-            service.deleteTrainer(id);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteTrainer(@PathVariable int id) {
+        service.deleteTrainer(id);
+        return ResponseEntity.noContent().build();
     }
-
-    @Operation(summary = "Update my course name", description = "Retrieve the trainer's course and update's the name")
-    @PutMapping("{id}/courses/setCourseName")
-    public ResponseEntity<CourseDTO> updateCourseName(@PathVariable int id, @RequestBody String newCourseName) {
-        CourseDTO Course = service.getCourse(id);
-
-        try {
-            Course.setCourseName(newCourseName);
-            return ResponseEntity.status(201).body(Course);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @Operation(summary = "Update my trainer name", description = "Update's the trainers name.")
-    @PutMapping( "/name/{id}")
-    public ResponseEntity<TrainersDTO> updateTrainerName(@PathVariable int id, @RequestBody String newTrainerName) {
-        try {
-            TrainersDTO trainer = service.setTrainerName(id, newTrainerName);
-            return ResponseEntity.status(201).body(trainer);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @Operation(summary = "Update my trainer id", description = "Update's the trainers id.")
-    @PutMapping( "/{id}")
-    public ResponseEntity<TrainersDTO> updateTrainerId(@RequestBody TrainersDTO trainerDTO, @PathVariable Integer newID) {
-        try {
-            TrainersDTO updatedTrainer = service.setTrainerId(trainerDTO, newID);
-            return ResponseEntity.status(201).body(updatedTrainer);
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
 }
-

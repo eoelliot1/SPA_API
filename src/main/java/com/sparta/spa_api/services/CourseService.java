@@ -5,11 +5,9 @@ import com.sparta.spa_api.dtos.CourseMapper;
 import com.sparta.spa_api.entities.Course;
 import com.sparta.spa_api.entities.Student;
 import com.sparta.spa_api.repository.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -17,17 +15,22 @@ public class CourseService {
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
 
-    @Autowired
-    public CourseService(CourseRepository courseRepository, CourseMapper courseMapper) {
-        if(courseRepository == null || courseMapper == null){
-            throw new IllegalArgumentException("Repository and Mapper cannot be null");
+    public CourseService(CourseRepository courseRepository,
+                         CourseMapper courseMapper) {
+
+        if (courseRepository == null || courseMapper == null) {
+            throw new IllegalArgumentException("Dependencies cannot be null");
         }
+
         this.courseRepository = courseRepository;
         this.courseMapper = courseMapper;
     }
 
     public List<CourseDTO> getAllCourses() {
-        return courseRepository.findAll().stream().map(courseMapper::toDTO).toList();
+        return courseRepository.findAll()
+                .stream()
+                .map(courseMapper::toDTO)
+                .toList();
     }
 
     public CourseDTO getCourseById(int id) {
@@ -37,20 +40,21 @@ public class CourseService {
     }
 
     public CourseDTO saveCourse(CourseDTO courseDTO) {
+
         if (courseDTO.getCourseName() == null || courseDTO.getCourseName().isBlank()) {
             throw new IllegalArgumentException("Course name is required");
         }
 
-        boolean exists = courseRepository.findAll().stream()
-                .anyMatch(c -> c.getCourseName().equalsIgnoreCase(courseDTO.getCourseName()));
+        Course course = courseMapper.toEntity(courseDTO);
+        return courseMapper.toDTO(courseRepository.save(course));
+    }
 
-        if (exists) {
-            throw new IllegalArgumentException("Course with this name already exists");
-        }
+    public CourseDTO updateCourse(int id, CourseDTO courseDTO) {
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Course not found"));
 
-        Course entity = courseMapper.toEntity(courseDTO);
-        Course saved = courseRepository.save(entity);
-        return courseMapper.toDTO(saved);
+        course.setCourseName(courseDTO.getCourseName());
+        return courseMapper.toDTO(courseRepository.save(course));
     }
 
     public void deleteCourse(int id) {
@@ -60,23 +64,7 @@ public class CourseService {
         courseRepository.deleteById(id);
     }
 
-    public CourseDTO updateCourse(Integer courseId, CourseDTO courseDTO) {
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new NoSuchElementException("Course not found"));
-
-        course.setCourseName(courseDTO.getCourseName());
-        Course saved = courseRepository.save(course);
-        return courseMapper.toDTO(saved);
-    }
-
-    public List<CourseDTO> searchCoursesByName(String name) {
-        return courseRepository.findByCourseNameContainingIgnoreCase(name)
-                .stream()
-                .map(courseMapper::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    public List<Student> getTraineesByCourseId(int courseId) {
+    public List<Student> getStudentsByCourseId(int courseId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new NoSuchElementException("Course not found"));
         return course.getStudents();
