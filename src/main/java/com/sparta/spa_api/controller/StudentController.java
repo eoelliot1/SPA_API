@@ -1,16 +1,17 @@
 package com.sparta.spa_api.controller;
 
-import com.sparta.spa_api.dtos.CourseDTO;
 import com.sparta.spa_api.dtos.StudentDTO;
 import com.sparta.spa_api.entities.Student;
 import com.sparta.spa_api.services.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Trainee Details", description = "CRUD operations performed on trainee table")
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -27,8 +28,6 @@ public class StudentController {
     public ResponseEntity<List<StudentDTO>> getAllStudents()  {
         return ResponseEntity.ok(service.getAllStudents());
     }
-
-
 
 
 

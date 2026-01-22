@@ -7,7 +7,6 @@ import com.sparta.spa_api.entities.Student;
 import com.sparta.spa_api.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -82,4 +81,5 @@ public class CourseService {
                 .orElseThrow(() -> new NoSuchElementException("Course not found"));
         return course.getStudents();
     }
+
 }

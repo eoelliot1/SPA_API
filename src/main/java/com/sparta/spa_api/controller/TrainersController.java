@@ -2,20 +2,16 @@ package com.sparta.spa_api.controller;
 
 import com.sparta.spa_api.dtos.CourseDTO;
 import com.sparta.spa_api.dtos.TrainersDTO;
-import com.sparta.spa_api.entities.Course;
 import com.sparta.spa_api.services.TrainerService;
 import io.swagger.v3.oas.annotations.Operation;
-
-import org.springframework.http.HttpStatus;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+@Tag(name = "Trainer Details", description = "CRUD operations performed on Trainer table")
 @RestController
 @RequestMapping("/trainers")
 public class TrainersController {

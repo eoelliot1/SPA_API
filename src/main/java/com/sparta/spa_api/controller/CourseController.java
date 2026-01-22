@@ -8,11 +8,10 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@Tag(name = "Course Details", description = "Operations on course table")
+@Tag(name = "Course Details", description = "CRUD operations performed on course table")
 @RestController
 @RequestMapping("/courses")
 public class CourseController {

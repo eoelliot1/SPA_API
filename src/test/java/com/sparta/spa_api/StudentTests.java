@@ -20,7 +20,6 @@ public class StudentTests {
 
     private final StudentRepository mockStudentRepo = Mockito.mock(StudentRepository.class);
     private final StudentMapper mockMapper = Mockito.mock(StudentMapper.class);
-    private final CourseMapper mockCourseMapper = Mockito.mock(CourseMapper.class);
     private final CourseRepository courseRepository = Mockito.mock(CourseRepository.class);
 
     private final StudentService sut =
