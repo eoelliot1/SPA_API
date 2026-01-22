@@ -1,9 +1,11 @@
 package com.sparta.spa_api.dtos;
 
 public class StudentDTO {
+
     private Integer id;
     private String studentName;
-    private Integer courseID;
+    private Integer courseId;
+    private Integer trainerId;   // ✅ ADD
     private boolean hasGraduated;
 
     public Integer getId() {
@@ -22,19 +24,27 @@ public class StudentDTO {
         this.studentName = studentName;
     }
 
-    public Integer getCourseID() {
-        return courseID;
+    public Integer getCourseId() {
+        return courseId;
     }
 
-    public void setCourseID(Integer courseID) {
-        this.courseID = courseID;
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
     }
 
-    public boolean isHasGraduated() {
+    public Integer getTrainerId() {
+        return trainerId;
+    }
+
+    public void setTrainerId(Integer trainerId) {
+        this.trainerId = trainerId;
+    }
+
+    public boolean isGraduated() {
         return hasGraduated;
     }
 
-    public void setHasGraduated(boolean hasGraduated) {
+    public void setGraduated(boolean hasGraduated) {
         this.hasGraduated = hasGraduated;
     }
 }

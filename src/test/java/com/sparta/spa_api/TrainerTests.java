@@ -1,10 +1,11 @@
 //package com.sparta.spa_api;
 //
-//import com.sparta.spa_api.dtos.TrainersDTO;
-//import com.sparta.spa_api.dtos.TrainersMapper;
+//import com.sparta.spa_api.dtos.*;
 //import com.sparta.spa_api.entities.Course;
 //import com.sparta.spa_api.entities.Student;
 //import com.sparta.spa_api.entities.Trainers;
+//import com.sparta.spa_api.repository.CourseRepository;
+//import com.sparta.spa_api.repository.StudentRepository;
 //import com.sparta.spa_api.repository.TrainersRepository;
 //import com.sparta.spa_api.services.TrainerService;
 //import org.junit.jupiter.api.Assertions;
@@ -12,17 +13,26 @@
 //import org.junit.jupiter.api.Test;
 //import org.mockito.Mockito;
 //
+//import java.util.ArrayList;
 //import java.util.List;
 //import java.util.NoSuchElementException;
 //import java.util.Optional;
 //
 //public class TrainerTests {
-//    private final TrainersRepository mockRepository = Mockito.mock(TrainersRepository.class);
+//    private final TrainersRepository mockTrainerRepository = Mockito.mock(TrainersRepository.class);
+//    private final StudentRepository mockStudentRepository = Mockito.mock(StudentRepository.class);
+//    private final CourseRepository mockCourseRepository = Mockito.mock(CourseRepository.class);
 //
-//    private final TrainersMapper mockMapper =
+//    private final TrainersMapper mockTrainersMapper =
 //            Mockito.mock(TrainersMapper.class);
 //
-//    private final TrainerService sut = new TrainerService(mockRepository, mockMapper);
+//    private final StudentMapper mockStudentMapper =
+//            Mockito.mock(StudentMapper.class);
+//
+//    private final CourseMapper mockCourseMapper =
+//            Mockito.mock(CourseMapper.class);
+//
+//    private final TrainerService sut = new TrainerService(mockTrainerRepository, mockTrainersMapper, mockCourseMapper, mockStudentRepository, mockStudentMapper);
 //
 //
 //    @Test
@@ -34,7 +44,7 @@
 //    @Test
 //    @DisplayName("Constructor should throw exception with null repository")
 //    void constructorWithNullRepositoryTest() {
-//        Assertions.assertThrows(IllegalArgumentException.class, () -> new TrainerService(null, null));
+//        Assertions.assertThrows(IllegalArgumentException.class, () -> new TrainerService(null, null, null, null, null));
 //    }
 //
 //    // User Story 3.1.1
@@ -49,25 +59,25 @@
 //        trainerDTO.setTrainer_name("Alice");
 //        trainerDTO.setCourse_id(course);
 //
-//        Mockito.when(mockRepository.findById(1)).thenReturn(Optional.of(trainer));
-//        Mockito.when(mockMapper.toDTO(trainer)).thenReturn(trainerDTO);
+//        Mockito.when(mockTrainerRepository.findById(1)).thenReturn(Optional.of(trainer));
+//        Mockito.when(mockTrainersMapper.toDTO(trainer)).thenReturn(trainerDTO);
 //
-//        TrainersDTO result = sut.getTrainerById(1);
+//        TrainersDTO result = sut.getTrainer(1);
 //
 //        Assertions.assertNotNull(result);
-//        Assertions.assertEquals("Software Testing", result.getCourse_id().getCourse_name());
+//        Assertions.assertEquals("Software Testing", result.getCourse_id().getCourseName());
 //    }
-//
+////
 //    // User Story 3.1.2
 //    @Test
 //    @DisplayName("Trainer cannot view course with invalid trainer ID")
 //    void getTrainerCourseInvalidIdTest() {
 //
-//        Mockito.when(mockRepository.findById(1)).thenReturn(Optional.empty());
+//        Mockito.when(mockTrainerRepository.findById(1)).thenReturn(Optional.empty());
 //
-//        Assertions.assertThrows(NoSuchElementException.class, () -> sut.getTrainerById(1));
+//        Assertions.assertThrows(NoSuchElementException.class, () -> sut.getTrainer(1));
 //    }
-//
+////
 //    // User Story 3.1.3
 //    @Test
 //    @DisplayName("Trainer cannot view course when no course is assigned")
@@ -81,59 +91,24 @@
 //        trainerDTO.setTrainer_name("Alice");
 //        trainerDTO.setCourse_id(null);
 //
-//        Mockito.when(mockRepository.findById(1)).thenReturn(Optional.of(trainer));
-//        Mockito.when(mockMapper.toDTO(trainer)).thenReturn(trainerDTO);
+//        Mockito.when(mockTrainerRepository.findById(1)).thenReturn(Optional.of(trainer));
+//        Mockito.when(mockTrainersMapper.toDTO(trainer)).thenReturn(trainerDTO);
 //
-//        TrainersDTO result = sut.getTrainerById(1);
+//        TrainersDTO result = sut.getTrainer(1);
 //
 //        Assertions.assertNotNull(result);
 //        Assertions.assertNull(result.getCourse_id());
 //    }
+////
 //
-//
-//    // User Story 3.2
-//    @Test
-//    @DisplayName("Trainer can view students enrolled on their course")
-//    void getStudentsForTrainerCourseTest() {
-//
-//        Course course = new Course("Java");
-//        Student student1 = new Student("John", false, course);
-//        Student student2 = new Student("Sarah", false, course);
-//
-//        course.getStudents().add(student1);
-//        course.getStudents().add(student2);
-//
-//        Trainers trainer = new Trainers("Bob", course);
-//
-//        Mockito.when(mockRepository.findById(1)).thenReturn(Optional.of(trainer));
-//
-//        List<Student> students = sut.getStudentsByTrainerId(1);
-//
-//        Assertions.assertEquals(2, students.size());
-//    }
-//
+////
 //    // User Story 3.3
-//    @Test
-//    @DisplayName("Trainer can update their personal details")
-//    void updateTrainerHappyPathTest() {
-//
-//        Course course = new Course("DevOps");
-//        Trainers trainer = new Trainers("Old Name", course);
-//
-//        Mockito.when(mockRepository.findById(1)).thenReturn(Optional.of(trainer));
-//        Mockito.when(mockRepository.save(trainer)).thenReturn(trainer);
-//
-//        Trainers updatedTrainer = sut.updateTrainerName(1, "New Name");
-//
-//        Assertions.assertEquals("New Name", updatedTrainer.getTrainer_name());
-//    }
-//
 //    @Test
 //    @DisplayName("Update trainer unhappy path - trainer not found")
 //    void updateTrainerUnhappyPathTest() {
 //
-//        Mockito.when(mockRepository.findById(1)).thenReturn(Optional.empty());
+//        Mockito.when(mockTrainerRepository.findById(1)).thenReturn(Optional.empty());
 //
-//        Assertions.assertThrows(NoSuchElementException.class, () -> sut.updateTrainerName(1, "New Name"));
+//        Assertions.assertThrows(NoSuchElementException.class, () -> sut.setTrainerName(1, "New Name"));
 //    }
 //}

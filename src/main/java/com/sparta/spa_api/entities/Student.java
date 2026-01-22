@@ -8,11 +8,11 @@ public class Student {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", nullable = false)
+  @Column(name = "student_id")
   private Integer id;
 
-  @Column(name = "student_name", length = 45)
-  private String student_name;
+  @Column(name = "student_name", length = 45, nullable = false)
+  private String studentName;
 
   @Column(name = "has_graduated", nullable = false)
   private boolean hasGraduated;
@@ -21,24 +21,28 @@ public class Student {
   @JoinColumn(name = "course_id", nullable = false)
   private Course course;
 
+  @ManyToOne
+  @JoinColumn(name = "trainer_id", nullable = true)
+  private Trainers trainer;
+
   public Student() {}
 
-  public Student(String student_name, boolean hasGraduated, Course course) {
-    this.student_name = student_name;
+  public Student(String studentName, boolean hasGraduated) {
+    this.studentName = studentName;
     this.hasGraduated = hasGraduated;
-    this.course = course;
   }
 
+  // Getters & setters
   public Integer getId() {
     return id;
   }
 
-  public String getStudent_name() {
-    return student_name;
+  public String getStudentName() {
+    return studentName;
   }
 
-  public void setStudent_name(String student_name) {
-    this.student_name = student_name;
+  public void setStudentName(String studentName) {
+    this.studentName = studentName;
   }
 
   public boolean isHasGraduated() {
@@ -55,5 +59,13 @@ public class Student {
 
   public void setCourse(Course course) {
     this.course = course;
+  }
+
+  public Trainers getTrainer() {
+    return trainer;
+  }
+
+  public void setTrainer(Trainers trainer) {
+    this.trainer = trainer;
   }
 }

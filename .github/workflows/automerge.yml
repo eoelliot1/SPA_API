@@ -1,0 +1,42 @@
+name: Run Unit Tests
+
+on:
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    outputs:
+      tests_passed: ${{ steps.tests.outcome }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: maven
+
+      - name: Verify Maven installation
+        run: mvn -v
+
+      - name: Build project and run unit tests
+        id: tests
+        run: mvn clean test
+
+  auto-merge:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: ${{ needs.build-and-test.result == 'success' }}
+    steps:
+      - name: Merge pull request
+        uses: pascalgn/automerge-action@v0.16.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
