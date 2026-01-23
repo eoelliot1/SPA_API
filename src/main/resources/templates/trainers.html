@@ -1,13 +1,39 @@
 <!DOCTYPE html>
-    <html lang="en">
-        <head class="bg-black-05">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trainers</title>
+</head>
+<body>
 
-        <meta charset="UTF-8">
-        <title>waaaaaaaaaaaaa</title>
-        </head>
-    <body>
+<h2>Students</h2>
 
-    <div> The difference between the master and the novice is that the master has failed more times...  </div>
-    </body>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Graduation status</th>
+        <th>Course</th>
+        <th>Trainer</th>
+    </tr>
+    </thead>
 
+    <tbody>
+    <tr th:each="student : ${students}">
+        <td th:text="${student.id}"></td>
+        <td th:text="${student.studentName}"></td>
+        <td th:text="${student.hasGraduated}"></td>
+        <td th:text="${student.course}"></td>
+        <td th:text="${student.trainer}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Optional: empty state -->
+<p th:if="${#lists.isEmpty(students)}">
+    No students found.
+</p>
+
+</body>
 </html>
