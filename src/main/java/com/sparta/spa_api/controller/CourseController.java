@@ -12,7 +12,7 @@ import java.util.List;
 
 @Tag(name = "Course Details", description = "CRUD operations performed on course table")
 @RestController
-@RequestMapping("/courses")
+@RequestMapping("api/courses")
 public class CourseController {
 
     private final CourseService service;

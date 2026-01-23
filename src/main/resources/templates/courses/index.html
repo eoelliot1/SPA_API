@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Courses List')"></head>
+<body class="bg-light">
+
+<!-- Header -->
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-4">Courses List</h1>
+
+    <!-- Add Course Button -->
+    <div class="text-end mb-3">
+        <a th:href="@{/courses/new}" class="btn btn-success">Add Course</a>
+    </div>
+
+    <!-- Courses Table -->
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Course Name</th>
+            <th style="width: 220px;">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course : ${courses}">
+            <td th:text="${course.id}"></td>
+            <td th:text="${course.courseName}"></td>
+            <td>
+                <a th:href="@{/courses/{id}(id=${course.id})}" class="btn btn-info btn-sm">View</a>
+                <a th:href="@{/courses/{id}/edit(id=${course.id})}" class="btn btn-warning btn-sm">Edit</a>
+                <form th:action="@{/courses/{id}/delete(id=${course.id})}" method="post" style="display:inline">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+
+        <!-- Empty state -->
+        <tr th:if="${#lists.isEmpty(courses)}">
+            <td colspan="3" class="text-center text-muted">No courses found.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>
