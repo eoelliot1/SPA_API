@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/students")
+@RequestMapping("/api/students")
 public class StudentController {
 
     private final StudentService service;
@@ -55,5 +55,4 @@ public class StudentController {
     public ResponseEntity<Boolean> hasGraduated(@PathVariable Integer id){
         return ResponseEntity.ok(service.hasGraduated(id));
     }
-
 }

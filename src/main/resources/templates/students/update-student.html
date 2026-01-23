@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:insert="fragments/head :: head(' Update Student')"></div>
+<div class="card-body p-4">
+
+
+  <form th:action="@{/students/save-update/{id}(id=${updatedStudent.id})}"
+        th:object="${updatedStudent}"
+        method="post">
+
+
+    <input type="hidden" th:field="*{id}">
+
+    <div class="mb-3">
+      <label for="studentName" class="form-label fw-bold">Full Name</label>
+      <input type="text"
+             id="studentName"
+             class="form-control"
+             th:field="*{studentName}"
+             required>
+    </div>
+
+    <div class="mb-4">
+      <label for="courseId" class="form-label fw-bold">Select Course</label>
+      <select id="courseId" class="form-select" th:field="*{courseId}" required>
+        <option th:each="c : ${courses}"
+                th:value="${c.id}"
+                th:text="${c.courseName}">
+        </option>
+      </select>
+      <input type="checkbox" th:field="*{graduated}" class="form-check-input">
+    </div>
+
+    <hr>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+      <button type="submit" class="btn btn-primary px-5">Save Changes</button>
+      <a th:href="@{/students}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
