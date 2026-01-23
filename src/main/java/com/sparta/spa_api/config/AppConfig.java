@@ -31,7 +31,7 @@ public class AppConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
-                .formLogin(form -> form.defaultSuccessUrl("/todos/").permitAll())
+                .formLogin(form -> form.defaultSuccessUrl("/").permitAll())
                 .csrf(csrf -> csrf.disable());
         return http.build();
     }
@@ -60,7 +60,7 @@ public class AppConfig {
             );
 
             Spartan trainerUser = new Spartan(
-                    "trainer@spartaglobal.com",
+                    "4",
                     encoder.encode("trainerpass"),
                     "TRAINER"
             );

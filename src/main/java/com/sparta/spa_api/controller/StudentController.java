@@ -55,4 +55,5 @@ public class StudentController {
     public ResponseEntity<Boolean> hasGraduated(@PathVariable Integer id){
         return ResponseEntity.ok(service.hasGraduated(id));
     }
+
 }
