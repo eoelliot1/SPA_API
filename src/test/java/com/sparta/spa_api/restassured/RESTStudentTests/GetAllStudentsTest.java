@@ -1,20 +1,31 @@
 package com.sparta.spa_api.restassured.RESTStudentTests;
 
+import com.sparta.spa_api.restassured.BaseApiTest;
+import com.sparta.spa_api.restassured.utils.APIConfig;
 import io.restassured.RestAssured;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.*;
 
-public class GetAllStudentsTest {
+public class GetAllStudentsTest extends BaseApiTest {
 
     @Test
-    void getAllStudents_shouldReturn200() {
+    @Tag("happy")
+    @DisplayName("""
+        Given students exist in the system
+        When all students are requested
+        Then the API returns HTTP 200
+        And the response body is a non-empty collection
+        """)
+    void shouldReturnAllStudents() {
+
         RestAssured
                 .given()
-                .baseUri("http://localhost")
-                .port(8091)
+                .accept("application/json")
                 .when()
-                .get("/student")
+                .get(APIConfig.ALL_STUDENTS)
                 .then()
                 .statusCode(200)
                 .body("$", not(empty()))
