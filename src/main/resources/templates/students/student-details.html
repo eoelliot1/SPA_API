@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:insert="fragments/head :: head(' Student detials')"></div>
+
+<body class="bg-light">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0">Student Profile</h2>
+                </div>
+
+                <div class="card-body">
+                    <div class="mb-3 border-bottom pb-2">
+                        <label class="form-label text-muted small d-block">Student ID</label>
+                        <span class="h6" th:text="${student.id}"></span>
+                    </div>
+
+                    <div class="mb-3 border-bottom pb-2">
+                        <label class="form-label text-muted small d-block">Full Name</label>
+                        <span class="h5" th:text="${student.studentName}"></span>
+                    </div>
+
+                    <div class="mb-3 border-bottom pb-2">
+                        <label class="form-label text-muted small d-block">Course Enrolled</label>
+                        <span class="h6" th:text="${student.course != null ? student.course.courseName : 'None'}"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-muted small d-block">Status</label>
+                        <span th:if="${student.hasGraduated}" class="badge bg-success px-3">Graduated</span>
+                        <span th:if="${!student.hasGraduated}" class="badge bg-warning text-dark px-3">In Progress</span>
+                    </div>
+                </div>
+
+                <div class="card-footer bg-transparent border-top-0 pb-4 text-center">
+                    <a th:href="@{/students/update-student/{id}(id=${student.id})}" class="btn btn-primary me-2">
+                        Edit Student
+                    </a>
+
+                    <a href="/students" class="btn btn-secondary">
+                        Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

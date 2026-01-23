@@ -1,8 +1,10 @@
 package com.sparta.spa_api.entities;
 
 import jakarta.persistence.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Entity
+
 @Table(name = "student")
 public class Student {
 
