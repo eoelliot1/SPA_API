@@ -59,7 +59,7 @@ public class TrainerService {
         Trainers trainer = trainersRepository.findById(trainerId)
                 .orElseThrow(() -> new NoSuchElementException("Trainer not found"));
 
-        return trainer.getStudents()
+        return trainer.getCourse().getStudents()
                 .stream()
                 .map(studentMapper::toDTO)
                 .toList();
