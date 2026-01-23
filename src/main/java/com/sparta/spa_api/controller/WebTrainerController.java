@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
@@ -39,7 +40,18 @@ public class WebTrainerController {
     @GetMapping
     public String trainersHomePage(Model model){
         List<Student> students = courseService.getStudentsByCourseId(1);
+        List<CourseDTO> courses = courseService.getAllCourses();
         model.addAttribute("students", students);
+        model.addAttribute("courses", courses);
         return "trainers"; // look for resources/templates/trainers.html
     }
+
+    @GetMapping("/search")
+    public String longCourses(@RequestParam("query") long query, Model model) {
+        List<Student> students = courseService.getStudentsByCourseId(1);
+        model.addAttribute("students", students);
+        model.addAttribute("courses", courseService.getCoursesLongerThan(query));
+        return "trainers";
+    }
+
 }
