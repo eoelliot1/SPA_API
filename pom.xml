@@ -123,6 +123,12 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+        </dependency>
+
+
         <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
