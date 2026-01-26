@@ -21,14 +21,14 @@ body {
 /* ===============================
    Header
    =============================== */
-header {
+#top-banner{
     background-color: var(--bg-dark) !important;
 }
 
 header h1 {
     font-weight: 600;
     letter-spacing: 0.5px;
-    color: var(--text-light);
+    color: var(--accent-primary);
 }
 
 header .btn {
