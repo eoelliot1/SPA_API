@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign In</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #30343f;
+      /*background-image: url("@{/resources/static/sparta_background.png}");*/
+    }
+
+    .login-card {
+      background-color: #1b2021;
+      color: #fff;
+    }
+
+    .login-card .form-label {
+      color: #ccc;
+    }
+
+    .form-control {
+      background-color: #30343f;
+      border: 1px solid #444;
+      color: #fff;
+    }
+
+    .form-control::placeholder {
+      color: #aaa;
+    }
+
+    .form-control:focus {
+      background-color: #30343f;
+      color: #fff;
+      border-color: #ea638c;
+      box-shadow: 0 0 0 0.2rem rgba(234, 99, 140, 0.25);
+    }
+
+    .btn-primary {
+      background-color: #ea638c;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #89023e;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container vh-100 d-flex align-items-center justify-content-center">
+  <div class="card login-card shadow-lg border-0 rounded-4"
+       style="width: 100%; max-width: 400px;">
+    <div class="card-body p-4">
+      <h3 class="text-center mb-4 fw-bold">Welcome Back</h3>
+
+      <form th:action="@{/login}" method="post">
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input
+                  type="text"
+                  name="username"
+                  class="form-control form-control-lg"
+                  placeholder="you@example.com"
+                  required
+          />
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label">Password</label>
+          <input
+                  type="password"
+                  name="password"
+                  class="form-control form-control-lg"
+                  placeholder="••••••••"
+                  required
+          />
+        </div>
+
+        <button
+                type="submit"
+                class="btn btn-primary btn-lg w-100 rounded-pill"
+        >
+          Sign In
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
