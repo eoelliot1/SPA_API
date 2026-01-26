@@ -45,9 +45,10 @@ public class StudentService {
         return studentMapper.toDTO(student);
     }
 
+
     // Save a new student
     public StudentDTO saveStudent(StudentDTO studentDTO) {
-        Student student = new Student(); // using no-arg constructor
+        Student student = new Student();
         student.setStudentName(studentDTO.getStudentName());
         student.setHasGraduated(studentDTO.isGraduated());
 
@@ -81,6 +82,7 @@ public class StudentService {
         return studentMapper.toDTO(updated);
     }
 
+
     // Delete student
     public void deleteStudent(Integer id) {
         if (!studentRepository.existsById(id)) {
@@ -94,5 +96,16 @@ public class StudentService {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Student not found with ID " + id));
         return student.isHasGraduated();
+    }
+
+    // Get all students (Entity)
+    public List<Student> getAllStudentEntities() {
+        return studentRepository.findAll();
+    }
+
+    // Get student by ID (Entity)
+    public Student getStudentEntityById(Integer id) {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Student not found with ID " + id));
     }
 }

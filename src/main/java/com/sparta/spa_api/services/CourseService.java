@@ -70,4 +70,41 @@ public class CourseService {
         return course.getStudents();
     }
 
+    public List<CourseDTO> getCoursesLongerThan(long minDays) {
+        return courseRepository.findAll()
+                .stream()
+                .filter(course -> course.getDurationInDays() >= minDays)
+                .map(courseMapper::toDTO)
+                .toList();
+    }
+
+    public List<CourseDTO> getCoursesByDurationRange(long minDays, long maxDays) {
+        return courseRepository.findAll()
+                .stream()
+                .filter(course -> {
+                    long duration = course.getDurationInDays();
+                    return duration >= minDays && duration <= maxDays;
+                })
+                .map(courseMapper::toDTO)
+                .toList();
+    }
+
+    public List<CourseDTO> getActiveCoursesLongerThan(long minDays) {
+        return courseRepository.findAll()
+                .stream()
+                .filter(course -> course.getEndDate() == null)
+                .filter(course -> course.getDurationInDays() >= minDays)
+                .map(courseMapper::toDTO)
+                .toList();
+    }
+
+
+//    public List<CourseDTO> filterByCourseDuration(String title, String description){
+//        List<Course> filteredTodos = courseRepository.findCourseDurationByStartAndEndDate(title, description);
+//        return filteredTodos.stream()
+//                .map(mapper::toDto)
+//                .collect(Collectors.toList());
+//    }
+
+
 }

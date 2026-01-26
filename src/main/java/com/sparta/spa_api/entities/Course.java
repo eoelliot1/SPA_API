@@ -1,8 +1,11 @@
 package com.sparta.spa_api.entities;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "course")
@@ -15,6 +18,13 @@ public class Course {
 
     @Column(name = "course_name", length = 45, nullable = false)
     private String courseName;
+
+    @Column(nullable = false)
+    private LocalDate startDate;
+
+    private LocalDate endDate; // null = still enrolled
+
+    // getters & setters
 
     @OneToMany(
             mappedBy = "course",
@@ -47,6 +57,12 @@ public class Course {
         trainer.setCourse(this);
     }
 
+    public long getDurationInDays() {
+        LocalDate end = (endDate != null) ? endDate : LocalDate.now();
+        return ChronoUnit.DAYS.between(startDate, end);
+    }
+
+
     // Getters & setters
     public Integer getId() {
         return id;
@@ -66,5 +82,21 @@ public class Course {
 
     public List<Trainers> getTrainers() {
         return trainers;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 }
