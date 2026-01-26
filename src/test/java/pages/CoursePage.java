@@ -12,40 +12,46 @@ import java.time.Duration;
 import java.util.List;
 
 @DefaultUrl("http://localhost:8091/courses")
-public class CoursesPage extends PageObject {
+public class CoursePage extends PageObject {
 
-    // List of courses displayed on the page
+    // ------------------------------
+    // Web elements
+    // ------------------------------
+
     @FindBy(css = ".course-item")
     private List<WebElementFacade> courses;
 
-    // Search box
     @FindBy(id = "searchBox")
     private WebElementFacade searchBox;
 
     @FindBy(id = "searchButton")
     private WebElementFacade searchButton;
 
-    // Enrol / Assign buttons inside each course item
     @FindBy(css = ".btn-enrol")
     private List<WebElementFacade> enrolButtons;
-
-    @FindBy(css = ".btn-assign")
-    private List<WebElementFacade> assignButtons;
 
     @FindBy(css = ".btn-remove")
     private List<WebElementFacade> removeButtons;
 
-    // ===============================
+    // ------------------------------
     // Page actions
-    // ===============================
+    // ------------------------------
+
+    public void navigateToPage() {
+        getDriver().get(getDriver().getCurrentUrl());
+        System.out.println("Navigated to Courses page");
+    }
 
     public void searchCourse(String courseName) {
         searchBox.type(courseName);
         searchButton.click();
+        System.out.println("Searched for course: " + courseName);
     }
 
     public boolean isCourseDisplayed(String courseName) {
-        return courses.stream().anyMatch(c -> c.getText().contains(courseName));
+        boolean found = courses.stream().anyMatch(c -> c.getText().contains(courseName));
+        System.out.println(found ? "Course displayed: " + courseName : "Course not found: " + courseName);
+        return found;
     }
 
     public void enrolInCourse(String courseName) {
@@ -53,26 +59,18 @@ public class CoursesPage extends PageObject {
             if (course.getText().contains(courseName)) {
                 course.findBy(".btn-enrol").click();
                 waitForAlert();
+                System.out.println("Enrolled in course: " + courseName);
                 break;
             }
         }
     }
 
-    public void assignToCourse(String courseName) {
-        for (WebElementFacade course : courses) {
-            if (course.getText().contains(courseName)) {
-                course.findBy(".btn-assign").click();
-                waitForAlert();
-                break;
-            }
-        }
-    }
-
-    public void removeAssignment(String courseName) {
+    public void unenrolFromCourse(String courseName) {
         for (WebElementFacade course : courses) {
             if (course.getText().contains(courseName)) {
                 course.findBy(".btn-remove").click();
                 waitForAlert();
+                System.out.println("Unenrolled from course: " + courseName);
                 break;
             }
         }
@@ -92,4 +90,5 @@ public class CoursesPage extends PageObject {
         Alert alert = getDriver().switchTo().alert();
         alert.accept();
     }
+
 }

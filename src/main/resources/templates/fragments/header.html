@@ -5,9 +5,7 @@
   <h1 class="text-center">Sparta Academy</h1>
 
   <div class="d-flex align-items-center gap-3">
-    <a href="/todos/" class="btn btn-light">Todos</a>
-
-    <a sec:authorize="hasRole('TRAINER')" href="/spartans/" class="btn btn-light">Spartans</a>
+    <a sec:authorize="hasRole('TRAINER')" href="/students/" class="btn btn-light">Spartans</a>
 
     <!-- Logout form -->
     <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" style="display:inline;">

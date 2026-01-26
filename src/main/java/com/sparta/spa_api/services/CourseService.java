@@ -6,12 +6,8 @@ import com.sparta.spa_api.entities.Course;
 import com.sparta.spa_api.entities.Student;
 import com.sparta.spa_api.repository.CourseRepository;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -101,8 +97,6 @@ public class CourseService {
                 .map(courseMapper::toDTO)
                 .toList();
     }
-
-
 
 
 //    public List<CourseDTO> filterByCourseDuration(String title, String description){

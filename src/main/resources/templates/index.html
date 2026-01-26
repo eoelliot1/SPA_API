@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <div th:insert="fragments/head :: head('Sparta Academy')"></div>
 
@@ -7,16 +8,53 @@
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container mt-5">
-    <div class="card shadow-sm">
+
+    <!-- Shared content between trainers and student -->
+    <div class="card shadow-sm mb-4">
         <div class="card-header bg-primary text-white">
-            <h1 class="text-center">Welcome to Sparta To-Do</h1>
+            <h1 class="text-center">Welcome to Sparta Training Academy</h1>
         </div>
         <div class="card-body">
             <p class="text-center fs-4" th:text="'Today is ' + ${date}"></p>
         </div>
     </div>
+
+    <!-- Trainer content -->
+    <div sec:authorize="hasRole('TRAINER')">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white">
+                <h2>Trainer Dashboard</h2>
+            </div>
+            <div class="card-body">
+                <p>You can manage courses, trainers, and trainees.</p>
+
+                <a href="/courses/" class="btn btn-primary me-2">Manage Courses</a>
+                <a href="/students/" class="btn btn-primary me-2">View Spartans</a>
+                <a href="/trainers/" class="btn btn-primary">View Trainers</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student content -->
+    <div sec:authorize="hasRole('STUDENT')">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-success text-white">
+                <h2>Student Dashboard</h2>
+            </div>
+            <div class="card-body">
+                <p>Welcome to your student dashboard! You can view your profile and your course.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FALLBACK (should never show if roles are correct) -->
+    <div sec:authorize="!isAuthenticated()">
+        <div class="alert alert-warning text-center">
+            Please log in to access the platform.
+        </div>
+    </div>
 </div>
-<!-- Bootstrap JS Bundle -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <div th:replace="fragments/footer :: footer"></div>
 </body>

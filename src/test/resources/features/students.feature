@@ -23,6 +23,6 @@ Feature: Student Course Actions
 
   # Sad Path - Unenrol from a course not enrolled in
   Scenario: Student tries to unenrol from a course they are not enrolled in
-    Given I am logged in as a Student and I am not enrolled in the course "Angular Basics"
+    Given I am logged in as a Student and I am not yet enrolled in the course "Angular Basics"
     When I attempt to unenrol from "Angular Basics" on the "Courses" page
     Then I should see an error message indicating I am not enrolled in that course
