@@ -5,8 +5,6 @@
   <h1 class="text-center">Sparta Academy</h1>
 
   <div class="d-flex align-items-center gap-3">
-    <a href="/todos/" class="btn btn-light">Todos</a>
-
     <a sec:authorize="hasRole('TRAINER')" href="/students/" class="btn btn-light">Spartans</a>
 
     <!-- Logout form -->
