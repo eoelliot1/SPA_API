@@ -57,7 +57,7 @@
             <th>ID</th>
             <th>Trainer name</th>
             <th>Trainer Course id</th>
-            <th class="text-center">Edit</th>
+            <th>Edit</th>
         </tr>
         </thead>
 
@@ -67,7 +67,7 @@
             <td th:text="${trainers.trainerName}"></td>
             <td th:text="${trainers.courseId}"></td>
             <td>
-                <a th:href="@{/trainers/{id}/update-trainer(id=${trainers.id})}" class="btn btn-primary me-2">
+                <a th:href="@{/trainers/{id}/update-trainer(id=${trainers.id})}"  class="btn btn-primary me-2">
                     Edit Trainer
                 </a>
             </td>

@@ -1,13 +1,12 @@
+
 <header th:fragment="header"
-        class="bg-primary text-white p-3 d-flex justify-content-between align-items-center"
+        class="bg-primary text-white p-3 d-flex justify-content-between align-items-center" id="top-banner"
         xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
   <h1 class="text-center">Sparta Academy</h1>
 
   <div class="d-flex align-items-center gap-3">
-    <a href="/todos/" class="btn btn-light">Todos</a>
-
-    <a sec:authorize="hasRole('TRAINER')" href="/spartans/" class="btn btn-light">Spartans</a>
+    <a sec:authorize="hasRole('TRAINER')" href="/students/" class="btn btn-light">Spartans</a>
 
     <!-- Logout form -->
     <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" style="display:inline;">

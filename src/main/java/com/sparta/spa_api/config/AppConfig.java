@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -33,7 +32,10 @@ public class AppConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
-                .formLogin(form -> form.defaultSuccessUrl("/").permitAll())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/")
+                        .permitAll())
                 .csrf(csrf -> csrf.disable());
         return http.build();
     }
@@ -79,7 +81,7 @@ public class AppConfig {
 
             System.out.println("Seeded Spartans for login");
 
-            // ===== COURSES =====
+            // Courses details
             Course course1 = new Course("Software Testing");
             Course course2 = new Course("Data");
 
@@ -94,7 +96,7 @@ public class AppConfig {
             courseRepository.save(course1);
             courseRepository.save(course2);
 
-            // ===== STUDENTS =====
+            // Students' details
             Student student1 = new Student();
             student1.setStudentName("Alice Johnson");
             student1.setHasGraduated(false);
@@ -120,7 +122,7 @@ public class AppConfig {
             studentRepository.save(student3);
             studentRepository.save(student4);
 
-            // ===== TRAINERS =====
+            // Trainers' details
             Trainers trainer1 = new Trainers();
             trainer1.setTrainerName("John Trainer");
             trainer1.setCourse(course1);

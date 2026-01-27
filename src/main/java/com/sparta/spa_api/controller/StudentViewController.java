@@ -24,7 +24,7 @@ public class StudentViewController {
     }
 
     // Show all students
-    @GetMapping
+    @GetMapping("/")
     public String viewStudents(Model model) {
         List<Student> students = studentService.getAllStudentEntities();
         model.addAttribute("students", students);
