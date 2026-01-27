@@ -3,85 +3,111 @@ package steps;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.thucydides.core.annotations.Managed;
+import net.serenitybdd.annotations.Managed;
 import pages.CoursePage;
+import pages.LoginPage;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CourseStepdefs {
 
     @Managed
+    LoginPage loginPage;
+
+    @Managed
     CoursePage coursePage;
 
-    private List<String> courses = new ArrayList<>();
-    private String userRole = "";
-    private String currentPage = "";
-    private String message = "";
+    private String currentRole;
 
-    @Given("I am logged in as a Student and there are courses in the system")
-    public void iAmLoggedInAsAStudentAndThereAreCoursesInTheSystem() {
-        coursePage.navigateToPage();
-        System.out.println("Logged in as Student with courses in the system");
+    // ------------------------------
+    // REUSABLE LOGIN LOGIC
+    // ------------------------------
+    private void performLogin(String role) {
+        loginPage.open();
+        loginPage.enterEmail(role.toLowerCase() + "@sparta.com");
+        loginPage.enterPassword("password123");
+        loginPage.clickSignIn();
     }
 
-    @When("I search for a course named {string} on the {string} page")
-    public void iSearchForACourseNamedOnThePage(String courseName, String arg1) {
-        coursePage.navigateToPage();
-        coursePage.searchCourse(courseName);
+    // ------------------------------
+    // AUTH / SETUP
+    // ------------------------------
+    @Given("I am logged in as a {string} and there are courses in the system")
+    public void iAmLoggedInAsARoleAndThereAreCourses(String role) {
+        this.currentRole = role;
+        performLogin(role);
     }
 
-    @Then("I should see the course {string} displayed in the search results")
-    public void iShouldSeeTheCourseDisplayedInTheSearchResults(String courseName) {
-        boolean displayed = coursePage.isCourseDisplayed(courseName);
-        if (!displayed) {
-            throw new AssertionError("Course not found in search results: " + courseName);
+    @Given("I am logged in as a {string} and I am not enrolled or assigned to the course {string}")
+    public void iAmNotEnrolledOrAssigned(String role, String courseName) {
+        this.currentRole = role;
+        performLogin(role);
+    }
+
+    @Given("I am logged in as a {string} and I am enrolled or assigned to the course {string}")
+    public void iAmAlreadyEnrolledOrAssigned(String role, String courseName) {
+        this.currentRole = role;
+        performLogin(role);
+        coursePage.addUserToCourse(courseName);
+        coursePage.acceptAlert();
+    }
+
+    // ------------------------------
+    // NAVIGATION / READ
+    // ------------------------------
+    @When("I navigate to the {string} page")
+    public void iNavigateToThePage(String pageName) {
+        coursePage.openCoursesPage();
+    }
+
+    @When("I search for a course named {string}")
+    public void iSearchForACourseNamed(String courseName) {
+        coursePage.searchForCourse(courseName);
+    }
+
+    @Then("I should see course {string} listed")
+    @Then("I should see {string} displayed in the search results")
+    public void iShouldSeeCourseDisplayed(String courseName) {
+        assertTrue(coursePage.isCourseDisplayed(courseName),
+                "Expected course to be displayed: " + courseName);
+    }
+
+    @Then("I should see that no courses match the search")
+    @Then("I should see no courses listed")
+    public void iShouldSeeNoCoursesMatchSearch() {
+        // If your app shows an alert when no courses are found:
+        try {
+            System.out.println("Alert text: " + coursePage.getAlertText());
+            coursePage.acceptAlert();
+        } catch (Exception e) {
+            // If no alert, check if the list is empty instead
+            assertTrue(coursePage.getCourses().isEmpty(), "Expected no courses to be listed");
         }
     }
 
-    @Then("I should see a message indicating that no courses match the search")
-    public void iShouldSeeAMessageIndicatingThatNoCoursesMatchTheSearch() {
-        String alert = coursePage.getAlertText();
-        System.out.println("Message shown: " + alert);
+    // ------------------------------
+    // CREATE / ACTIONS
+    // ------------------------------
+    @When("I enrol or assign myself to the course {string}")
+    public void iEnrolOrAssignMyself(String courseName) {
+        coursePage.addUserToCourse(courseName);
+    }
+
+    @Then("I should see a confirmation message")
+    public void iShouldSeeConfirmationMessage() {
         coursePage.acceptAlert();
     }
 
-    @Given("I am logged in as a Student and I am enrolled in the course {string}")
-    public void iAmLoggedInAsAStudentAndIAmEnrolledInTheCourse(String courseName) {
-        coursePage.navigateToPage();
-        coursePage.enrolInCourse(courseName); // Enrol first
-        System.out.println("Logged in as Student and enrolled in course: " + courseName);
+    // ------------------------------
+    // DELETE / REMOVE
+    // ------------------------------
+    @When("I remove myself from the course {string}")
+    public void iRemoveMyselfFromCourse(String courseName) {
+        coursePage.removeUserFromCourse(courseName);
     }
 
-    @When("I choose to unenrol from {string} on the {string} page")
-    public void iChooseToUnenrolFromOnThePage(String courseName, String arg1) {
-        coursePage.navigateToPage();
-        coursePage.unenrolFromCourse(courseName);
-    }
-
-    @Then("I should see a confirmation that I am no longer enrolled in the course")
-    public void iShouldSeeAConfirmationThatIAmNoLongerEnrolledInTheCourse() {
-        String alert = coursePage.getAlertText();
-        System.out.println("Confirmation message: " + alert);
-        coursePage.acceptAlert();
-    }
-
-    @Given("I am logged in as a Student and I am not enrolled in the course {string}")
-    public void iAmLoggedInAsAStudentAndIAmNotEnrolledInTheCourse(String courseName) {
-        coursePage.navigateToPage();
-        System.out.println("Logged in as Student and NOT enrolled in course: " + courseName);
-    }
-
-    @When("I attempt to unenrol from {string} on the {string} page")
-    public void iAttemptToUnenrolFromOnThePage(String courseName, String arg1) {
-        coursePage.navigateToPage();
-        coursePage.unenrolFromCourse(courseName);
-    }
-
-    @Then("I should see an error message indicating I am not enrolled in that course")
-    public void iShouldSeeAnErrorMessageIndicatingIAmNotEnrolledInThatCourse() {
-        String alert = coursePage.getAlertText();
-        System.out.println("Error message: " + alert);
+    @Then("I should see an error message indicating I am not enrolled or assigned to that course")
+    public void iShouldSeeNotEnrolledError() {
         coursePage.acceptAlert();
     }
 }

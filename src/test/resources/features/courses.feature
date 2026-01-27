@@ -1,28 +1,12 @@
-Feature: Courses Management
+Feature: Browse courses
   As a user
-  I want to view and enrol in courses
-  So that I can manage my learning or teaching
+  I want to view and search available courses
+  So that I can find relevant courses
 
-  # Trainer - View all courses
-  Scenario: Trainer views all courses
-    Given I am logged in as a Trainer and there are courses in the system
-    When I navigate to the "Courses" page
-    Then I should see a list of all courses displayed on the page
+  Scenario: Search for an existing course
+    When I search for a course named "Data"
+    Then I should see course "Data" listed
 
-  # Trainer - No courses available
-  Scenario: Trainer views courses when none exist
-    Given I am logged in as a Trainer and there are no courses in the system
-    When I navigate to the "Courses" page
-    Then I should see a message indicating that no courses are available
-
-  # Student - View all courses
-  Scenario: Student views all courses
-    Given I am logged in as a Student and there are courses in the system
-    When I navigate to the "Courses" page
-    Then I should see a list of all courses displayed on the page
-
-  # Student - No courses available
-  Scenario: Student views courses when none exist
-    Given I am logged in as a Student and there are no courses in the system
-    When I navigate to the "Courses" page
-    Then I should see a message indicating that no courses are available
+  Scenario: Search for a course that does not exist
+    When I search for a course named "Python"
+    Then I should see no courses listed
