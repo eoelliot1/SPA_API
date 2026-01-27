@@ -96,4 +96,10 @@ public class TrainerService {
         }
         trainersRepository.deleteById(id);
     }
+
+    public List<TrainersDTO> getAllTrainers() {
+        return trainersRepository.findAll().stream()
+                .map(trainersMapper::toDTO)
+                .toList();
+    }
 }

@@ -11,7 +11,7 @@
     <form th:action="@{/courses/{id}/update(id=${course.id})}" th:object="${course}" method="post">
         <div class="mb-3">
             <label class="form-label">Course Name</label>
-            <input type="text" th:field="*{courseName}" class="form-control" placeholder="Enter course name" required>
+            <input type="text" th:field="*{courseName}" class="form-control" D required>
             <div class="text-danger" th:errors="*{courseName}"></div>
         </div>
 
