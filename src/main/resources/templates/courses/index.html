@@ -10,6 +10,23 @@
 
     <h1 class="text-center mb-4">Courses List</h1>
 
+    <form th:action="@{/courses/search}" method="get" class="row mb-4">
+        <div class="col-md-8">
+            <input
+                    type="text"
+                    name="keyword"
+                    th:value="${keyword}"
+                    class="form-control"
+                    placeholder="Search courses by name"
+            />
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary w-30">
+                Search
+            </button>
+        </div>
+    </form>
+
     <!-- Add Course Button -->
     <div class="text-end mb-3">
         <a th:href="@{/courses/new}" class="btn btn-success">Add Course</a>

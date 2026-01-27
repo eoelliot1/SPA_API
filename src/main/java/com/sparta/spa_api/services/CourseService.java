@@ -97,14 +97,16 @@ public class CourseService {
                 .map(courseMapper::toDTO)
                 .toList();
     }
+    public List<CourseDTO> searchCourses(String keyword) {
+        return courseRepository
+                .findByCourseNameContainingIgnoreCase(keyword)
+                .stream()
+                .map(courseMapper::toDTO)
+                .toList();
+    }
 
 
-//    public List<CourseDTO> filterByCourseDuration(String title, String description){
-//        List<Course> filteredTodos = courseRepository.findCourseDurationByStartAndEndDate(title, description);
-//        return filteredTodos.stream()
-//                .map(mapper::toDto)
-//                .collect(Collectors.toList());
-//    }
+
 
 
 }
