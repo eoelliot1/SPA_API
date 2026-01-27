@@ -73,6 +73,16 @@ public class CourseWebController {
         courseService.deleteCourse(id);
         return "redirect:/courses/";
     }
+
+    @GetMapping("/search")
+    public String searchCourses(
+            @RequestParam("keyword") String keyword,
+            Model model
+    ) {
+        model.addAttribute("courses", courseService.searchCourses(keyword));
+        model.addAttribute("keyword", keyword);
+        return "courses/index";
+    }
 }
 
  
