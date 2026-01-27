@@ -162,6 +162,11 @@ body.login-page {
     box-shadow: 0 0 0 0.2rem rgba(234, 99, 140, 0.25);
 }
 
+.btn-primary .btn-success .btn-danger .btn-info {
+    border-radius: 40px 40px 40px 40px;
+
+}
+
 .login-card .btn-primary {
     background-color: #ea638c;
     border: none;

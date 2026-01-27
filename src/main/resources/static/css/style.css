@@ -66,6 +66,8 @@ h1, h2, h3, h4 {
 .btn-primary {
     background-color: var(--accent-primary);
     border-color: var(--accent-primary);
+    border-radius: 40px 40px 40px 40px;
+
 }
 
 .btn-primary:hover {
@@ -76,6 +78,8 @@ h1, h2, h3, h4 {
 .btn-success {
     background-color: var(--bg-dark);
     border-color: var(--bg-dark);
+    border-radius: 40px 40px 40px 40px;
+
 }
 
 .btn-success:hover {
