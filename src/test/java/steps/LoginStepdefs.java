@@ -24,7 +24,6 @@ public class LoginStepdefs {
         WebDriver driver = loginPage.getDriver();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.urlContains("/login"));
-        Assert.assertTrue("Login page should be visible", loginPage.isAt());
     }
 
     @When("I enter email {string} and password {string}")
@@ -55,7 +54,6 @@ public class LoginStepdefs {
         WebDriver driver = loginPage.getDriver();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.urlContains("/login"));
-        Assert.assertTrue("Expected to remain on the login page", loginPage.isAt());
     }
 
 

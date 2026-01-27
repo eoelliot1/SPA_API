@@ -19,8 +19,8 @@ Feature: User Authentication
     Then I should be redirected to the trainee dashboard
 
     Examples:
-      | email              | password |
-      | 4                  | trainerpass |
+      | email                         | password |
+      | student@spartaglobal.com      | studentpass |
 
 
   Scenario Outline: Unsuccessful login

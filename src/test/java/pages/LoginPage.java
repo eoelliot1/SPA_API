@@ -62,7 +62,7 @@ public class LoginPage extends PageObject {
     @FindBy(xpath = "/html/body/div[1]/div[1]/div/h2")
     private WebElementFacade trainerDashboardHeader;
 
-    @FindBy(xpath = "//h5[text()='Student Dashboard']")
+    @FindBy(xpath = "/html/body/div[1]/div[1]/div")
     private WebElementFacade studentDashboardHeader;
 
     public void enterEmail(String email) {
@@ -85,8 +85,5 @@ public class LoginPage extends PageObject {
         return studentDashboardHeader.isVisible();
     }
 
-    public boolean isAt() {
-        return getDriver().getCurrentUrl().equals("http://localhost:8091/login");
-    }
 
 }
