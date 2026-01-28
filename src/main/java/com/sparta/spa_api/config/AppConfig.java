@@ -75,8 +75,14 @@ public class AppConfig {
                     "STUDENT"
             );
 
+            Spartan cathy = new Spartan(
+                    "cathy@spartaglobal.com",
+                    encoder.encode("cathypass"),
+                    "TRAINER"
+            );
+
             spartanRepo.saveAll(
-                    List.of(admin, trainerUser, studentUser)
+                    List.of(admin, trainerUser, studentUser, cathy)
             );
 
             System.out.println("Seeded Spartans for login");

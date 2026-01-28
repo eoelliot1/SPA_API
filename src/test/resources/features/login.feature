@@ -9,14 +9,14 @@ Feature: User Authentication
     Then I should be redirected to the trainer dashboard
 
     Examples:
-      | email              | password |
-      | 4                  | trainerpass |
+      | email                     | password |
+      | cathy@spartaglobal.com    | cathypass |
 
 
   Scenario Outline: Successful login with valid credentials as a trainee
     Given I am on the login page
     When I enter email "<email>" and password "<password>"
-    Then I should be redirected to the trainee dashboard
+    Then I should be redirected to the student dashboard
 
     Examples:
       | email                         | password |
@@ -31,4 +31,4 @@ Feature: User Authentication
 
     Examples:
       | wrong_email              | wrong_password |
-      | 2                        | wrongpass |
+      | wrongemail@gmail.com     |  wrongpass |

@@ -2,141 +2,92 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Sparta Academy</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-          rel="stylesheet">
-</head>
+<div th:replace="fragments/head :: head('Dashboard')"></div>
 
 <body class="bg-light">
-
-<!-- TOP HEADER -->
-<header class="bg-primary text-white shadow-sm">
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-primary shadow-sm">
     <div class="container-fluid">
-        <div class="d-flex align-items-center py-3">
+        <a class="navbar-brand d-flex align-items-center"
+           th:href="@{/}">
+            <img th:src="@{/images/sparta-background.png}"
+                 alt="Sparta Academy"
+                 class="navbar-logo">
+        </a>
 
-            <div class="me-3">
-                <!-- Sidebar toggle for trainer -->
-                <button class="btn btn-outline-light me-2"
-                        data-bs-toggle="offcanvas"
-                        data-bs-target="#trainerSidebar"
-                        sec:authorize="hasRole('TRAINER')">
-                    ☰
-                </button>
+        <div class="d-none d-lg-flex ms-auto">
+            <!-- Trainer buttons -->
+            <a class="btn btn-outline-light me-2" href="/courses/" sec:authorize="hasRole('TRAINER')">Manage Courses</a>
+            <a class="btn btn-outline-light me-2" href="/students/" sec:authorize="hasRole('TRAINER')">View Spartans</a>
+            <a class="btn btn-outline-light me-2" href="/trainers/" sec:authorize="hasRole('TRAINER')">View Trainers</a>
 
-                <!-- Sidebar toggle for student -->
-                <button class="btn btn-outline-light"
-                        data-bs-toggle="offcanvas"
-                        data-bs-target="#studentSidebar"
-                        sec:authorize="hasRole('STUDENT')">
-                    ☰
-                </button>
-            </div>
+            <!-- Student buttons -->
+            <a class="btn btn-outline-light me-2" href="/profile/" sec:authorize="hasRole('STUDENT')">My Profile</a>
+            <a class="btn btn-outline-light" href="/courses/my" sec:authorize="hasRole('STUDENT')">My Course</a>
+        </div>
 
-            <h1 class="h4 mb-0 flex-grow-1 text-center">
-                Sparta Training Academy
-            </h1>
+        <!-- Hamburger -->
+        <button class="btn btn-outline-light d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sideMenuRight">
+            ☰
+        </button>
+    </div>
+</nav>
 
-            <!-- Dashboard link changes based on role -->
-            <div>
-                <a class="btn btn-light"
-                   th:href="@{/trainer/dashboard}"
-                   sec:authorize="hasRole('TRAINER')">
-                    Dashboard
-                </a>
-                <a class="btn btn-light"
-                   th:href="@{/student/dashboard}"
-                   sec:authorize="hasRole('STUDENT')">
-                    Dashboard
-                </a>
-            </div>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="sideMenuRight">
+    <div class="offcanvas-header bg-primary text-white">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <!-- Trainer buttons -->
+        <div sec:authorize="hasRole('TRAINER')" class="mb-2">
+            <a class="btn btn-primary w-100 mb-2" href="/courses/">Manage Courses</a>
+            <a class="btn btn-primary w-100 mb-2" href="/students/">View Spartans</a>
+            <a class="btn btn-primary w-100 mb-2" href="/trainers/">View Trainers</a>
+        </div>
 
+        <!-- Student buttons -->
+        <div sec:authorize="hasRole('STUDENT')">
+            <a class="btn btn-success w-100 mb-2" href="/profile/">My Profile</a>
+            <a class="btn btn-success w-100" href="/courses/my">My Course</a>
         </div>
     </div>
-</header>
+</div>
 
 <div class="container mt-4">
-
-    <!-- Welcome Card -->
+    <!-- Welcome card -->
     <div class="card shadow-sm mb-4">
         <div class="card-body text-center">
-            <h2>Welcome to the Dashboard!!</h2>
+
+            <h2 id="trainer-dashboard"
+                sec:authorize="hasRole('TRAINER')">
+                Welcome to the Trainer Dashboard
+            </h2>
+
+            <h2 id="student-dashboard"
+                sec:authorize="hasRole('STUDENT')">
+                Welcome to the Student Dashboard
+            </h2>
+
             <p class="fs-4" th:text="'Today is ' + ${date}"></p>
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- Main content card -->
     <div class="card shadow-sm">
         <div class="card-body text-center">
             <p>Select an option from the menu to get started.</p>
         </div>
     </div>
 
-    <!-- Fallback if not logged in -->
+    <!-- Fallback -->
     <div sec:authorize="!isAuthenticated()" class="mt-4">
         <div class="alert alert-warning text-center">
             Please log in to access the platform.
         </div>
     </div>
-
-</div>
-
-<!-- TRAINER SIDEBAR -->
-<div class="offcanvas offcanvas-start text-bg-dark"
-     tabindex="-1"
-     id="trainerSidebar"
-     sec:authorize="hasRole('TRAINER')">
-
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Trainer Dashboard</h5>
-        <button type="button" class="btn-close btn-close-white"
-                data-bs-dismiss="offcanvas"></button>
-    </div>
-
-    <div class="offcanvas-body p-0">
-        <ul class="nav flex-column nav-pills">
-            <li class="nav-item">
-                <a class="nav-link text-white" href="/courses/">Manage Courses</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="/students/">View Spartans</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="/trainers/">View Trainers</a>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<!-- STUDENT SIDEBAR -->
-<div class="offcanvas offcanvas-start text-bg-success"
-     tabindex="-1"
-     id="studentSidebar"
-     sec:authorize="hasRole('STUDENT')">
-
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Student Dashboard</h5>
-        <button type="button" class="btn-close btn-close-white"
-                data-bs-dismiss="offcanvas"></button>
-    </div>
-
-    <div class="offcanvas-body p-0">
-        <ul class="nav flex-column nav-pills">
-            <li class="nav-item">
-                <a class="nav-link text-white" href="/profile/">My Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="/courses/my">My Course</a>
-            </li>
-        </ul>
-    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
