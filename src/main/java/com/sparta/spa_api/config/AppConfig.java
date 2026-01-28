@@ -96,32 +96,6 @@ public class AppConfig {
             courseRepository.save(course1);
             courseRepository.save(course2);
 
-            // Students' details
-            Student student1 = new Student();
-            student1.setStudentName("Alice Johnson");
-            student1.setHasGraduated(false);
-            student1.setCourse(course1);
-
-            Student student2 = new Student();
-            student2.setStudentName("Bob Smith");
-            student2.setHasGraduated(true);
-            student2.setCourse(course1);
-
-            Student student3 = new Student();
-            student3.setStudentName("Charlie Brown");
-            student3.setHasGraduated(false);
-            student3.setCourse(course2);
-
-            Student student4 = new Student();
-            student4.setStudentName("Daisy Miller");
-            student4.setHasGraduated(true);
-            student4.setCourse(course2);
-
-            studentRepository.save(student1);
-            studentRepository.save(student2);
-            studentRepository.save(student3);
-            studentRepository.save(student4);
-
             // Trainers' details
             Trainers trainer1 = new Trainers();
             trainer1.setTrainerName("John Trainer");
@@ -143,6 +117,39 @@ public class AppConfig {
             trainersRepository.save(trainer2);
             trainersRepository.save(trainer3);
             trainersRepository.save(trainer4);
+
+            // Students' details
+            Student student1 = new Student();
+            student1.setStudentName("Alice Johnson");
+            student1.setHasGraduated(false);
+            student1.setCourse(course1);
+            //student1.setTrainer(trainersRepository.findById(1).get());
+
+            Student student2 = new Student();
+            student2.setStudentName("Bob Smith");
+            student2.setHasGraduated(true);
+            student2.setCourse(course1);
+            //student2.setTrainer(trainersRepository.findById(1).get());
+
+
+            Student student3 = new Student();
+            student3.setStudentName("Charlie Brown");
+            student3.setHasGraduated(false);
+            student3.setCourse(course2);
+            //student1.setTrainer(trainersRepository.findById(3).get());
+
+
+            Student student4 = new Student();
+            student4.setStudentName("Daisy Miller");
+            student4.setHasGraduated(true);
+            student4.setCourse(course2);
+            //student1.setTrainer(trainersRepository.findById(3).get());
+
+
+            studentRepository.save(student1);
+            studentRepository.save(student2);
+            studentRepository.save(student3);
+            studentRepository.save(student4);
 
             System.out.println("Seed data added");
         };

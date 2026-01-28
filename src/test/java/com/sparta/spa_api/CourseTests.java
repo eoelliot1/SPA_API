@@ -2,8 +2,10 @@ package com.sparta.spa_api;
 
 import com.sparta.spa_api.dtos.CourseDTO;
 import com.sparta.spa_api.dtos.CourseMapper;
+import com.sparta.spa_api.dtos.TrainersMapper;
 import com.sparta.spa_api.entities.Course;
 import com.sparta.spa_api.entities.Student;
+import com.sparta.spa_api.entities.Trainers;
 import com.sparta.spa_api.repository.CourseRepository;
 import com.sparta.spa_api.services.CourseService;
 import org.junit.jupiter.api.Assertions;
@@ -16,9 +18,10 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public class CourseTests {
+    private final TrainersMapper mockTrainersMapper = Mockito.mock(TrainersMapper.class);
     private final CourseRepository mockRepository = Mockito.mock(CourseRepository.class);
     private final CourseMapper mockMapper = Mockito.mock(CourseMapper.class);
-    private final CourseService sut = new CourseService(mockRepository, mockMapper);
+    private final CourseService sut = new CourseService(mockRepository, mockMapper, mockTrainersMapper);
 
 
     @Test
@@ -30,7 +33,7 @@ public class CourseTests {
     @Test
     @DisplayName("Constructor throws exception if null arguments")
     public void constructorNullArgsTest() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new CourseService(null, null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new CourseService(null, null, null));
     }
 
     @Test
