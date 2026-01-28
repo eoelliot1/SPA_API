@@ -1,12 +1,14 @@
 package pages;
 
+import lombok.Getter;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.pages.PageObject;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.Alert;
 
 import java.time.Duration;
 import java.util.List;
@@ -14,10 +16,7 @@ import java.util.List;
 @DefaultUrl("http://localhost:8091/courses")
 public class CoursePage extends PageObject {
 
-    // ------------------------------
-    // Web elements
-    // ------------------------------
-
+    @Getter
     @FindBy(css = ".course-item")
     private List<WebElementFacade> courses;
 
@@ -27,68 +26,79 @@ public class CoursePage extends PageObject {
     @FindBy(id = "searchButton")
     private WebElementFacade searchButton;
 
-    @FindBy(css = ".btn-enrol")
-    private List<WebElementFacade> enrolButtons;
-
-    @FindBy(css = ".btn-remove")
-    private List<WebElementFacade> removeButtons;
-
     // ------------------------------
-    // Page actions
+    // NAVIGATION
     // ------------------------------
-
-    public void navigateToPage() {
-        getDriver().get(getDriver().getCurrentUrl());
-        System.out.println("Navigated to Courses page");
+    public void openCoursesPage() {
+        open();
+    }
+    public List<WebElementFacade> getCourses() {
+        return courses;
     }
 
-    public void searchCourse(String courseName) {
+
+
+    // ------------------------------
+    // READ
+    // ------------------------------
+    public void searchForCourse(String courseName) {
+        searchBox.clear();
         searchBox.type(courseName);
         searchButton.click();
-        System.out.println("Searched for course: " + courseName);
     }
 
     public boolean isCourseDisplayed(String courseName) {
-        boolean found = courses.stream().anyMatch(c -> c.getText().contains(courseName));
-        System.out.println(found ? "Course displayed: " + courseName : "Course not found: " + courseName);
-        return found;
+        return courses.stream()
+                .anyMatch(course -> course.getText().contains(courseName));
     }
 
-    public void enrolInCourse(String courseName) {
-        for (WebElementFacade course : courses) {
-            if (course.getText().contains(courseName)) {
-                course.findBy(".btn-enrol").click();
-                waitForAlert();
-                System.out.println("Enrolled in course: " + courseName);
-                break;
-            }
-        }
+    // ------------------------------
+    // CREATE (Enrol / Assign)
+    // ------------------------------
+    public void addUserToCourse(String courseName) {
+        WebElementFacade course = findCourse(courseName);
+        course.find(By.cssSelector(".add-btn")).click();
+        waitForAlert();
     }
 
-    public void unenrolFromCourse(String courseName) {
-        for (WebElementFacade course : courses) {
-            if (course.getText().contains(courseName)) {
-                course.findBy(".btn-remove").click();
-                waitForAlert();
-                System.out.println("Unenrolled from course: " + courseName);
-                break;
-            }
-        }
+    // ------------------------------
+    // DELETE (Unenrol / Unassign)
+    // ------------------------------
+    public void removeUserFromCourse(String courseName) {
+        WebElementFacade course = findCourse(courseName);
+        course.find(By.cssSelector(".remove-btn")).click();
+        waitForAlert();
     }
 
-    public void waitForAlert() {
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.alertIsPresent());
-    }
-
+    // ------------------------------
+    // ALERT HANDLING
+    // ------------------------------
     public String getAlertText() {
+        waitForAlert();
         Alert alert = getDriver().switchTo().alert();
         return alert.getText();
     }
 
     public void acceptAlert() {
-        Alert alert = getDriver().switchTo().alert();
-        alert.accept();
+        getDriver().switchTo().alert().accept();
     }
+
+    protected void waitForAlert() {
+        new WebDriverWait(getDriver(), Duration.ofSeconds(10))
+                .until(ExpectedConditions.alertIsPresent());
+    }
+
+    // ------------------------------
+    // HELPERS
+    // ------------------------------
+    private WebElementFacade findCourse(String courseName) {
+        return courses.stream()
+                .filter(course -> course.getText().contains(courseName))
+                .findFirst()
+                .orElseThrow(() ->
+                        new AssertionError("Course not found: " + courseName)
+                );
+    }
+
 
 }
