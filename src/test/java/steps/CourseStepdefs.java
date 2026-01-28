@@ -1,11 +1,16 @@
 package steps;
 
+import io.cucumber.java.PendingException;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.annotations.Managed;
+import org.junit.Assert;
 import pages.CoursePage;
 import pages.LoginPage;
+
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,24 +24,19 @@ public class CourseStepdefs {
 
     private String currentRole;
 
-    // ------------------------------
-    // REUSABLE LOGIN LOGIC
-    // ------------------------------
-    private void performLogin(String role) {
+    @Given("I am logged in as a trainee")
+    public void iAmLoggedInAsATrainee() {
         loginPage.open();
-        loginPage.enterEmail(role.toLowerCase() + "@sparta.com");
-        loginPage.enterPassword("password123");
-        loginPage.clickSignIn();
+        loginPage.loginWith("4", "trainerpass");
+        Assert.assertTrue(loginPage.trainerDashboardIsVisible());
     }
 
-    // ------------------------------
-    // AUTH / SETUP
-    // ------------------------------
-    @Given("I am logged in as a {string} and there are courses in the system")
-    public void iAmLoggedInAsARoleAndThereAreCourses(String role) {
-        this.currentRole = role;
-        performLogin(role);
+    @And("I am on the courses page")
+    public void iAmOnTheCoursesPage() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
+
 
     @Given("I am logged in as a {string} and I am not enrolled or assigned to the course {string}")
     public void iAmNotEnrolledOrAssigned(String role, String courseName) {
@@ -110,4 +110,6 @@ public class CourseStepdefs {
     public void iShouldSeeNotEnrolledError() {
         coursePage.acceptAlert();
     }
+
+
 }

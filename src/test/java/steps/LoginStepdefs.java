@@ -1,60 +1,38 @@
 package steps;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import net.serenitybdd.annotations.Managed;
-import pages.LoginPage;
+
+import io.cucumber.java.en.*;
+import net.serenitybdd.annotations.Steps;
 import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
+import pages.LoginPage;
 
 public class LoginStepdefs {
 
-    @Managed
+    @Steps
     LoginPage loginPage;
 
-    private final int TIMEOUT = 10; // Timeout for explicit waits
-
     @Given("I am on the login page")
-    public void iAmOnTheLoginPage() {
-        loginPage.open();
-        WebDriver driver = loginPage.getDriver();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
-        wait.until(ExpectedConditions.urlContains("/login"));
+    public void i_am_on_the_login_page() {
+        loginPage.openLoginPage();
     }
 
     @When("I enter email {string} and password {string}")
-    public void iEnterEmailAndPassword(String email, String password) {
-        loginPage.enterEmail(email);
-        loginPage.enterPassword(password);
-        loginPage.clickSignIn();
+    public void i_enter_email_and_password(String email, String password) {
+        loginPage.loginWith(email, password);
     }
 
     @Then("I should be redirected to the trainer dashboard")
-    public void iShouldBeRedirectedToTrainerDashboard() {
-        WebDriver driver = loginPage.getDriver();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
-        wait.until(ExpectedConditions.visibilityOf(loginPage.getTrainerDashboardHeader()));
-        Assert.assertTrue("Trainer dashboard should be visible", loginPage.isTrainerDashboardVisible());
+    public void i_should_be_redirected_to_the_trainer_dashboard() {
+        Assert.assertTrue(loginPage.trainerDashboardIsVisible());
     }
 
     @Then("I should be redirected to the trainee dashboard")
-    public void iShouldBeRedirectedToTraineeDashboard() {
-        WebDriver driver = loginPage.getDriver();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
-        wait.until(ExpectedConditions.visibilityOf(loginPage.getStudentDashboardHeader()));
-        Assert.assertTrue("Student dashboard should be visible", loginPage.isStudentDashboardVisible());
+    public void i_should_be_redirected_to_the_trainee_dashboard() {
+        Assert.assertTrue(loginPage.studentDashboardIsVisible());
     }
 
     @Then("I should remain on the login page")
-    public void iShouldRemainOnLoginPage() {
-        WebDriver driver = loginPage.getDriver();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
-        wait.until(ExpectedConditions.urlContains("/login"));
+    public void i_should_remain_on_the_login_page() {
+        Assert.assertTrue(loginPage.isStillOnLoginPage());
     }
-
-
 }

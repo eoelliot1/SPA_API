@@ -1,56 +1,15 @@
 package pages;
 
-import net.serenitybdd.core.pages.WebElementFacade;
 import net.serenitybdd.annotations.DefaultUrl;
+import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.pages.PageObject;
 import org.openqa.selenium.support.FindBy;
 
 @DefaultUrl("http://localhost:8091/login")
 public class LoginPage extends PageObject {
 
-    // Login form elements
     @FindBy(name = "username")
     private WebElementFacade emailField;
-
-    public WebElementFacade getEmailField() {
-        return emailField;
-    }
-
-    public void setEmailField(WebElementFacade emailField) {
-        this.emailField = emailField;
-    }
-
-    public WebElementFacade getPasswordField() {
-        return passwordField;
-    }
-
-    public void setPasswordField(WebElementFacade passwordField) {
-        this.passwordField = passwordField;
-    }
-
-    public WebElementFacade getSignInButton() {
-        return signInButton;
-    }
-
-    public void setSignInButton(WebElementFacade signInButton) {
-        this.signInButton = signInButton;
-    }
-
-    public WebElementFacade getTrainerDashboardHeader() {
-        return trainerDashboardHeader;
-    }
-
-    public void setTrainerDashboardHeader(WebElementFacade trainerDashboardHeader) {
-        this.trainerDashboardHeader = trainerDashboardHeader;
-    }
-
-    public WebElementFacade getStudentDashboardHeader() {
-        return studentDashboardHeader;
-    }
-
-    public void setStudentDashboardHeader(WebElementFacade studentDashboardHeader) {
-        this.studentDashboardHeader = studentDashboardHeader;
-    }
 
     @FindBy(name = "password")
     private WebElementFacade passwordField;
@@ -58,32 +17,31 @@ public class LoginPage extends PageObject {
     @FindBy(css = "button[type='submit']")
     private WebElementFacade signInButton;
 
-    // Trainer dashboard element
-    @FindBy(xpath = "/html/body/div[1]/div[1]/div/h2")
+    @FindBy(xpath = "/html/body/div[1]/div[1]/div")
     private WebElementFacade trainerDashboardHeader;
 
-    @FindBy(xpath = "/html/body/div[1]/div[1]/div")
+    @FindBy(xpath = "/html/body/div[1]/div[1]")
     private WebElementFacade studentDashboardHeader;
 
-    public void enterEmail(String email) {
+    public void openLoginPage() {
+        open();
+    }
+
+    public void loginWith(String email, String password) {
         emailField.type(email);
-    }
-
-    public void enterPassword(String password) {
         passwordField.type(password);
-    }
-
-    public void clickSignIn() {
         signInButton.click();
     }
 
-    public boolean isTrainerDashboardVisible() {
-        return trainerDashboardHeader.isVisible();
+    public boolean trainerDashboardIsVisible() {
+        return trainerDashboardHeader.waitUntilVisible().isVisible();
     }
 
-    public boolean isStudentDashboardVisible() {
-        return studentDashboardHeader.isVisible();
+    public boolean studentDashboardIsVisible() {
+        return studentDashboardHeader.waitUntilVisible().isVisible();
     }
 
-
+    public boolean isStillOnLoginPage() {
+        return getDriver().getCurrentUrl().contains("/login");
+    }
 }
