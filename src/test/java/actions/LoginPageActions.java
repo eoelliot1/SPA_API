@@ -29,6 +29,11 @@ public class LoginPageActions {
         loginPageLocators.getSignInButton().click();
     }
 
+    // Click on logout button
+    public void clickLogoutButton() {
+        loginPageLocators.getLogoutButton().click();
+    }
+
     public void signIn(String email, String password) {
 
         // Fill email

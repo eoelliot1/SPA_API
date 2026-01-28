@@ -12,7 +12,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.HelperClass;
-
 import java.time.Duration;
 
 public class LoginSteps {
@@ -67,4 +66,29 @@ public class LoginSteps {
         Assertions.assertTrue(isOnLoginPage,
                 "Expected to remain on the login page, but URL was: " + currentUrl);
     }
+
+    @Given("I am logged in as a Trainer")
+    public void iAmLoggedInAsATrainer() {
+        String email = "cathy@spartaglobal.com";
+        String password = "cathypass";
+
+        loginPageActions.signIn(email, password);
+    }
+
+    @When("I press the logout button")
+    public void iPressTheLogoutButton() {
+        loginPageActions.clickLogoutButton();
+        wait.until(ExpectedConditions.urlContains("/login"));
+    }
+
+    @Then("I should be redirected to the login page")
+    public void iShouldBeRedirectedToTheLoginPage() {
+        String currentUrl = HelperClass.getDriver().getCurrentUrl();
+        boolean isOnLoginPage = currentUrl.contains("/login");
+        Assertions.assertTrue(isOnLoginPage,
+                "Expected to remain on the login page, but URL was: " + currentUrl);
+    }
+
+
+
 }

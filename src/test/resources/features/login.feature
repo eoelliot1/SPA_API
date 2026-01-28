@@ -32,3 +32,11 @@ Feature: User Authentication
     Examples:
       | wrong_email              | wrong_password |
       | wrongemail@gmail.com     |  wrongpass |
+
+
+  Scenario: Successful logout
+    Given I am on the login page
+    And I am logged in as a Trainer
+    When I press the logout button
+    Then I should be redirected to the login page
+

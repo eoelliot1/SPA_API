@@ -11,6 +11,9 @@ public class LoginPageLocators {
     @FindBy(css = "button[type='submit']")
     private WebElement signInButton;
 
+    @FindBy(xpath = "/html/body/nav/div/div/form/button")
+    private WebElement logoutButton;
+
     @FindBy(xpath = "/html/body/div[2]/div[1]/div")
     private WebElement trainerDashboard;
 
@@ -38,6 +41,10 @@ public class LoginPageLocators {
 
     public WebElement getStudentDashboard() {
         return studentDashboard;
+    }
+
+    public WebElement getLogoutButton() {
+        return logoutButton;
     }
 
 

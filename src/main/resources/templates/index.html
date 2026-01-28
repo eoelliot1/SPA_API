@@ -21,9 +21,19 @@
             <a class="btn btn-outline-light me-2" href="/students/" sec:authorize="hasRole('TRAINER')">View Spartans</a>
             <a class="btn btn-outline-light me-2" href="/trainers/" sec:authorize="hasRole('TRAINER')">View Trainers</a>
 
+            <!-- Logout button for trainers in main navbar -->
+            <form sec:authorize="hasRole('TRAINER')" th:action="@{/logout}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-outline-light me-2">Logout</button>
+            </form>
+
             <!-- Student buttons -->
             <a class="btn btn-outline-light me-2" href="/profile/" sec:authorize="hasRole('STUDENT')">My Profile</a>
-            <a class="btn btn-outline-light" href="/courses/my" sec:authorize="hasRole('STUDENT')">My Course</a>
+            <a class="btn btn-outline-light me-2" href="/courses/my" sec:authorize="hasRole('STUDENT')">My Course</a>
+
+            <!-- Logout button for students in main navbar -->
+            <form sec:authorize="hasRole('STUDENT')" th:action="@{/logout}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-outline-light">Logout</button>
+            </form>
         </div>
 
         <!-- Hamburger -->
@@ -44,12 +54,20 @@
             <a class="btn btn-primary w-100 mb-2" href="/courses/">Manage Courses</a>
             <a class="btn btn-primary w-100 mb-2" href="/students/">View Spartans</a>
             <a class="btn btn-primary w-100 mb-2" href="/trainers/">View Trainers</a>
+            <!-- Logout button for trainers in mobile menu -->
+            <form sec:authorize="hasRole('TRAINER')" th:action="@{/logout}" method="post" class="w-100">
+                <button type="submit" class="btn btn-light w-100">Logout</button>
+            </form>
         </div>
 
         <!-- Student buttons -->
         <div sec:authorize="hasRole('STUDENT')">
             <a class="btn btn-success w-100 mb-2" href="/profile/">My Profile</a>
-            <a class="btn btn-success w-100" href="/courses/my">My Course</a>
+            <a class="btn btn-success w-100 mb-2" href="/courses/my">My Course</a>
+            <!-- Logout button for students in mobile menu -->
+            <form sec:authorize="hasRole('STUDENT')" th:action="@{/logout}" method="post" class="w-100">
+                <button type="submit" class="btn btn-light w-100">Logout</button>
+            </form>
         </div>
     </div>
 </div>
