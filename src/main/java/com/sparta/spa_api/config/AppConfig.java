@@ -59,182 +59,95 @@ public class AppConfig {
             // ===== AUTH USERS (LOGIN ACCOUNTS) =====
             Spartan admin = new Spartan(
                     "admin@spartaglobal.com",
+                    "admin",
                     encoder.encode("adminpass"),
                     "ADMIN"
             );
 
             Spartan trainerUser = new Spartan(
-                    "4",
+                    "trainer@spartaglobal.com",
+                    "trainer",
                     encoder.encode("trainerpass"),
                     "TRAINER"
             );
 
             Spartan studentUser = new Spartan(
                     "student@spartaglobal.com",
+                    "student",
                     encoder.encode("studentpass"),
                     "STUDENT"
             );
 
-            Spartan cathy = new Spartan(
-                    "cathy@spartaglobal.com",
-                    encoder.encode("cathypass"),
-                    "TRAINER"
-            );
 
             spartanRepo.saveAll(
-                    List.of(admin, trainerUser, studentUser, cathy)
+                    List.of(admin, trainerUser, studentUser)
             );
 
             System.out.println("Seeded Spartans for login");
 
             // Courses details
-            Course softwareTesting = new Course("Software Testing");
-            Course data = new Course("Data");
-            Course webDevelopment = new Course("Web Development");
-            Course cyberSecurity = new Course("Cyber Security");
-            Course mobileAppDev = new Course("Mobile App Development");
+            Course course1 = new Course("Software Testing");
+            Course course2 = new Course("Data");
 
             LocalDate startDate = LocalDate.of(2024, 9, 1);
             LocalDate startDate2 = LocalDate.of(2025, 5, 7);
-            LocalDate startDate3 = LocalDate.of(2024, 11, 15);
-            LocalDate startDate4 = LocalDate.of(2025, 2, 10);
-            LocalDate startDate5 = LocalDate.of(2025, 8, 20);
-
             LocalDate endDate = LocalDate.of(2026, 1, 1);
-            LocalDate endDate2 = LocalDate.of(2026, 4, 1);
-            LocalDate endDate3 = LocalDate.of(2025, 11, 15);
-            LocalDate endDate4 = LocalDate.of(2025, 8, 10);
-            LocalDate endDate5 = LocalDate.of(2026, 6, 20);
-
-            softwareTesting.setStartDate(startDate);
-            softwareTesting.setEndDate(endDate);
-
-            data.setStartDate(startDate2);
-            data.setEndDate(endDate2);
-
-            webDevelopment.setStartDate(startDate3);
-            webDevelopment.setEndDate(endDate3);
-
-            cyberSecurity.setStartDate(startDate4);
-            cyberSecurity.setEndDate(endDate4);
-
-            mobileAppDev.setStartDate(startDate5);
-            mobileAppDev.setEndDate(endDate5);
+            course1.setStartDate(startDate);
+            course2.setStartDate(startDate2);
+            course1.setEndDate(endDate);
 
 
-            courseRepository.save(softwareTesting);
-            courseRepository.save(data);
-            courseRepository.save(webDevelopment);
-            courseRepository.save(cyberSecurity);
-            courseRepository.save(mobileAppDev);
-
-            // Trainers' details
-            Trainers john = new Trainers();
-            john.setTrainerName("John Trainer");
-            john.setCourse(softwareTesting);
-
-            Trainers sarah = new Trainers();
-            sarah.setTrainerName("Sarah Coach");
-            sarah.setCourse(data);
-
-            Trainers mike = new Trainers();
-            mike.setTrainerName("Mike Mentor");
-            mike.setCourse(softwareTesting);
-
-            Trainers emma = new Trainers();
-            emma.setTrainerName("Emma Instructor");
-            emma.setCourse(data);
-
-            Trainers david = new Trainers();
-            david.setTrainerName("David Guide");
-            david.setCourse(webDevelopment);
-
-            Trainers lisa = new Trainers();
-            lisa.setTrainerName("Lisa Tutor");
-            lisa.setCourse(cyberSecurity);
-
-            Trainers robert = new Trainers();
-            robert.setTrainerName("Robert Advisor");
-            robert.setCourse(mobileAppDev);
-
-
-
-            trainersRepository.save(john);
-            trainersRepository.save(sarah);
-            trainersRepository.save(mike);
-            trainersRepository.save(emma);
-            trainersRepository.save(david);
-            trainersRepository.save(lisa);
-            trainersRepository.save(robert);
-
+            courseRepository.save(course1);
+            courseRepository.save(course2);
 
             // Students' details
-            Student alice = new Student();
-            alice.setStudentName("Alice Johnson");
-            alice.setHasGraduated(false);
-            alice.setCourse(softwareTesting);
-            alice.setTrainer(trainersRepository.findById(1).get());
-
-            Student bob = new Student();
-            bob.setStudentName("Bob Smith");
-            bob.setHasGraduated(true);
-            bob.setCourse(softwareTesting);
-            bob.setTrainer(trainersRepository.findById(2).get());
+            Student student1 = new Student();
+            student1.setStudentName("Alice Johnson");
+            student1.setHasGraduated(false);
+            student1.setCourse(course1);
 
 
-            Student charlie = new Student();
-            charlie.setStudentName("Charlie Brown");
-            charlie.setHasGraduated(false);
-            charlie.setCourse(webDevelopment);
-            charlie.setTrainer(trainersRepository.findById(3).get());
+            Student student2 = new Student();
+            student2.setStudentName("Bob Smith");
+            student2.setHasGraduated(true);
+            student2.setCourse(course1);
 
+            Student student3 = new Student();
+            student3.setStudentName("Charlie Brown");
+            student3.setHasGraduated(false);
+            student3.setCourse(course2);
 
-            Student daisy = new Student();
-            daisy.setStudentName("Daisy Miller");
-            daisy.setHasGraduated(true);
-            daisy.setCourse(data);
-            daisy.setTrainer(trainersRepository.findById(3).get());
+            Student student4 = new Student();
+            student4.setStudentName("Daisy Miller");
+            student4.setHasGraduated(true);
+            student4.setCourse(course2);
 
-            Student ethan = new Student();
-            ethan.setStudentName("Ethan Wilson");
-            ethan.setHasGraduated(false);
-            ethan.setCourse(webDevelopment);
-            ethan.setTrainer(trainersRepository.findById(4).get());
+            studentRepository.save(student1);
+            studentRepository.save(student2);
+            studentRepository.save(student3);
+            studentRepository.save(student4);
 
-            Student sophia = new Student();
-            sophia.setStudentName("Sophia Garcia");
-            sophia.setHasGraduated(true);
-            sophia.setCourse(cyberSecurity);
-            sophia.setTrainer(trainersRepository.findById(2).get());
+            // Trainers' details
+            Trainers trainer1 = new Trainers();
+            trainer1.setTrainerName("John Trainer");
+            trainer1.setCourse(course1);
 
-            Student mason = new Student();
-            mason.setStudentName("Mason Taylor");
-            mason.setHasGraduated(false);
-            mason.setCourse(mobileAppDev);
-            mason.setTrainer(trainersRepository.findById(1).get());
+            Trainers trainer2 = new Trainers();
+            trainer2.setTrainerName("Sarah Coach");
+            trainer2.setCourse(course1);
 
-            Student ava = new Student();
-            ava.setStudentName("Ava Martinez");
-            ava.setHasGraduated(true);
-            ava.setCourse(webDevelopment);
-            ava.setTrainer(trainersRepository.findById(2).get());
+            Trainers trainer3 = new Trainers();
+            trainer3.setTrainerName("Mike Mentor");
+            trainer3.setCourse(course2);
 
-            Student noah = new Student();
-            noah.setStudentName("Noah Anderson");
-            noah.setHasGraduated(false);
-            noah.setCourse(cyberSecurity);
+            Trainers trainer4 = new Trainers();
+            trainer4.setTrainerName("Emma Instructor");
+            trainer4.setCourse(course2);
 
-
-            studentRepository.save(alice);
-            studentRepository.save(bob);
-            studentRepository.save(charlie);
-            studentRepository.save(daisy);
-            studentRepository.save(ethan);
-            studentRepository.save(sophia);
-            studentRepository.save(mason);
-            studentRepository.save(ava);
-            studentRepository.save(noah);
-
+            trainersRepository.save(trainer1);
+            trainersRepository.save(trainer2);
+            trainersRepository.save(trainer3);
+            trainersRepository.save(trainer4);
 
             System.out.println("Seed data added");
         };

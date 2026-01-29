@@ -27,6 +27,10 @@ public class Student {
   @JoinColumn(name = "trainer_id", nullable = true)
   private Trainers trainer;
 
+  @ManyToOne
+  @JoinColumn(name = "spartan_id", unique = true)
+  private Spartan spartan;
+
   public Student() {}
 
   public Student(String studentName, boolean hasGraduated) {
@@ -82,4 +86,13 @@ public class Student {
             '}';
   }
 
+
+  public Spartan getSpartan() {
+    return spartan;
+  }
+
+  public void setSpartan(Spartan spartan) {
+    this.spartan = spartan;
+  }
 }
+

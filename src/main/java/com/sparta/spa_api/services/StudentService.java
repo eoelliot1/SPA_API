@@ -3,6 +3,7 @@ package com.sparta.spa_api.services;
 import com.sparta.spa_api.dtos.StudentDTO;
 import com.sparta.spa_api.dtos.StudentMapper;
 import com.sparta.spa_api.entities.Course;
+import com.sparta.spa_api.entities.Spartan;
 import com.sparta.spa_api.entities.Student;
 import com.sparta.spa_api.repository.CourseRepository;
 import com.sparta.spa_api.repository.StudentRepository;
@@ -112,5 +113,15 @@ public class StudentService {
         return studentRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Student not found with ID " + id));
     }
+
+    // In StudentService
+    public Student getStudentByEmail(String email) {
+        return studentRepository.findBySpartanEmail(email).orElse(null);
+    }
+
+    public Student getStudentBySpartan(Spartan spartan) {
+        return (Student) studentRepository.findBySpartan(spartan).orElse(null);
+    }
+
 
 }
