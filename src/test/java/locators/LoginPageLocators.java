@@ -11,7 +11,7 @@ public class LoginPageLocators {
     @FindBy(css = "button[type='submit']")
     private WebElement signInButton;
 
-    @FindBy(xpath = "/html/body/nav/div/div/form/button")
+    @FindBy(css = "button[type='submit']")
     private WebElement logoutButton;
 
     @FindBy(xpath = "/html/body/div[2]/div[1]/div")

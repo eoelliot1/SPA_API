@@ -10,7 +10,7 @@ Feature: User Authentication
 
     Examples:
       | email                     | password |
-      | cathy@spartaglobal.com    | cathypass |
+      | trainer                   | trainerpass |
 
 
   Scenario Outline: Successful login with valid credentials as a trainee
@@ -20,7 +20,7 @@ Feature: User Authentication
 
     Examples:
       | email                         | password |
-      | student@spartaglobal.com      | studentpass |
+      | student                       | studentpass |
 
 
   Scenario Outline: Unsuccessful login

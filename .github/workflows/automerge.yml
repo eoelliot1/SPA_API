@@ -1,18 +1,18 @@
-name: Run Unit Tests
+name: Run Tests Pipeline
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  build-and-test:
+  unit-tests:
+    name: Unit & Mockito Tests
     runs-on: ubuntu-latest
-    outputs:
-      tests_passed: ${{ steps.tests.outcome }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,21 +20,68 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '21'
+          distribution: temurin
+          java-version: 21
           cache: maven
 
-      - name: Verify Maven installation
-        run: mvn -v
+      - name: Run unit & Mockito tests
+        run: mvn clean test -DskipITs=true
+        # assumes unit + mockito live under surefire
 
-      - name: Build project and run unit tests
-        id: tests
-        run: mvn clean test
+
+  rest-assured-tests:
+    name: REST Assured Tests
+    needs: unit-tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Run REST Assured tests
+        run: mvn verify -Drest.tests=true
+        # typically bound to failsafe or a Maven profile
+
+
+  selenium-tests:
+    name: Selenium Tests
+    needs: rest-assured-tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Run Selenium tests
+        run: mvn verify -Dselenium.tests=true
+
 
   auto-merge:
-    needs: build-and-test
+    name: Auto Merge PR
+    needs:
+      - unit-tests
+      - rest-assured-tests
+      - selenium-tests
     runs-on: ubuntu-latest
-    if: ${{ needs.build-and-test.result == 'success' }}
+    if: ${{ success() }}
+
     steps:
       - name: Merge pull request
         uses: pascalgn/automerge-action@v0.16.3

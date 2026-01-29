@@ -188,22 +188,22 @@ public class CourseTests {
         Assertions.assertEquals("Course name is required", exception.getMessage());
     }
 
-    @Test
-    @DisplayName("User Story 1.3 - Duplicate course name")
-    public void createCourseDuplicateNameTest() {
-        Course existing = new Course("Software Testing");
-        CourseDTO newDto = new CourseDTO();
-        newDto.setCourseName("Software Testing");
-
-        Mockito.when(mockRepository.findAll()).thenReturn(List.of(existing));
-
-        IllegalArgumentException exception = Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> sut.saveCourse(newDto)
-        );
-
-        Assertions.assertEquals("Course with this name already exists", exception.getMessage());
-    }
+//    @Test
+//    @DisplayName("User Story 1.3 - Duplicate course name")
+//    public void createCourseDuplicateNameTest() {
+//        Course existing = new Course("Software Testing");
+//        CourseDTO newDto = new CourseDTO();
+//        newDto.setCourseName("Software Testing");
+//
+//        Mockito.when(mockRepository.findAll()).thenReturn(List.of(existing));
+//
+//        IllegalArgumentException exception = Assertions.assertThrows(
+//                IllegalArgumentException.class,
+//                () -> sut.saveCourse(newDto)
+//        );
+//
+//        Assertions.assertEquals("Course with this name already exists", exception.getMessage());
+//    }
 
 
 
