@@ -48,11 +48,7 @@ public class TrainerService {
     public TrainersDTO getTrainerById(int id) {
         Trainers trainer = trainersRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResponseStatusException(
-                                HttpStatus.NOT_FOUND,
-                                "Trainer not found"
-                        )
-                );
+                        new NoSuchElementException("Trainer not found"));
         return trainersMapper.toDTO(trainer);
     }
 

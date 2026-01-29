@@ -29,6 +29,8 @@ public class TrainerApiTests extends TestBase {
                 .statusCode(200);
     }
 
+
+
     @Test
     @DisplayName("Get course by ID")
     void shouldReturnTrainerById() {
@@ -43,6 +45,7 @@ public class TrainerApiTests extends TestBase {
 
         assertThat(response.jsonPath().getInt("id"), is(1));
     }
+
 
 
     @Test
@@ -110,7 +113,7 @@ public class TrainerApiTests extends TestBase {
         given()
                 .auth().preemptive().basic("trainer", "trainerpass")
                 .when()
-                .delete("/api/trainers/4")
+                .delete("/api/trainers/1")
                 .then()
                 .statusCode(204);
 
@@ -118,7 +121,7 @@ public class TrainerApiTests extends TestBase {
         given()
                 .auth().preemptive().basic("trainer", "trainerpass")
                 .when()
-                .get("/api/trainers/4")
+                .get("/api/trainers/1")
                 .then()
                 .statusCode(404);
     }
