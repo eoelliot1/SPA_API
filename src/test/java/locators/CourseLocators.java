@@ -4,6 +4,9 @@ import org.openqa.selenium.support.FindBy;
 
 public class CourseLocators {
     // Courses List Page
+    @FindBy(xpath = "/html/body/nav/div/div/a[1]")
+    private WebElement coursesItem;
+
     @FindBy(name = "keyword")
     private WebElement searchField;
 

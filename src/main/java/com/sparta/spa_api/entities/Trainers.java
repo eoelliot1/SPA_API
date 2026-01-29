@@ -63,4 +63,13 @@ public class Trainers {
     public List<Student> getStudents() {
         return students;
     }
+
+    @Override
+    public String toString() {
+        return "Trainers{" +
+                "id=" + id +
+                ", trainerName='" + trainerName + '\'' +
+                ", course=" + (course != null ? course.getCourseName() : "null") +
+                '}';
+    }
 }

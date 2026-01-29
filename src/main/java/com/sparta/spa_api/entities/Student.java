@@ -71,5 +71,15 @@ public class Student {
     this.trainer = trainer;
   }
 
+  @Override
+  public String toString() {
+    return "Student{" +
+            "id=" + id +
+            ", studentName='" + studentName + '\'' +
+            ", hasGraduated=" + hasGraduated +
+            ", course=" + (course != null ? course.getCourseName() : "null") +
+            ", trainer=" + (trainer != null ? trainer.getTrainerName() : "null") +
+            '}';
+  }
 
 }
