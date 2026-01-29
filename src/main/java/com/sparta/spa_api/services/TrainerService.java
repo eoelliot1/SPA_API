@@ -47,8 +47,8 @@ public class TrainerService {
 
     public TrainersDTO getTrainerById(int id) {
         Trainers trainer = trainersRepository.findById(id)
-                .orElseThrow(() ->
-                        new NoSuchElementException("Trainer not found"));
+                .orElseThrow(() -> new NoSuchElementException("Trainer not found with ID " + id));
+
         return trainersMapper.toDTO(trainer);
     }
 
