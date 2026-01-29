@@ -1,6 +1,7 @@
 package com.sparta.spa_api.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sparta.spa_api.entities.Course;
 import com.sparta.spa_api.entities.Student;
 import jakarta.validation.constraints.NotBlank;
 
@@ -22,6 +23,9 @@ public class CourseDTO {
     private LocalDate endDate;
 
     private long durationInDays;
+
+    public CourseDTO(Course course) {
+    }
 
     public long getDurationInDays() {
         return durationInDays;

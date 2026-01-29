@@ -5,6 +5,7 @@ import com.sparta.spa_api.dtos.CourseDTO;
 import com.sparta.spa_api.dtos.CourseMapper;
 import com.sparta.spa_api.dtos.StudentDTO;
 import com.sparta.spa_api.dtos.TrainersDTO;
+import com.sparta.spa_api.entities.Course;
 import com.sparta.spa_api.repository.CourseRepository;
 import com.sparta.spa_api.repository.TrainersRepository;
 import com.sparta.spa_api.services.CourseService;
@@ -56,11 +57,10 @@ public class CourseWebController {
         return "courses/view"; // details.html
     }
 
-    // Show "Add Course" form
     @GetMapping("/new")
     public String showCreateForm(Model model) {
-        model.addAttribute("course", new CourseDTO());
-        return "courses/new"; // new.html
+        model.addAttribute("course", new Course()); // uses entity, no DTO needed
+        return "courses/new";
     }
 
     // Handle Add Course form submit
