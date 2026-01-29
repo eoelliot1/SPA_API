@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/trainers")
+@RequestMapping("/api/trainers")
 public class TrainersController {
 
     private final TrainerService service;
@@ -24,6 +24,12 @@ public class TrainersController {
     @GetMapping("/{id}")
     public ResponseEntity<TrainersDTO> getTrainer(@PathVariable int id) {
         return ResponseEntity.ok(service.getTrainerById(id));
+    }
+
+    @Operation(summary = "Get all Trainers")
+    @GetMapping
+    public ResponseEntity<List<TrainersDTO>> getAllTrainers() {
+        return ResponseEntity.ok(service.getAllTrainers());
     }
 
     @Operation(summary = "Get Trainer's Course")
