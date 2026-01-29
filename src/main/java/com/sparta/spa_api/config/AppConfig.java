@@ -74,9 +74,9 @@ public class AppConfig {
             );
 
             Spartan studentUser = new Spartan(
-                    "student@spartaglobal.com",
-                    "student",
-                    encoder.encode("studentpass"),
+                    "alice@spartaglobal.com",
+                    "alice",
+                    encoder.encode("alicepass"),
                     "STUDENT"
             );
 
@@ -107,6 +107,8 @@ public class AppConfig {
             student1.setStudentName("Alice Johnson");
             student1.setHasGraduated(false);
             student1.setCourse(course1);
+            student1.setSpartan(studentUser);
+            studentRepository.save(student1);
 
 
             Student student2 = new Student();
