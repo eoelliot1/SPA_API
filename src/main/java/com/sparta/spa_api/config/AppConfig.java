@@ -31,12 +31,14 @@ public class AppConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+                .httpBasic(basic -> {})
+
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/")
-                        .permitAll())
-                .csrf(csrf -> csrf.disable());
+                        .permitAll());
         return http.build();
     }
 
