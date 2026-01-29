@@ -97,5 +97,27 @@ public class StudentApiTests extends TestBase{
                 .statusCode(404);
     }
 
+    @Test
+    @DisplayName("Update student")
+    void shouldUpdateStudent() {
+        Map<String, Object> updatedStudent = new HashMap<>();
+        updatedStudent.put("studentName", "Ahmed 2");
+        updatedStudent.put("courseId", 2);
+
+        Response response =
+                given()
+                        .auth().preemptive().basic("trainer", "trainerpass")
+                        .contentType(ContentType.JSON)
+                        .body(updatedStudent)
+                        .when()
+                        .put("/api/students/1")
+                        .then()
+                        .statusCode(200)
+                        .extract().response();
+
+        assertThat(response.jsonPath().getString("studentName"), is("Ahmed 2"));
+        assertThat(response.jsonPath().getInt("courseId"), is(2));
+    }
+
 
 }

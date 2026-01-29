@@ -29,6 +29,8 @@ public class TrainerApiTests extends TestBase {
                 .statusCode(200);
     }
 
+
+
     @Test
     @DisplayName("Get course by ID")
     void shouldReturnTrainerById() {
@@ -44,6 +46,22 @@ public class TrainerApiTests extends TestBase {
         assertThat(response.jsonPath().getInt("id"), is(1));
     }
 
+    @Test
+    @DisplayName("Return 404 when trainer does not exist")
+    void shouldReturn404ForInvalidTrainerId() {
+
+        given()
+                .auth().preemptive().basic("trainer", "trainerpass")
+                .accept(ContentType.JSON)
+                .when()
+                .get("/api/trainers/999")
+                .then()
+                .statusCode(404)
+                .contentType(ContentType.JSON)
+                .body("status", equalTo(404))
+                .body("message", notNullValue())
+                .body("path", equalTo("/api/trainers/999"));
+    }
 
     @Test
     @DisplayName("Get trainer by invalid ID → 404")
