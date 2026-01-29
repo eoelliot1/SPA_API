@@ -10,7 +10,7 @@ Feature: User Authentication
 
     Examples:
       | email                     | password |
-      | cathy@spartaglobal.com    | cathypass |
+      | trainer                   | trainerpass |
 
 
   Scenario Outline: Successful login with valid credentials as a trainee
@@ -20,7 +20,7 @@ Feature: User Authentication
 
     Examples:
       | email                         | password |
-      | student@spartaglobal.com      | studentpass |
+      | student                       | studentpass |
 
 
   Scenario Outline: Unsuccessful login
@@ -37,6 +37,6 @@ Feature: User Authentication
   Scenario: Successful logout
     Given I am on the login page
     And I am logged in as a Trainer
+    And I am on the trainer dashboard
     When I press the logout button
     Then I should be redirected to the login page
-

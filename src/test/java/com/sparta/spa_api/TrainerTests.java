@@ -2,7 +2,6 @@ package com.sparta.spa_api;
 
 import com.sparta.spa_api.dtos.*;
 import com.sparta.spa_api.entities.Course;
-import com.sparta.spa_api.entities.Student;
 import com.sparta.spa_api.entities.Trainers;
 import com.sparta.spa_api.repository.CourseRepository;
 import com.sparta.spa_api.repository.StudentRepository;
@@ -12,10 +11,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public class TrainerTests {

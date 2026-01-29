@@ -1,6 +1,8 @@
 package steps;
 
 import actions.LoginPageActions;
+import io.cucumber.java.PendingException;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -43,6 +45,7 @@ public class LoginSteps {
         Assert.assertTrue(trainerDashboard.getText().contains("Trainer"));
     }
 
+
     @Then("I should be redirected to the student dashboard")
     public void iShouldBeRedirectedToTheStudentDashboard() {
         WebElement studentDashboard = loginPageLocators.getStudentDashboard();
@@ -69,8 +72,8 @@ public class LoginSteps {
 
     @Given("I am logged in as a Trainer")
     public void iAmLoggedInAsATrainer() {
-        String email = "cathy@spartaglobal.com";
-        String password = "cathypass";
+        String email = "trainer";
+        String password = "trainerpass";
 
         loginPageActions.signIn(email, password);
     }
@@ -89,6 +92,12 @@ public class LoginSteps {
                 "Expected to remain on the login page, but URL was: " + currentUrl);
     }
 
+    @And("I am on the trainer dashboard")
+    public void iAmOnTheTrainerDashboard() {
+        WebElement trainerDashboard = loginPageLocators.getTrainerDashboard();
+        wait.until(ExpectedConditions.visibilityOf(trainerDashboard));
 
+        Assert.assertTrue(trainerDashboard.getText().contains("Trainer"));
+    }
 
 }
