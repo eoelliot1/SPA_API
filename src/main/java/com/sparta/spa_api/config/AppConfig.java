@@ -59,21 +59,25 @@ public class AppConfig {
             // ===== AUTH USERS (LOGIN ACCOUNTS) =====
             Spartan admin = new Spartan(
                     "admin@spartaglobal.com",
+                    "admin",
                     encoder.encode("adminpass"),
                     "ADMIN"
             );
 
             Spartan trainerUser = new Spartan(
-                    "4",
+                    "trainer@spartaglobal.com",
+                    "trainer",
                     encoder.encode("trainerpass"),
                     "TRAINER"
             );
 
             Spartan studentUser = new Spartan(
                     "student@spartaglobal.com",
+                    "student",
                     encoder.encode("studentpass"),
                     "STUDENT"
             );
+
 
             spartanRepo.saveAll(
                     List.of(admin, trainerUser, studentUser)
@@ -101,6 +105,7 @@ public class AppConfig {
             student1.setStudentName("Alice Johnson");
             student1.setHasGraduated(false);
             student1.setCourse(course1);
+
 
             Student student2 = new Student();
             student2.setStudentName("Bob Smith");

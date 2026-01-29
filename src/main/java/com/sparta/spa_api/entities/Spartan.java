@@ -21,6 +21,9 @@ public class Spartan implements UserDetails {
     @NotNull
     private String password;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
     @NotNull
     private String role; // Trainer OR Student (Spartan)
 
@@ -29,11 +32,13 @@ public class Spartan implements UserDetails {
         // No-arg constructor for JPA
     }
 
-    public Spartan(String username, String password, String role) {
+    public Spartan(String email, String username, String password, String role) {
+        this.email = email;
         this.username = username;
         this.password = password;
         this.role = role;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -93,5 +98,17 @@ public class Spartan implements UserDetails {
                 ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
                 '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

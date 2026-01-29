@@ -2,13 +2,18 @@ package com.sparta.spa_api.controller;
 
 import com.sparta.spa_api.dtos.CourseDTO;
 import com.sparta.spa_api.dtos.StudentDTO;
+import com.sparta.spa_api.entities.Spartan;
 import com.sparta.spa_api.entities.Student;
+import com.sparta.spa_api.repository.SpartanRepository;
 import com.sparta.spa_api.services.CourseService;
 import com.sparta.spa_api.services.StudentService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -17,10 +22,14 @@ public class StudentViewController {
 
     private final StudentService studentService;
     private final CourseService courseService;
+    private final SpartanRepository spartanRepository; // add this
 
-    public StudentViewController(StudentService studentService, CourseService courseService) {
+
+    public StudentViewController(StudentService studentService, CourseService courseService, SpartanRepository spartanRepository) {
         this.studentService = studentService;
         this.courseService = courseService;
+        this.spartanRepository = spartanRepository;
+
     }
 
     // Show all students
@@ -32,7 +41,7 @@ public class StudentViewController {
     }
 
     // Show single student
-    @GetMapping("student-details/{id}")
+    @GetMapping("/student-details/{id}")
     public String viewStudent(@PathVariable Integer id, Model model) {
         Student student = studentService.getStudentEntityById(id);
         model.addAttribute("student", student);
@@ -63,8 +72,6 @@ public class StudentViewController {
     }
 
 
-
-
     @GetMapping("/update-student/{id}")
     public String showUpdateForm(@PathVariable Integer id, Model model) {
 
@@ -81,5 +88,32 @@ public class StudentViewController {
         studentService.updateStudent(id, studentDto);
         return "redirect:/students";
     }
+
+    @GetMapping("/profile")
+    public String viewOwnProfile(Model model, @AuthenticationPrincipal User user) {
+
+        Spartan spartan = spartanRepository.findByEmail(user.getUsername()).orElse(null);
+        if (spartan == null) return "redirect:/";
+
+
+        Student student = studentService.getStudentBySpartan(spartan);
+        if (student == null) return "redirect:/";
+
+        model.addAttribute("student", student);
+        return "students/profile";
+    }
+
+
+
+    //to student courses
+    @GetMapping("/courses")
+    public String viewMyCourses(Model model) {
+        // For now, return all courses for testing
+        List<CourseDTO> courses = courseService.getAllCourses();
+        model.addAttribute("courses", courses);
+        return "students/courses";
+    }
+
+
 
 }

@@ -24,8 +24,18 @@
             <a class="btn btn-outline-light me-2" href="/trainers/" sec:authorize="hasRole('TRAINER')">View Trainers</a>
 
             <!-- Student buttons -->
-            <a class="btn btn-outline-light me-2" href="/profile/" sec:authorize="hasRole('STUDENT')">My Profile</a>
-            <a class="btn btn-outline-light" href="/courses/my" sec:authorize="hasRole('STUDENT')">My Course</a>
+            <a class="btn btn-outline-light me-2"
+               th:href="@{/students/profile}"
+               sec:authorize="hasRole('STUDENT')">
+                My Profile
+            </a>
+
+
+            <a class="btn btn-outline-light"
+               th:href="@{/students/courses}"
+               sec:authorize="hasRole('STUDENT')">
+                My Course
+            </a>
         </div>
 
         <!-- Hamburger -->
@@ -50,8 +60,16 @@
 
         <!-- Student buttons -->
         <div sec:authorize="hasRole('STUDENT')">
-            <a class="btn btn-success w-100 mb-2" href="/profile/">My Profile</a>
-            <a class="btn btn-success w-100" href="/courses/my">My Course</a>
+            <a class="btn btn-success w-100 mb-2"
+               th:href="@{/students/profile}"
+               sec:authorize="hasRole('STUDENT')">
+                My Profile
+            </a>
+            <a class="btn btn-success w-100"
+               th:href="@{/students/courses}"
+               sec:authorize="hasRole('STUDENT')">
+                My Course
+            </a>
         </div>
     </div>
 </div>
