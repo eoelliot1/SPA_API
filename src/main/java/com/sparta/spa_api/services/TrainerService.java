@@ -10,7 +10,9 @@ import com.sparta.spa_api.entities.Course;
 import com.sparta.spa_api.entities.Trainers;
 import com.sparta.spa_api.repository.CourseRepository;
 import com.sparta.spa_api.repository.TrainersRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -45,7 +47,12 @@ public class TrainerService {
 
     public TrainersDTO getTrainerById(int id) {
         Trainers trainer = trainersRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Trainer not found"));
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Trainer not found"
+                        )
+                );
         return trainersMapper.toDTO(trainer);
     }
 
