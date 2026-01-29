@@ -70,4 +70,6 @@ public class Student {
   public void setTrainer(Trainers trainer) {
     this.trainer = trainer;
   }
+
+
 }

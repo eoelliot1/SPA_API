@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Update Course')"></head>
+<body class="bg-light">
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Enrollment :)</h2>
+
+<!--    <form th:action="@{/courses/enrol}" th:object="${courses}" method="post">-->
+<!--        <div class="mb-3">-->
+<!--            <label class="form-label">Course Name</label>-->
+<!--            <input type="text" th:field="*{courseName}" class="form-control" D required>-->
+<!--            <div class="text-danger" th:errors="*{courseName}"></div>-->
+<!--        </div>-->
+
+<!--        <button type="submit" class="btn btn-primary">Update</button>-->
+<!--        <a th:href="@{/courses/}" class="btn btn-secondary">Cancel</a>-->
+<!--    </form>-->
+</div>
+
+
+                <!--        COURSES TABLE!             -->
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+    <tr>
+        <th>ID</th>
+        <th>Course Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="course : ${courses}">
+        <td th:text="${course.id}"></td>
+        <td th:text="${course.courseName}"></td>
+    </tr>
+
+    <!-- Empty state -->
+    <tr th:if="${#lists.isEmpty(courses)}">
+        <td colspan="3" class="text-center text-muted">No courses found.</td>
+    </tr>
+    </tbody>
+</table>
+
+
+            <!--    STUDENT FORM TABLE        -->
+
+<div class="container mt-5">
+    <h2 class="mb-4">Enroll Students in Courses</h2>
+
+    <table class="table table-bordered align-middle">
+        <thead class="table-light">
+        <tr>
+            <th>Student</th>
+            <th>Select Course</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.studentName}"></td>
+
+            <td>
+                <form th:action="@{/courses/enrollment/{id}/{cid}/enrol(id=${student.id},cid=${0})}"
+                      method="post"
+                      th:id="'student-form-' + ${student.id}"
+                      th:data-student-id="${student.id}">
+
+                    <select class="form-select"
+                            required
+                            onchange=" const studentId = this.form.dataset.studentId;
+                                        this.form.action =
+                                            '/courses/enrollment/' +
+                                            studentId + '/' +
+                                            this.value + '/enrol';
+                                    ">
+                        <option value="" disabled selected>
+                            -- Select Course --
+                        </option>
+
+                        <option th:each="course : ${courses}"
+                                th:value="${course.id}"
+                                th:text="${course.courseName}">
+                        </option>
+                    </select>
+
+<!--                    <button type="submit" class="btn btn-primary">-->
+<!--                        Enrol!!!-->
+<!--                    </button>-->
+                </form>
+            </td>
+
+            <td>
+                <button class="btn btn-primary"
+                        th:onclick="'document.getElementById(\'student-form-' + ${student.id} + '\').submit()'">
+                    Enrol
+                </button>
+
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+    <!--    TRAINERS FORM TABLE        -->
+
+    <h2 class="mb-4">Enroll Trainers in Courses</h2>
+
+    <table class="table table-bordered align-middle">
+        <thead class="table-light">
+        <tr>
+            <th>Trainers</th>
+            <th>Select Course</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="trainer : ${trainers}">
+            <td th:text="${trainer.trainerName}"></td>
+
+            <td>
+                <form th:action="@{/courses/enrollment/{id}/{cid}/enroltrainer(id=${trainer.id},cid=${0})}"
+                      method="post"
+                      th:id="'trainer-form-' + ${trainer.id}"
+                      th:data-trainer-id="${trainer.id}">
+
+                    <select class="form-select"
+                            required
+                            onchange=" const trainerId = this.form.dataset.trainerId;
+                                        this.form.action =
+                                            '/courses/enrollment/' +
+                                            trainerId + '/' +
+                                            this.value + '/enroltrainer';
+                                    ">
+                        <option value="" disabled selected>
+                            -- Select Course --
+                        </option>
+
+                        <option th:each="course : ${courses}"
+                                th:value="${course.id}"
+                                th:text="${course.courseName}">
+                        </option>
+                    </select>
+
+                    <!--                    <button type="submit" class="btn btn-primary">-->
+                    <!--                        Enrol!!!-->
+                    <!--                    </button>-->
+                </form>
+            </td>
+
+            <td>
+                <button class="btn btn-primary"
+                        th:onclick="'document.getElementById(\'trainer-form-' + ${trainer.id} + '\').submit()'">
+                    Enrol
+                </button>
+
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
+

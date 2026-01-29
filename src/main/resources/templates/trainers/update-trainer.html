@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Edit Trainer')"></head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+    <h2>Edit Trainer</h2>
+
+    <form th:action="@{/trainers/{id}/update-trainer(id=${trainer.id})}" th:object="${trainer}" method="post">
+        <div class="mb-3">
+            <label class="form-label fw-bold">Trainer Name</label>
+            <input type="text"
+                   class="form-control"
+                   th:field="*{trainerName}"
+
+                   required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-bold">Course</label>
+            <select class="form-select" th:field="*{courseId}">
+                <option value="">-- Select Course --</option>
+                <option th:each="c : ${courses}"
+                        th:value="${c.id}"
+                        th:text="${c.courseName}">
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-warning">Update</button>
+        <a th:href="@{/trainers}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -4,7 +4,7 @@ public class TrainersDTO {
 
     private Integer id;
     private String trainerName;
-    private Integer courseId; // ✅ ID only
+    private Integer courseId; // ID only
 
     public Integer getId() {
         return id;

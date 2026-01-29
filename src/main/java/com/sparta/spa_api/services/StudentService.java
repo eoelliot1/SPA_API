@@ -76,6 +76,10 @@ public class StudentService {
             Course course = courseRepository.findById(studentDTO.getCourseId())
                     .orElseThrow(() -> new IllegalArgumentException("Course not found with ID " + studentDTO.getCourseId()));
             student.setCourse(course);
+            student.setTrainer(course.getTrainers().stream().findFirst().orElse(null));
+            if(course.getTrainers() == null) {
+                throw new NoSuchElementException("Warning! Course: " + course.getCourseName() + " has no trainers.");
+            }
         }
 
         Student updated = studentRepository.save(student);
@@ -108,4 +112,5 @@ public class StudentService {
         return studentRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Student not found with ID " + id));
     }
+
 }
