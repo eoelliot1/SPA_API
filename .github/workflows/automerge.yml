@@ -25,7 +25,7 @@ jobs:
           cache: maven
 
       - name: Run unit & Mockito tests
-        run: mvn clean test -DskipITs=true
+        run: mvn clean test
         # assumes unit + mockito live under surefire
 
 
