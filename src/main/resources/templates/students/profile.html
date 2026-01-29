@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-
+<head th:replace="fragments/head :: head('Courses List')"></head>
 <head>
     <meta charset="UTF-8">
     <title>Student Profile</title>
@@ -12,8 +12,10 @@
 </head>
 
 <body class="bg-light">
+<div th:replace="fragments/header :: header"></div>
 
-<div class="container py-5" th:if="${student != null}">
+
+<div class="container py-5">
 
     <!-- Page Header -->
     <div class="mb-4">
@@ -27,75 +29,41 @@
 
             <div class="row mb-3">
                 <div class="col-md-4 fw-semibold">Student ID</div>
-                <div class="col-md-8" th:text="${student.id}">N/A</div>
+                <div class="col-md-8" th:text="${student?.id ?: 'N/A'}">N/A</div>
             </div>
 
             <div class="row mb-3">
-                <div class="col-md-4 fw-semibold">First Name</div>
-                <div class="col-md-8" th:text="${student.firstName ?: 'N/A'}">N/A</div>
+                <div class="col-md-4 fw-semibold">Name</div>
+                <div class="col-md-8" th:text="${student?.studentName ?: 'N/A'}">N/A</div>
             </div>
 
             <div class="row mb-3">
-                <div class="col-md-4 fw-semibold">Last Name</div>
-                <div class="col-md-8" th:text="${student.lastName ?: 'N/A'}">N/A</div>
+                <div class="col-md-4 fw-semibold">Graduated?</div>
+                <div class="col-md-8" th:text="${student?.hasGraduated != null ? (student.hasGraduated ? 'Yes' : 'No') : 'N/A'}">N/A</div>
             </div>
 
-            <div class="row mb-3">
-                <div class="col-md-4 fw-semibold">Email</div>
-                <div class="col-md-8" th:text="${student.email ?: 'N/A'}">N/A</div>
-            </div>
-
-            <!-- Courses -->
+            <!-- Course -->
             <div class="row mb-4">
-                <div class="col-md-4 fw-semibold">Courses</div>
-                <div class="col-md-8">
-                    <ul class="list-group"
-                        th:if="${student.courses != null and !student.courses.isEmpty()}">
-                        <li class="list-group-item"
-                            th:each="course : ${student.courses}"
-                            th:text="${course.name ?: 'Unnamed Course'}">
-                            N/A
-                        </li>
-                    </ul>
-
-                    <span class="text-muted"
-                          th:if="${student.courses == null or student.courses.isEmpty()}">
-                        No courses enrolled
-                    </span>
-                </div>
+                <div class="col-md-4 fw-semibold">Course</div>
+                <div class="col-md-8" th:text="${student?.course?.courseName ?: 'No course'}">No course</div>
             </div>
 
             <!-- Actions -->
             <div class="d-flex gap-2">
-
-                <a th:href="@{/students/update-student/{id}(id=${student.id})}"
+                <a th:if="${student?.id != null}"
+                   th:href="@{/students/update-student/{id}(id=${student.id})}"
                    class="btn btn-warning">
                     Edit Profile
                 </a>
 
-                <form th:action="@{/students/{id}/delete(id=${student.id})}"
-                      method="post"
-                      onsubmit="return confirm('Are you sure you want to delete this student?');">
-                    <button type="submit" class="btn btn-danger">
-                        Delete
-                    </button>
-                </form>
-
-                <a th:href="@{/students}" class="btn btn-secondary">
-                    Back to Students
+                <a th:href="@{/}" class="btn btn-secondary">
+                    Back to Dashboard
                 </a>
             </div>
 
         </div>
     </div>
 
-</div>
-
-<!-- Fallback if student is null -->
-<div class="container py-5" th:if="${student == null}">
-    <div class="alert alert-warning text-center">
-        Student not found.
-    </div>
 </div>
 
 </body>

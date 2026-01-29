@@ -119,6 +119,10 @@ public class CourseService {
                 .map(courseMapper::toDTO)
                 .toList();
     }
+    public List<Course> getAllCourseEntities() {
+        return courseRepository.findAll();
+    }
+
 
 
     /*
