@@ -20,8 +20,7 @@ Feature: User Authentication
 
     Examples:
       | email                         | password |
-      | student                       | studentpass |
-
+      | alice                         | alicepass |
 
   Scenario Outline: Unsuccessful login
     Given I am on the login page

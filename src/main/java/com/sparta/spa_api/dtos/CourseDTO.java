@@ -27,6 +27,10 @@ public class CourseDTO {
     public CourseDTO(Course course) {
     }
 
+    public CourseDTO() {
+
+    }
+
     public long getDurationInDays() {
         return durationInDays;
     }
