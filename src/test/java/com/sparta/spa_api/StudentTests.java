@@ -1,3 +1,15 @@
+package com.sparta.spa_api;
+import com.sparta.spa_api.TestBase;
+import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.given;
+
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.DisplayName;
+
 //package com.sparta.spa_api;
 //
 //import com.sparta.spa_api.dtos.CourseMapper;
@@ -173,3 +185,35 @@
 //        Assertions.assertTrue(result);
 //    }
 //}
+public class StudentTests extends TestBase {
+
+    @Test
+    void testGetStudents() {
+        given()
+                .auth().preemptive().basic("4", "trainerpass")
+                .when()
+                .get("/api/students")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    @DisplayName("Get course by ID")
+    void shouldReturnCourseById() {
+        Response response =
+                given()
+                        .auth().preemptive().basic("4", "trainerpass")
+                        .when()
+                        .get("/api/students/1")
+                        .then()
+                        .statusCode(200)
+                        .extract().response();
+
+        assertThat(response.jsonPath().getInt("id"), is(1));
+    }
+}
+
+
+
+
+

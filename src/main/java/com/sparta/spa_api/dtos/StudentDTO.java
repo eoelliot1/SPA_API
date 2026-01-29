@@ -5,7 +5,7 @@ public class StudentDTO {
     private Integer id;
     private String studentName;
     private Integer courseId;
-    private Integer trainerId;   // ✅ ADD
+    private Integer trainerId;
     private boolean hasGraduated;
 
     public Integer getId() {
