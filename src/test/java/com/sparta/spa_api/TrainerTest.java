@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import java.util.Optional;
 
-public class TrainerTests {
+public class TrainerTest {
     private final TrainersRepository mockTrainerRepository = Mockito.mock(TrainersRepository.class);
     private final StudentRepository mockStudentRepository = Mockito.mock(StudentRepository.class);
     private final CourseRepository mockCourseRepository = Mockito.mock(CourseRepository.class);

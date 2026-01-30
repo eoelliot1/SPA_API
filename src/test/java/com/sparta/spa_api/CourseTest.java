@@ -5,7 +5,6 @@ import com.sparta.spa_api.dtos.CourseMapper;
 import com.sparta.spa_api.dtos.TrainersMapper;
 import com.sparta.spa_api.entities.Course;
 import com.sparta.spa_api.entities.Student;
-import com.sparta.spa_api.entities.Trainers;
 import com.sparta.spa_api.repository.CourseRepository;
 import com.sparta.spa_api.services.CourseService;
 import org.junit.jupiter.api.Assertions;
@@ -17,7 +16,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-public class CourseTests {
+public class CourseTest {
     private final TrainersMapper mockTrainersMapper = Mockito.mock(TrainersMapper.class);
     private final CourseRepository mockRepository = Mockito.mock(CourseRepository.class);
     private final CourseMapper mockMapper = Mockito.mock(CourseMapper.class);

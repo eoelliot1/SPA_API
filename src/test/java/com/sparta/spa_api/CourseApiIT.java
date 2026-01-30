@@ -1,23 +1,19 @@
 package com.sparta.spa_api;
 
-
-import com.sparta.spa_api.TestBase;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
-public class TrainerApiTests extends TestBase {
+public class CourseApiIT extends TestBase {
 
     @Test
     void testGetTrainers() {
@@ -29,10 +25,8 @@ public class TrainerApiTests extends TestBase {
                 .statusCode(200);
     }
 
-
-
     @Test
-    @DisplayName("Get course by ID")
+    @DisplayName("Get trainer by ID")
     void shouldReturnTrainerById() {
         Response response =
                 given()
@@ -49,7 +43,6 @@ public class TrainerApiTests extends TestBase {
     @Test
     @DisplayName("Return 404 when trainer does not exist")
     void shouldReturn404ForInvalidTrainerId() {
-
         given()
                 .auth().preemptive().basic("trainer", "trainerpass")
                 .accept(ContentType.JSON)
@@ -63,7 +56,6 @@ public class TrainerApiTests extends TestBase {
                 .body("path", equalTo("/api/trainers/999"));
     }
 
-
     @Test
     @DisplayName("Get trainer by invalid ID → 404")
     void shouldReturn404WhenTrainerNotFound() {
@@ -75,13 +67,11 @@ public class TrainerApiTests extends TestBase {
                 .statusCode(404);
     }
 
-
-
     @Test
     @DisplayName("Create new trainer")
     void shouldCreateTrainer() {
         Map<String, Object> newTrainer = new HashMap<>();
-        newTrainer.put("id", 5);
+        newTrainer.put("id", 8);
         newTrainer.put("trainerName", "Philip");
         newTrainer.put("courseId", 1);
 
@@ -97,7 +87,7 @@ public class TrainerApiTests extends TestBase {
                         .extract().response();
 
         assertThat(response.jsonPath().getString("trainerName"), is("Philip"));
-        assertThat(response.jsonPath().getInt("id"), is(5));
+        assertThat(response.jsonPath().getInt("id"), is(8));
     }
 
     @Test
@@ -122,7 +112,6 @@ public class TrainerApiTests extends TestBase {
         assertThat(response.jsonPath().getInt("courseId"), is(2));
     }
 
-
     @Test
     @DisplayName("Delete trainer")
     void shouldDeleteTrainer() {
@@ -133,7 +122,6 @@ public class TrainerApiTests extends TestBase {
                 .then()
                 .statusCode(204);
 
-        // Verify deletion
         given()
                 .auth().preemptive().basic("trainer", "trainerpass")
                 .when()
@@ -142,9 +130,3 @@ public class TrainerApiTests extends TestBase {
                 .statusCode(404);
     }
 }
-
-
-
-
-
-
