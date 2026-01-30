@@ -6,7 +6,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import locators.LoginPageLocators;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -41,7 +40,7 @@ public class LoginSteps {
         WebElement trainerDashboard = loginPageLocators.getTrainerDashboard();
         wait.until(ExpectedConditions.visibilityOf(trainerDashboard));
 
-        Assert.assertTrue(trainerDashboard.getText().contains("Trainer"));
+        Assertions.assertTrue(trainerDashboard.getText().contains("Trainer"));
     }
 
 
@@ -50,7 +49,7 @@ public class LoginSteps {
         WebElement studentDashboard = loginPageLocators.getStudentDashboard();
         wait.until(ExpectedConditions.visibilityOf(studentDashboard));
 
-        Assert.assertTrue(studentDashboard.getText().contains("Student"));
+        Assertions.assertTrue(studentDashboard.getText().contains("Student"));
 
     }
 
@@ -96,7 +95,7 @@ public class LoginSteps {
         WebElement trainerDashboard = loginPageLocators.getTrainerDashboard();
         wait.until(ExpectedConditions.visibilityOf(trainerDashboard));
 
-        Assert.assertTrue(trainerDashboard.getText().contains("Trainer"));
+        Assertions.assertTrue(trainerDashboard.getText().contains("Trainer"));
     }
 
 }

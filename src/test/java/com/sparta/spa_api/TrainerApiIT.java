@@ -13,7 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CourseApiIT extends TestBase {
+public class TrainerApiIT extends TestBase {
 
     @Test
     void testGetTrainers() {
