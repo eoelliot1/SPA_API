@@ -2,10 +2,16 @@ package actions;
 
 import locators.LoginPageLocators;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.WebElement;
 import utils.HelperClass;
+import java.time.Duration;
+
 
 public class LoginPageActions {
     LoginPageLocators loginPageLocators = null;
+    WebDriverWait wait = new WebDriverWait(HelperClass.getDriver(), Duration.ofSeconds(HelperClass.TIMEOUT));
 
     public LoginPageActions() {
 
@@ -31,7 +37,10 @@ public class LoginPageActions {
 
     // Click on logout button
     public void clickLogoutButton() {
-        loginPageLocators.getLogoutButton().click();
+        WebElement logoutButton = loginPageLocators.getLogoutButton();
+        wait.until(ExpectedConditions.visibilityOf(logoutButton));
+        logoutButton.click();
+
     }
 
     public void signIn(String email, String password) {
