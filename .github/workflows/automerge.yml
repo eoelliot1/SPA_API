@@ -22,10 +22,34 @@ jobs:
           java-version: 21
           cache: maven
 
-      - name: Start Application
+      - name: Build application
+        run: mvn -B -DskipTests package
+
+      - name: Start application (find jar + health check)
         run: |
-          nohup java -jar target/your-app.jar &
-          sleep 10   # Adjust time or use a health check
+          # find the built jar (ignore -original jars)
+          JAR=$(ls target/*.jar | grep -v '\-original' | head -n1 || true)
+          if [ -z "$JAR" ]; then
+            echo "ERROR: no JAR found in target/"; ls -al target || true
+            exit 1
+          fi
+          echo "Starting $JAR"
+          nohup java -jar "$JAR" > target/app.log 2>&1 &
+
+          # Wait for HTTP endpoint to be available (adjust URL as needed)
+          echo "Waiting for application to become ready at http://localhost:8091/login ..."
+          retries=0
+          until curl -sSf http://localhost:8091/login > /dev/null 2>&1 || [ $retries -ge 60 ]; do
+            retries=$((retries+1))
+            echo "Waiting... ($retries)"
+            sleep 1
+          done
+          if [ $retries -ge 60 ]; then
+            echo "ERROR: application did not become ready in time. Tail of target/app.log:"
+            tail -n +1 target/app.log | sed -n '1,200p'
+            exit 1
+          fi
+          echo "Application is up"
 
       - name: Run unit tests
         run: mvn -B clean test
@@ -44,10 +68,34 @@ jobs:
           java-version: 21
           cache: maven
 
-      - name: Start Application
+      - name: Build application
+        run: mvn -B -DskipTests package
+
+      - name: Start application (find jar + health check)
         run: |
-          nohup java -jar target/your-app.jar &
-          sleep 10   # Adjust time or use a health check
+          # find the built jar (ignore -original jars)
+          JAR=$(ls target/*.jar | grep -v '\-original' | head -n1 || true)
+          if [ -z "$JAR" ]; then
+            echo "ERROR: no JAR found in target/"; ls -al target || true
+            exit 1
+          fi
+          echo "Starting $JAR"
+          nohup java -jar "$JAR" > target/app.log 2>&1 &
+
+          # Wait for HTTP endpoint to be available (adjust URL as needed)
+          echo "Waiting for application to become ready at http://localhost:8091/login ..."
+          retries=0
+          until curl -sSf http://localhost:8091/login > /dev/null 2>&1 || [ $retries -ge 60 ]; do
+            retries=$((retries+1))
+            echo "Waiting... ($retries)"
+            sleep 1
+          done
+          if [ $retries -ge 60 ]; then
+            echo "ERROR: application did not become ready in time. Tail of target/app.log:"
+            tail -n +1 target/app.log | sed -n '1,200p'
+            exit 1
+          fi
+          echo "Application is up"
 
       - name: Run API tests
         run: mvn -B -Papi verify
@@ -69,10 +117,34 @@ jobs:
       - name: Set up Chrome
         uses: browser-actions/setup-chrome@v1
 
-      - name: Start Application
+      - name: Build application
+        run: mvn -B -DskipTests package
+
+      - name: Start application (find jar + health check)
         run: |
-          nohup java -jar target/your-app.jar &
-          sleep 10   # Adjust time or use a health check
+          # find the built jar (ignore -original jars)
+          JAR=$(ls target/*.jar | grep -v '\-original' | head -n1 || true)
+          if [ -z "$JAR" ]; then
+            echo "ERROR: no JAR found in target/"; ls -al target || true
+            exit 1
+          fi
+          echo "Starting $JAR"
+          nohup java -jar "$JAR" > target/app.log 2>&1 &
+
+          # Wait for HTTP endpoint to be available (adjust URL as needed)
+          echo "Waiting for application to become ready at http://localhost:8091/login ..."
+          retries=0
+          until curl -sSf http://localhost:8091/login > /dev/null 2>&1 || [ $retries -ge 60 ]; do
+            retries=$((retries+1))
+            echo "Waiting... ($retries)"
+            sleep 1
+          done
+          if [ $retries -ge 60 ]; then
+            echo "ERROR: application did not become ready in time. Tail of target/app.log:"
+            tail -n +1 target/app.log | sed -n '1,200p'
+            exit 1
+          fi
+          echo "Application is up"
 
       - name: Run Web tests
         env:
