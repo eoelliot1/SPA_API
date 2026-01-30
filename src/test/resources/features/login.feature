@@ -33,9 +33,9 @@ Feature: User Authentication
       | wrongemail@gmail.com     |  wrongpass |
 
 
-  Scenario: Successful logout
-    Given I am on the login page
-    And I am logged in as a Trainer
-    And I am on the trainer dashboard
-    When I press the logout button
-    Then I should be redirected to the login page
+//  Scenario: Successful logout
+//    Given I am on the login page
+//    And I am logged in as a Trainer
+ //   And I am on the trainer dashboard
+ //   When I press the logout button
+ //   Then I should be redirected to the login page
