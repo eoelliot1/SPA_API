@@ -22,6 +22,11 @@ jobs:
           java-version: 21
           cache: maven
 
+      - name: Start Application
+        run: |
+          nohup java -jar target/your-app.jar &
+          sleep 10   # Adjust time or use a health check
+
       - name: Run unit tests
         run: mvn -B clean test
 
@@ -38,6 +43,11 @@ jobs:
           distribution: temurin
           java-version: 21
           cache: maven
+
+      - name: Start Application
+        run: |
+          nohup java -jar target/your-app.jar &
+          sleep 10   # Adjust time or use a health check
 
       - name: Run API tests
         run: mvn -B -Papi verify
@@ -58,6 +68,11 @@ jobs:
 
       - name: Set up Chrome
         uses: browser-actions/setup-chrome@v1
+
+      - name: Start Application
+        run: |
+          nohup java -jar target/your-app.jar &
+          sleep 10   # Adjust time or use a health check
 
       - name: Run Web tests
         env:
