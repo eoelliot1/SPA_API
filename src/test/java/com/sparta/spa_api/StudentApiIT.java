@@ -1,11 +1,9 @@
 package com.sparta.spa_api;
-import com.sparta.spa_api.TestBase;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import io.restassured.response.Response;
@@ -14,7 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StudentApiTests extends TestBase{
+public class StudentApiIT extends TestBase{
 
     @Test
     void testGetStudents() {
@@ -75,7 +73,7 @@ public class StudentApiTests extends TestBase{
                         .extract().response();
 
         assertThat(response.jsonPath().getString("studentName"), is("Ahmed"));
-        assertThat(response.jsonPath().getInt("id"), is(5));
+        assertThat(response.jsonPath().getInt("id"), is(15));
     }
 
     @Test

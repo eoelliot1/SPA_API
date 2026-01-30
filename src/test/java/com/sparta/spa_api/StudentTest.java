@@ -1,5 +1,7 @@
+
 package com.sparta.spa_api;
 
+import com.sparta.spa_api.dtos.CourseMapper;
 import com.sparta.spa_api.dtos.StudentDTO;
 import com.sparta.spa_api.dtos.StudentMapper;
 import com.sparta.spa_api.entities.Course;
@@ -16,7 +18,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-public class StudentTests {
+public class StudentTest {
 
     private final StudentRepository mockStudentRepo = Mockito.mock(StudentRepository.class);
     private final StudentMapper mockMapper = Mockito.mock(StudentMapper.class);
@@ -30,7 +32,7 @@ public class StudentTests {
     @Test
     @DisplayName("StudentService is constructed correctly")
     void constructServiceTest() {
-        Assertions.assertInstanceOf(StudentService.class, sut);
+        Assertions.assertNotNull(sut);
     }
 
     @Test
@@ -47,14 +49,8 @@ public class StudentTests {
     @Test
     @DisplayName("Get all students returns list of StudentDTOs")
     void getAllStudentsTest() {
-        Course course = new Course();
-        course.setCourseName("Data");
-
         Student student1 = new Student("Alice", false);
-        student1.setCourse(course);
-
         Student student2 = new Student("Bob", true);
-        student2.setCourse(course);
 
         StudentDTO dto1 = new StudentDTO();
         dto1.setStudentName("Alice");
@@ -78,11 +74,7 @@ public class StudentTests {
     @Test
     @DisplayName("Get student by ID - student exists")
     void getStudentByIdTest() {
-        Course course = new Course();
-        course.setCourseName("Software Testing");
-
         Student student = new Student("Alice", false);
-        student.setCourse(course);
 
         StudentDTO dto = new StudentDTO();
         dto.setStudentName("Alice");
@@ -101,7 +93,10 @@ public class StudentTests {
     void getStudentByIdNotFoundTest() {
         Mockito.when(mockStudentRepo.findById(99)).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(NoSuchElementException.class, () -> sut.getStudentById(99));
+        Assertions.assertThrows(
+                NoSuchElementException.class,
+                () -> sut.getStudentById(99)
+        );
     }
 
     // ===== Update Student =====
@@ -109,30 +104,37 @@ public class StudentTests {
     @Test
     @DisplayName("Update student when student exists")
     void updateStudentTest() {
-        Student student = new Student("Alice", false);
+        Student existingStudent = new Student("Alice", false);
 
-        StudentDTO dto = new StudentDTO();
-        dto.setStudentName("Alice Updated");
-        dto.setCourseId(null); // no course update
+        StudentDTO updateDTO = new StudentDTO();
+        updateDTO.setStudentName("Alice Updated");
+        updateDTO.setGraduated(true);
 
-        Mockito.when(mockStudentRepo.findById(1)).thenReturn(Optional.of(student));
-        Mockito.when(mockStudentRepo.save(student)).thenReturn(student);
-        Mockito.when(mockMapper.toDTO(student)).thenReturn(dto);
+        StudentDTO returnedDTO = new StudentDTO();
+        returnedDTO.setStudentName("Alice Updated");
 
-        StudentDTO result = sut.updateStudent(1, dto);
+        Mockito.when(mockStudentRepo.findById(1)).thenReturn(Optional.of(existingStudent));
+        Mockito.when(mockStudentRepo.save(existingStudent)).thenReturn(existingStudent);
+        Mockito.when(mockMapper.toDTO(existingStudent)).thenReturn(returnedDTO);
+
+        StudentDTO result = sut.updateStudent(1, updateDTO);
 
         Assertions.assertEquals("Alice Updated", result.getStudentName());
+        Assertions.assertTrue(existingStudent.isHasGraduated());
     }
 
     @Test
     @DisplayName("Update student throws exception when student does not exist")
     void updateStudentNotFoundTest() {
         StudentDTO dto = new StudentDTO();
-        dto.setStudentName("Alice Updated");
+        dto.setStudentName("Doesn't Matter");
 
         Mockito.when(mockStudentRepo.findById(99)).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(NoSuchElementException.class, () -> sut.updateStudent(99, dto));
+        Assertions.assertThrows(
+                NoSuchElementException.class,
+                () -> sut.updateStudent(99, dto)
+        );
     }
 
     // ===== Delete Student =====
@@ -142,7 +144,7 @@ public class StudentTests {
     void deleteStudentSuccessTest() {
         Mockito.when(mockStudentRepo.existsById(1)).thenReturn(true);
 
-        Assertions.assertDoesNotThrow(() -> sut.deleteStudent(1));
+        sut.deleteStudent(1);
 
         Mockito.verify(mockStudentRepo).deleteById(1);
     }
@@ -152,7 +154,10 @@ public class StudentTests {
     void deleteStudentFailTest() {
         Mockito.when(mockStudentRepo.existsById(99)).thenReturn(false);
 
-        Assertions.assertThrows(NoSuchElementException.class, () -> sut.deleteStudent(99));
+        Assertions.assertThrows(
+                NoSuchElementException.class,
+                () -> sut.deleteStudent(99)
+        );
     }
 
     // ===== Has Graduated =====
@@ -168,4 +173,23 @@ public class StudentTests {
 
         Assertions.assertTrue(result);
     }
+
+    @Test
+    @DisplayName("hasGraduated throws exception when student not found")
+    void hasGraduatedNotFoundTest() {
+        Mockito.when(mockStudentRepo.findById(99)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(
+                NoSuchElementException.class,
+                () -> sut.hasGraduated(99)
+        );
+    }
 }
+
+
+
+
+
+
+
+

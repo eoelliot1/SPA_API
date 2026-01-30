@@ -1,5 +1,6 @@
 name: Run Tests Pipeline
 
+
 on:
   pull_request:
     branches: ["master"]
@@ -48,7 +49,6 @@ jobs:
       - name: Run REST Assured tests
         run: mvn verify -Drest.tests=true
         # typically bound to failsafe or a Maven profile
-
 
   selenium-tests:
     name: Selenium Tests
