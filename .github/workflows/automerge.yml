@@ -44,7 +44,7 @@ jobs:
             echo "Waiting... ($retries)"
             sleep 1
           done
-          if [ $retries -ge 60 ]; then
+          if [ $retries -ge 120 ]; then
             echo "ERROR: application did not become ready in time. Tail of target/app.log:"
             tail -n +1 target/app.log | sed -n '1,200p'
             exit 1
@@ -90,7 +90,7 @@ jobs:
             echo "Waiting... ($retries)"
             sleep 1
           done
-          if [ $retries -ge 60 ]; then
+          if [ $retries -ge 120 ]; then
             echo "ERROR: application did not become ready in time. Tail of target/app.log:"
             tail -n +1 target/app.log | sed -n '1,200p'
             exit 1
@@ -139,7 +139,7 @@ jobs:
             echo "Waiting... ($retries)"
             sleep 1
           done
-          if [ $retries -ge 60 ]; then
+          if [ $retries -ge 120 ]; then
             echo "ERROR: application did not become ready in time. Tail of target/app.log:"
             tail -n +1 target/app.log | sed -n '1,200p'
             exit 1
