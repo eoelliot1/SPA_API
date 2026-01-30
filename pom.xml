@@ -332,6 +332,25 @@
                             </includes>
                         </configuration>
                     </plugin>
+                         <plugin>
+                               <groupId>org.apache.maven.plugins</groupId>
+                               <artifactId>maven-surefire-plugin</artifactId>
+                               <version>3.2.5</version>
+                           
+                               <configuration>
+                                   <includes>
+                                       <include>**/*Test.java</include>
+                                   </includes>
+                           
+                                   <useModulePath>false</useModulePath>
+                           
+                                   <dependenciesToScan>
+                                       <dependency>
+                                           io.cucumber:cucumber-junit-platform-engine
+                                       </dependency>
+                                   </dependenciesToScan>
+                               </configuration>
+                           </plugin>
                 </plugins>
             </build>
         </profile>
