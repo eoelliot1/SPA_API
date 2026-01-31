@@ -66,9 +66,9 @@ public class AppConfig {
             );
 
             Spartan trainerUser = new Spartan(
-                    "trainer@spartaglobal.com",
-                    "trainer",
-                    encoder.encode("trainerpass"),
+                    "sarah@spartaglobal.com",
+                    "sarah",
+                    encoder.encode("sarahpass"),
                     "TRAINER"
             );
 
