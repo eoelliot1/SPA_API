@@ -13,15 +13,17 @@ public class LoginPageLocators {
 
     @FindBy(css = "button[type='submit']")
     private WebElement logoutButton;
-
     @FindBy(xpath = "/html/body/div[2]/div[1]/div")
     private WebElement trainerDashboard;
 
     @FindBy(xpath = "/html/body/div[2]/div[1]/div")
     private WebElement studentDashboard;
 
-    @FindBy(id = "email-input")
-    private WebElement emailField;
+//    @FindBy(id = "email-input")
+//    private WebElement emailField;
+
+    @FindBy(xpath="/html/body/div/div/div/form/div[1]/input")
+  private WebElement emailField;
 
     public WebElement getEmailField() {
         return emailField;
