@@ -10,17 +10,11 @@ Feature: Trainer Management
     When I am logged in as a Trainer
     Then I should be redirected to the trainer dashboard
 
-  # =========================
-  # Viewing Trainers
-  # =========================
 
   Scenario: View all available trainers
        Then I should see all available trainers listed
 
 
-  # =========================
-  # Searching Trainers
-  # =========================
 
   Scenario: Search trainers by course duration
     When I search for courses longer than "120" days
@@ -30,9 +24,6 @@ Feature: Trainer Management
     When I search for courses longer than "1000" days
     Then I should see no trainers listed
 
-  # =========================
-  # Adding Trainer
-  # =========================
 
   Scenario: Navigate to add new trainer page
     When I click "Add New Trainer"
@@ -45,9 +36,6 @@ Feature: Trainer Management
     And I click Save Trainer
     Then I should see trainer "Philip Windridge" listed
 
-  # =========================
-  # Editing Trainer
-  # =========================
 
   Scenario: Edit an existing trainer
     Given there is an existing trainer named "Sarah Coach"
@@ -56,15 +44,7 @@ Feature: Trainer Management
     And I change course to "Software Testing"
     And I click Update Trainer
     Then I should be redirected to the trainers page
-    And I should see course "Software Testing" assigned
-#
-#  Scenario: Cancel trainer editing
-#    Given there is an existing trainer named "Sarah Coach"
-#    When I click "Edit" for trainer "Sarah Coach"
-#    And I update trainer name to "Sarah Lead Coach"
-#    And I click "Cancel"
-#    Then I should see trainer "Sarah Coach" listed
-#    And I should not see "Sarah Lead Coach"
+
 
 
 

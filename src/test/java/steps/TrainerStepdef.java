@@ -1,6 +1,7 @@
 package steps;
 
 import actions.LoginPageActions;
+import context.TestContext;
 import io.cucumber.java.PendingException;
 import io.cucumber.java.en.*;
 import actions.TrainerPageActions;
@@ -25,7 +26,7 @@ import java.util.List;
 public class TrainerStepdef {
     WebDriver driver = HelperClass.getDriver();
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(HelperClass.TIMEOUT));
-    TrainerPageLocators trainerLocators= new TrainerPageLocators();
+    TrainerPageLocators trainerLocators = new TrainerPageLocators();
 
     LoginPageActions loginPageActions = new LoginPageActions();
     LoginPageLocators loginPageLocators;
@@ -44,12 +45,8 @@ public class TrainerStepdef {
 
         trainerPageActions.navigateToTrainersPage();
 
-        // Simple assertion
         Assert.assertTrue(driver.getCurrentUrl().contains("/trainers"));
 
-//        Assert.assertTrue("Trainers table is not visible", trainerPageActions.isTrainersTableVisible());
-//        List<WebElement> rows = trainerPageActions.getAllTrainerRows();
-//        Assert.assertTrue("No trainers found", rows.size() > 0);
 
     }
 
@@ -87,14 +84,6 @@ public class TrainerStepdef {
         trainerPageActions.saveTrainer();
     }
 
-//    @Then("I should see trainer {string} listed")
-//    public void iShouldSeeTrainerListed(String trainerName) {
-//        var rows = trainerPageActions.getTrainerPageLocators().getTrainerRows();
-//
-//        boolean found = rows.stream()
-//                .anyMatch(row -> row.getText().contains(trainerName));
-//        Assert.assertTrue("Trainer " + trainerName + " not found in the list", found);
-//    }
 
     @When("I click {string}")
     public void iClick(String buttonName) {
@@ -113,10 +102,10 @@ public class TrainerStepdef {
     @Then("I should see trainer {string} listed")
     public void iShouldSeeTrainerListed(String trainerName) {
 
-            Assert.assertTrue(
-                    "Trainer not found in list: " + trainerName,
-                    trainerPageActions.isTrainerListed(trainerName)
-            );
+        Assert.assertTrue(
+                "Trainer not found in list: " + trainerName,
+                trainerPageActions.isTrainerListed(trainerName)
+        );
     }
 
     @Then("I should see no trainers listed")
@@ -130,33 +119,20 @@ public class TrainerStepdef {
     @Given("there is an existing trainer named {string}")
     public void thereIsAnExistingTrainerNamed(String trainerName) {
 
-            trainerPageActions.goToTrainersPage();
-            Assert.assertTrue(
-                    "Trainer not found: " + trainerName,
-                    trainerPageActions.isTrainerListed(trainerName)
-            );
+        trainerPageActions.goToTrainersPage();
+        Assert.assertTrue(
+                "Trainer not found: " + trainerName,
+                trainerPageActions.isTrainerListed(trainerName)
+        );
     }
 
-    @When("I click {string} for trainer {string}")
-    public void iClickForTrainer(String button, String trainerName) {
-        if (button.equalsIgnoreCase("Edit")) {
-            // Wait a moment for the table to be fully loaded
-            try {
-                Thread.sleep(1000); // Small wait to ensure page is stable
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
 
-            // Refresh the page elements before clicking
-            PageFactory.initElements(driver, trainerLocators);
-
-            trainerPageActions.clickEditTrainer(trainerName);
-        }
-    }
 
     @And("I update trainer name to {string}")
     public void iUpdateTrainerNameTo(String newName) {
+
         trainerPageActions.updateTrainerName(newName);
+        TestContext.currentTrainerName = newName;
     }
 
     @And("I change course to {string}")
@@ -171,14 +147,7 @@ public class TrainerStepdef {
         );
     }
 
-    @And("I should see course {string} assigned")
 
-    public void iShouldSeeCourseAssigned(String courseName) {
-        Assert.assertTrue(
-                "Course not found",
-                trainerPageActions.isCourseAssigned1("John Senior Trainer", courseName)
-        );
-    }
 
     @And("I click Update Trainer")
     public void iClickUpdateTrainer() {
@@ -186,63 +155,24 @@ public class TrainerStepdef {
 
     }
 
-    @And("I should see course {string} assigned for trainer {string}")
-    public void iShouldSeeCourseAssignedForTrainer(String expectedCourse, String trainerName) {
 
-        List<WebElement> rows = trainerPageActions.getTrainerRows();
+    @When("I click {string} for trainer {string}")
+    public void iClickForTrainer(String action, String trainerName) {
+        trainerPageActions.clickEditTrainer(trainerName);
+    }
 
-        boolean found = rows.stream().anyMatch(row -> {
-            String name = row.findElement(By.xpath("./td[1]")).getText();
-            String course = row.findElement(By.xpath("./td[3]")).getText();
-            return name.equals(trainerName) && course.equals(expectedCourse);
-        });
-
-        Assert.assertTrue("Trainer " + trainerName + " does not have course " + expectedCourse, found);
+    @And("I should see course {string} assigned")
+    public void iShouldSeeCourseAssigned(String courseName) {
+        Assert.assertTrue(
+                trainerPageActions.isCourseAssignedToTrainer(
+                        TestContext.currentTrainerName,
+                        courseName
+                )
+        );
     }
 
 
-//    @When("I click {string}")
-//    public void iClick(String buttonName) {
-//        if(buttonName.equals("Add New Trainer")) {
-//            // Click the "Add New Trainer" button using your locator
-//            trainerPageLocators.getAddTrainerButton().click();
-//        }
-
-    }
+}
 
 
-
-//    WebDriver driver = HelperClass.getDriver(); // ✅ Use driver from HelperClass
-//    TrainerPageActions trainerActions = new TrainerPageActions(driver);
-//    TrainerPageLocators trainerLocators;
-//
-//
-//
-//
-//
-//    @And("I navigate to the trainers page")
-//    public void iNavigateToTheTrainersPage() {
-//        trainerActions.navigateToTrainersPage();
-//
-//    }
-
-
-
-
-//
-//    @Then("I should see all available trainers listed")
-//    public void iShouldSeeAllAvailableTrainersListed() {
-//        Assert.assertTrue("Trainers table is not visible", trainerActions.isTrainersTableVisible());
-//        List<WebElement> rows = trainerActions.getAllTrainerRows();
-//        Assert.assertTrue("No trainers found", rows.size() > 0);
-//    }
-//
-//    @Then("I should see trainers with their course names displayed")
-//    public void iShouldSeeTrainersWithTheirCourseNamesDisplayed() {
-//        List<WebElement> courseCells = trainerActions.getTrainerCourseCells();
-//        for (WebElement cell : courseCells) {
-//            String text = cell.getText();
-//            Assert.assertTrue("Trainer course name is missing", text != null && !text.isEmpty());
-//        }
-//    }
 

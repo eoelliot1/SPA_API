@@ -1,4 +1,4 @@
-name: Run Junit & API tests Pipeline
+name: Run Junit & API tests Pipeline and merge
 
 on:
   pull_request:

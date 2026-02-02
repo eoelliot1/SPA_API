@@ -1,125 +1,13 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en"-->
-<!--      xmlns:th="http://www.thymeleaf.org"-->
-<!--      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">-->
-<!--<div th:replace="fragments/head :: head('Dashboard')"></div>-->
-
-<!--<body class="bg-light">-->
-<!--&lt;!&ndash; NAVBAR &ndash;&gt;-->
-<!--<nav class="navbar navbar-dark bg-primary shadow-sm">-->
-<!--    <div class="container-fluid">-->
-<!--        <a class="navbar-brand d-flex align-items-center"-->
-<!--           th:href="@{/}">-->
-<!--            <img th:src="@{/images/spartalogo.png}"-->
-<!--                 alt="Sparta Academy"-->
-<!--                 class="navbar-logo">-->
-<!--        </a>-->
-
-<!--        <div class="d-none d-lg-flex ms-auto">-->
-<!--            &lt;!&ndash; Trainer buttons &ndash;&gt;-->
-<!--            <a class="btn btn-outline-light me-2" href="/courses/" sec:authorize="hasRole('TRAINER')">Manage Courses</a>-->
-<!--            <a class="btn btn-outline-light me-2" href="/students/" sec:authorize="hasRole('TRAINER')">View Spartans</a>-->
-<!--            <a class="btn btn-outline-light me-2" href="/trainers" sec:authorize="hasRole('TRAINER')">View Trainers</a>-->
-
-<!--            &lt;!&ndash; Logout button for trainers in main navbar &ndash;&gt;-->
-<!--            <form sec:authorize="hasRole('TRAINER')" th:action="@{/logout}" method="post" class="d-inline">-->
-<!--                <button type="submit" class="btn btn-outline-light me-2">Logout</button>-->
-<!--            </form>-->
-
-<!--            &lt;!&ndash; Student buttons &ndash;&gt;-->
-<!--            <a class="btn btn-outline-light me-2"  th:href="@{/students/profile}" sec:authorize="hasRole('STUDENT')">My Profile</a>-->
-<!--            <a class="btn btn-outline-light me-2"  th:href="@{/students/courses}" sec:authorize="hasRole('STUDENT')">My Course</a>-->
-
-<!--            &lt;!&ndash; Logout button for students in main navbar &ndash;&gt;-->
-<!--            <form sec:authorize="hasRole('STUDENT')" th:action="@{/logout}" method="post" class="d-inline">-->
-<!--                <button type="submit" class="btn btn-outline-light">Logout</button>-->
-<!--            </form>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Hamburger &ndash;&gt;-->
-<!--        <button class="btn btn-outline-light d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sideMenuRight">-->
-<!--            ☰-->
-<!--        </button>-->
-<!--    </div>-->
-<!--</nav>-->
-
-<!--<div class="offcanvas offcanvas-end" tabindex="-1" id="sideMenuRight">-->
-<!--    <div class="offcanvas-header bg-primary text-white">-->
-<!--        <h5 class="offcanvas-title">Menu</h5>-->
-<!--        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>-->
-<!--    </div>-->
-<!--    <div class="offcanvas-body">-->
-<!--        &lt;!&ndash; Trainer buttons &ndash;&gt;-->
-<!--        <div sec:authorize="hasRole('TRAINER')" class="mb-2">-->
-<!--            <a class="btn btn-primary w-100 mb-2" href="/courses/">Manage Courses</a>-->
-<!--            <a class="btn btn-primary w-100 mb-2" href="/students/">View Spartans</a>-->
-<!--            <a class="btn btn-primary w-100 mb-2" href="/trainers">View Trainers</a>-->
-<!--            &lt;!&ndash; Logout button for trainers in mobile menu &ndash;&gt;-->
-<!--            <form sec:authorize="hasRole('TRAINER')" th:action="@{/logout}" method="post" class="w-100">-->
-<!--                <button type="submit" class="btn btn-light w-100">Logout</button>-->
-<!--            </form>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Student buttons &ndash;&gt;-->
-<!--        <div sec:authorize="hasRole('STUDENT')">-->
-<!--            <a class="btn btn-success w-100 mb-2"  th:href="@{/students/profile}">My Profile</a>-->
-<!--            <a class="btn btn-success w-100 mb-2"  th:href="@{/students/courses}">My Course</a>-->
-<!--            &lt;!&ndash; Logout button for students in mobile menu &ndash;&gt;-->
-<!--            <form sec:authorize="hasRole('STUDENT')" th:action="@{/logout}" method="post" class="w-100">-->
-<!--                <button type="submit" class="btn btn-light w-100">Logout</button>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<div class="container mt-4">-->
-<!--    &lt;!&ndash; Welcome card &ndash;&gt;-->
-<!--    <div class="card shadow-sm mb-4">-->
-<!--        <div class="card-body text-center">-->
-
-<!--            <h2 id="trainer-dashboard"-->
-<!--                sec:authorize="hasRole('TRAINER')">-->
-<!--                Welcome to the Trainer Dashboard-->
-<!--            </h2>-->
-
-<!--            <h2 id="student-dashboard"-->
-<!--                sec:authorize="hasRole('STUDENT')">-->
-<!--                Welcome to the Student Dashboard-->
-<!--            </h2>-->
-
-<!--            <p class="fs-4" th:text="'Today is ' + ${date}"></p>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; Main content card &ndash;&gt;-->
-<!--    <div class="card shadow-sm">-->
-<!--        <div class="card-body text-center">-->
-<!--            <p>Select an option from the menu to get started.</p>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; Fallback &ndash;&gt;-->
-<!--    <div sec:authorize="!isAuthenticated()" class="mt-4">-->
-<!--        <div class="alert alert-warning text-center">-->
-<!--            Please log in to access the platform.-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
-<!--</body>-->
-<!--</html>-->
-
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
-<div th:replace="fragments/head :: head('Dashboard')"></div>
+<head th:replace="fragments/head :: head('Dashboard')"></head>
 
 <body class="bg-light">
 
-<!-- NAVBAR -->
+<!-- ================= NAVBAR ================= -->
 <nav class="navbar navbar-dark bg-primary shadow-sm">
     <div class="container-fluid">
 
@@ -132,63 +20,33 @@
         <!-- DESKTOP MENU -->
         <div class="d-none d-lg-flex ms-auto">
 
-            <!-- ADMIN buttons -->
-            <a class="btn btn-outline-light me-2"
-               href="/courses/admin"
-               sec:authorize="hasRole('ADMIN')">New</a>
+            <!-- ADMIN -->
+            <div sec:authorize="hasRole('ADMIN')">
+                <a class="btn btn-outline-light me-2" href="/courses/admin">New</a>
+                <a class="btn btn-outline-light me-2" href="/courses/">Courses</a>
+                <a class="btn btn-outline-light me-2" href="/students/">Students</a>
+                <a class="btn btn-outline-light me-2" href="/trainers">Trainers</a>
+            </div>
 
-            <a class="btn btn-outline-light me-2"
-               href="/courses/"
-               sec:authorize="hasRole('ADMIN')">View Courses</a>
+            <!-- TRAINER -->
+            <div sec:authorize="hasRole('TRAINER')">
+                <a class="btn btn-outline-light me-2" href="/courses/">My Courses</a>
+                <a class="btn btn-outline-light me-2" href="/students/">My Students</a>
+            </div>
 
-            <a class="btn btn-outline-light me-2"
-               href="/students/"
-               sec:authorize="hasRole('ADMIN')">View Spartans</a>
+            <!-- STUDENT -->
+            <div sec:authorize="hasRole('STUDENT')">
+                <a class="btn btn-outline-light me-2" th:href="@{/students/profile}">Profile</a>
+                <a class="btn btn-outline-light me-2" th:href="@{/students/courses}">My Course</a>
+            </div>
 
-            <a class="btn btn-outline-light me-2"
-               href="/trainers"
-               sec:authorize="hasRole('ADMIN')">View Trainers</a>
-
-            <form sec:authorize="hasRole('ADMIN')"
-                  th:action="@{/logout}" method="post" class="d-inline">
-                <button type="submit" class="btn btn-outline-light me-2">Logout</button>
-            </form>
-
-            <!-- TRAINER buttons -->
-            <a class="btn btn-outline-light me-2"
-               href="/courses/"
-               sec:authorize="hasRole('TRAINER')">Manage Courses</a>
-
-            <a class="btn btn-outline-light me-2"
-               href="/students/"
-               sec:authorize="hasRole('TRAINER')">View Spartans</a>
-
-            <a class="btn btn-outline-light me-2"
-               href="/trainers"
-               sec:authorize="hasRole('TRAINER')">View Trainers</a>
-
-            <form sec:authorize="hasRole('TRAINER')"
-                  th:action="@{/logout}" method="post" class="d-inline">
-                <button type="submit" class="btn btn-outline-light me-2">Logout</button>
-            </form>
-
-            <!-- STUDENT buttons -->
-            <a class="btn btn-outline-light me-2"
-               th:href="@{/students/profile}"
-               sec:authorize="hasRole('STUDENT')">My Profile</a>
-
-            <a class="btn btn-outline-light me-2"
-               th:href="@{/students/courses}"
-               sec:authorize="hasRole('STUDENT')">My Course</a>
-
-            <form sec:authorize="hasRole('STUDENT')"
-                  th:action="@{/logout}" method="post" class="d-inline">
-                <button type="submit" class="btn btn-outline-light">Logout</button>
+            <form th:action="@{/logout}" method="post" class="d-inline ms-2">
+                <button class="btn btn-outline-light">Logout</button>
             </form>
 
         </div>
 
-        <!-- HAMBURGER -->
+        <!-- MOBILE TOGGLE -->
         <button class="btn btn-outline-light d-lg-none"
                 type="button"
                 data-bs-toggle="offcanvas"
@@ -199,7 +57,7 @@
     </div>
 </nav>
 
-<!-- MOBILE OFFCANVAS -->
+<!-- ================= MOBILE MENU ================= -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="sideMenuRight">
     <div class="offcanvas-header bg-primary text-white">
         <h5 class="offcanvas-title">Menu</h5>
@@ -207,78 +65,196 @@
                 class="btn-close btn-close-white"
                 data-bs-dismiss="offcanvas"></button>
     </div>
-
     <div class="offcanvas-body">
 
-        <!-- ADMIN -->
-        <div sec:authorize="hasRole('ADMIN')" class="mb-3">
+        <div sec:authorize="hasRole('ADMIN')">
             <a class="btn btn-primary w-100 mb-2" href="/courses/admin">New</a>
-            <a class="btn btn-primary w-100 mb-2" href="/courses/">Manage Courses</a>
-            <a class="btn btn-primary w-100 mb-2" href="/students/">View Spartans</a>
-            <a class="btn btn-primary w-100 mb-2" href="/trainers">View Trainers</a>
-            <form th:action="@{/logout}" method="post">
-                <button class="btn btn-light w-100">Logout</button>
-            </form>
+            <a class="btn btn-primary w-100 mb-2" href="/courses/">Courses</a>
+            <a class="btn btn-primary w-100 mb-2" href="/students/">Students</a>
+            <a class="btn btn-primary w-100 mb-2" href="/trainers">Trainers</a>
         </div>
 
-        <!-- TRAINER -->
-        <div sec:authorize="hasRole('TRAINER')" class="mb-3">
-            <a class="btn btn-primary w-100 mb-2" href="/courses/">Manage Courses</a>
-            <a class="btn btn-primary w-100 mb-2" href="/students/">View Spartans</a>
-            <a class="btn btn-primary w-100 mb-2" href="/trainers">View Trainers</a>
-            <form th:action="@{/logout}" method="post">
-                <button class="btn btn-light w-100">Logout</button>
-            </form>
+        <div sec:authorize="hasRole('TRAINER')">
+            <a class="btn btn-primary w-100 mb-2" href="/courses/">My Courses</a>
+            <a class="btn btn-primary w-100 mb-2" href="/students/">My Students</a>
         </div>
 
-        <!-- STUDENT -->
         <div sec:authorize="hasRole('STUDENT')">
-            <a class="btn btn-success w-100 mb-2" th:href="@{/students/profile}">My Profile</a>
+            <a class="btn btn-success w-100 mb-2" th:href="@{/students/profile}">Profile</a>
             <a class="btn btn-success w-100 mb-2" th:href="@{/students/courses}">My Course</a>
-            <form th:action="@{/logout}" method="post">
-                <button class="btn btn-light w-100">Logout</button>
-            </form>
         </div>
+
+        <form th:action="@{/logout}" method="post" class="mt-3">
+            <button class="btn btn-light w-100">Logout</button>
+        </form>
 
     </div>
 </div>
 
-<!-- CONTENT -->
+<!-- ================= MAIN CONTENT ================= -->
 <div class="container mt-4">
 
-    <div class="card shadow-sm mb-4">
-        <div class="card-body text-center">
-
-            <h2 sec:authorize="hasRole('ADMIN')">
-                Welcome to the Admin Dashboard
-            </h2>
-
-            <h2 sec:authorize="hasRole('TRAINER')">
-                Welcome to the Trainer Dashboard
-            </h2>
-
-            <h2 sec:authorize="hasRole('STUDENT')">
-                Welcome to the Student Dashboard
-            </h2>
-
-            <p class="fs-4" th:text="'Today is ' + ${date}"></p>
+    <!-- WELCOME -->
+    <div class="card shadow-sm mb-4 text-center">
+        <div class="card-body">
+            <h2 sec:authorize="hasRole('ADMIN')">Admin Dashboard</h2>
+            <h2 sec:authorize="hasRole('TRAINER')">Trainer Dashboard</h2>
+            <h2 sec:authorize="hasRole('STUDENT')">Student Dashboard</h2>
+            <p class="fs-5" th:text="'Today is ' + ${date}"></p>
         </div>
     </div>
 
-    <div class="card shadow-sm">
-        <div class="card-body text-center">
-            <p>Select an option from the menu to get started.</p>
+    <!-- ================= ADMIN ================= -->
+    <div sec:authorize="hasRole('ADMIN')" class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <h6>Courses</h6>
+                    <h2 th:text="${courseCount}">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <h6>Trainers</h6>
+                    <h2 th:text="${trainerCount}">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <h6>Students</h6>
+                    <h2 th:text="${studentCount}">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="text-center">User Distribution</h5>
+                    <canvas id="adminChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= TRAINER ================= -->
+    <div sec:authorize="hasRole('TRAINER')" class="mt-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="mb-3">My Courses</h4>
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>Students</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Software Testing</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>Data</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>Java Development</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>DevOps</td>
+                        <td>4</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
         </div>
     </div>
 
-    <div sec:authorize="!isAuthenticated()" class="mt-4">
-        <div class="alert alert-warning text-center">
-            Please log in to access the platform.
+
+    <!-- ================= STUDENT ================= -->
+    <div sec:authorize="hasRole('STUDENT')" class="mt-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="mb-3">My Tasks</h4>
+
+                <ul class="list-group" th:if="${!#lists.isEmpty(tasks)}">
+                    <li class="list-group-item"
+                        th:each="task : ${tasks}">
+                        <span th:text="${task.title}"></span>
+                    </li>
+                </ul>
+
+                <p class="text-muted text-center"
+                   th:if="${#lists.isEmpty(tasks)}">
+                    No tasks assigned yet.
+                </p>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mt-4">
+            <div class="card-body">
+                <h5 class="text-center">Task Progress</h5>
+                <canvas id="taskChart"></canvas>
+            </div>
         </div>
     </div>
 
 </div>
 
+<!-- ================= SCRIPTS ================= -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    // ADMIN PIE
+    const adminCanvas = document.getElementById('adminChart');
+    if (adminCanvas) {
+        const students = [[${studentCount ?: 0}]];
+        const trainers = [[${trainerCount ?: 0}]];
+
+        new Chart(adminCanvas, {
+            type: 'pie',
+            data: {
+                labels: ['Students', 'Trainers'],
+                datasets: [{
+                    data: [students, trainers]
+                }]
+            },
+            options: { responsive: true }
+        });
+    }
+
+    // STUDENT TASK CHART
+    const taskCanvas = document.getElementById('taskChart');
+    if (taskCanvas) {
+        new Chart(taskCanvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Completed', 'Remaining'],
+                datasets: [{
+                    data: [0, 0]
+                }]
+            },
+            options: { responsive: true }
+        });
+    }
+
+    /*]]>*/
+</script>
+
 </body>
 </html>

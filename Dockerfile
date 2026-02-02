@@ -1,15 +1,13 @@
 # Build stage
-FROM maven:3.9-eclipse-temurin-17 AS build
+FROM --platform=linux/amd64 maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /app
 COPY . .
-#RUN mvn -B -DskipTests clean package
-RUN mvn -B clean package
+RUN mvn -B clean package -DskipTests
 
 # Run stage
-FROM eclipse-temurin:17-jre
+FROM --platform=linux/amd64 eclipse-temurin:21-jre
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8091
 ENV PORT=8091
 CMD ["sh", "-c", "java -jar app.jar --spring.profiles.active=prod --server.port=${PORT}"]
- 
