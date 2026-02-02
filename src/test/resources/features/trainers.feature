@@ -55,7 +55,7 @@ Feature: Trainer Management
     And I update trainer name to "Sarah Senior Trainer"
     And I change course to "Software Testing"
     And I click Update Trainer
-    #Then I should be redirected to the trainers page
+    Then I should be redirected to the trainers page
     And I should see course "Software Testing" assigned
 #
 #  Scenario: Cancel trainer editing
@@ -66,17 +66,7 @@ Feature: Trainer Management
 #    Then I should see trainer "Sarah Coach" listed
 #    And I should not see "Sarah Lead Coach"
 
-  # =========================
-  # Trainer Details
-  # =========================
 
-#  Scenario: View trainer details
-#    Given there is an existing trainer named "Mike Mentor"
-#    When I click "View" on trainer "Mike Mentor"
-#    Then I should see the trainer details page
-#    And I should see "Mike Mentor" as the trainer name
-#    And I should see the trainer id displayed
-#    And I should see the assigned course displayed
 
 
 

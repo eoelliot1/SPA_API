@@ -60,25 +60,33 @@ public class TrainerPageActions {
     }
 
     public void clickEditTrainer(String trainerName) {
-        WebElement editButton = trainerPageLocators.getEditButtonForTrainer(trainerName);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", editButton);
-        wait.until(ExpectedConditions.urlContains("/update-trainer"));
 
-        // Scroll into view
-        ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].scrollIntoView({block:'center'});",
-                editButton
-        );
+            // Wait for the trainers table to be present
+            wait.until(ExpectedConditions.visibilityOf(trainerPageLocators.getTrainersTable()));
 
-        // JS click (bypasses overlay)
-        ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].click();",
-                editButton
-        );
+            // Find the edit button using a fresh lookup each time
+            WebElement editButton = driver.findElement(By.xpath(
+                    "//tr[td[text()='" + trainerName + "']]//a[contains(text(),'Edit')]"
+            ));
 
-        // Wait for edit page
-        wait.until(ExpectedConditions.urlContains("/update-trainer"));
-    }
+            // Scroll into view first
+            ((JavascriptExecutor) driver).executeScript(
+                    "arguments[0].scrollIntoView({block:'center', behavior:'smooth'});",
+                    editButton
+            );
+
+            // Wait for the element to be clickable after scrolling
+            wait.until(ExpectedConditions.elementToBeClickable(editButton));
+
+            // Click using JavaScript (more reliable)
+            ((JavascriptExecutor) driver).executeScript(
+                    "arguments[0].click();",
+                    editButton
+            );
+
+            // Wait for the edit page to load
+            wait.until(ExpectedConditions.urlContains("/update-trainer"));
+        }
 
     public void updateTrainerName(String newName) {
         trainerPageLocators.getEditTrainerNameInput().clear();

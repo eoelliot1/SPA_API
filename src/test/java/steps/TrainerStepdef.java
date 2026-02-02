@@ -140,6 +140,16 @@ public class TrainerStepdef {
     @When("I click {string} for trainer {string}")
     public void iClickForTrainer(String button, String trainerName) {
         if (button.equalsIgnoreCase("Edit")) {
+            // Wait a moment for the table to be fully loaded
+            try {
+                Thread.sleep(1000); // Small wait to ensure page is stable
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            // Refresh the page elements before clicking
+            PageFactory.initElements(driver, trainerLocators);
+
             trainerPageActions.clickEditTrainer(trainerName);
         }
     }

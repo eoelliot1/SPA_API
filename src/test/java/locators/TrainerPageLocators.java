@@ -54,11 +54,11 @@ public class TrainerPageLocators {
 //    @FindBy(xpath = "//tr[td[text()='John Trainer']]//a[contains(text(),'Edit')]")
 //    private WebElement editTrainerButton;
 
-public WebElement getEditButtonForTrainer(String trainerName) {
-    return driver.findElement(By.xpath(
-            "//tr[td[text()='" + trainerName + "']]//a[contains(text(),'Edit')]"
-    ));
-}
+//public WebElement getEditButtonForTrainer(String trainerName) {
+//    return driver.findElement(By.xpath(
+//            "//tr[td[text()='" + trainerName + "']]//a[contains(text(),'Edit')]"
+//    ));
+//}
 
 
 
