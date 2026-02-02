@@ -17,7 +17,7 @@ public class StudentApiIT extends TestBase{
     @Test
     void testGetStudents() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .get("/api/students")
                 .then()
@@ -29,7 +29,7 @@ public class StudentApiIT extends TestBase{
     void shouldReturnCourseById() {
         Response response =
                 given()
-                        .auth().preemptive().basic("trainer", "trainerpass")
+                        .auth().preemptive().basic("sarah", "sarahpass")
                         .when()
                         .get("/api/students/1")
                         .then()
@@ -43,7 +43,7 @@ public class StudentApiIT extends TestBase{
     @DisplayName("Get Student by invalid ID → 404")
     void shouldReturn404WhenStudentNotFound() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .get("/api/students/50")
                 .then()
@@ -63,7 +63,7 @@ public class StudentApiIT extends TestBase{
 
         Response response =
                 given()
-                        .auth().preemptive().basic("trainer", "trainerpass")
+                        .auth().preemptive().basic("sarah", "sarahpass")
                         .contentType(ContentType.JSON)
                         .body(newStudent)
                         .when()
@@ -80,7 +80,7 @@ public class StudentApiIT extends TestBase{
     @DisplayName("Delete Student")
     void shouldDeleteStudent() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .delete("/api/students/2")
                 .then()
@@ -88,7 +88,7 @@ public class StudentApiIT extends TestBase{
 
         // Verify deletion
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .get("/api/students/2")
                 .then()
@@ -104,7 +104,7 @@ public class StudentApiIT extends TestBase{
 
         Response response =
                 given()
-                        .auth().preemptive().basic("trainer", "trainerpass")
+                        .auth().preemptive().basic("sarah", "sarahpass")
                         .contentType(ContentType.JSON)
                         .body(updatedStudent)
                         .when()

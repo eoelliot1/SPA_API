@@ -18,7 +18,7 @@ public class TrainerApiIT extends TestBase {
     @Test
     void testGetTrainers() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .get("/api/trainers")
                 .then()
@@ -30,7 +30,7 @@ public class TrainerApiIT extends TestBase {
     void shouldReturnTrainerById() {
         Response response =
                 given()
-                        .auth().preemptive().basic("trainer", "trainerpass")
+                        .auth().preemptive().basic("sarah", "sarahpass")
                         .when()
                         .get("/api/trainers/1")
                         .then()
@@ -44,7 +44,7 @@ public class TrainerApiIT extends TestBase {
     @DisplayName("Return 404 when trainer does not exist")
     void shouldReturn404ForInvalidTrainerId() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .accept(ContentType.JSON)
                 .when()
                 .get("/api/trainers/999")
@@ -60,7 +60,7 @@ public class TrainerApiIT extends TestBase {
     @DisplayName("Get trainer by invalid ID → 404")
     void shouldReturn404WhenTrainerNotFound() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .get("/api/trainers/50")
                 .then()
@@ -77,7 +77,7 @@ public class TrainerApiIT extends TestBase {
 
         Response response =
                 given()
-                        .auth().preemptive().basic("trainer", "trainerpass")
+                        .auth().preemptive().basic("sarah", "sarahpass")
                         .contentType(ContentType.JSON)
                         .body(newTrainer)
                         .when()
@@ -99,7 +99,7 @@ public class TrainerApiIT extends TestBase {
 
         Response response =
                 given()
-                        .auth().preemptive().basic("trainer", "trainerpass")
+                        .auth().preemptive().basic("sarah", "sarahpass")
                         .contentType(ContentType.JSON)
                         .body(updatedTrainer)
                         .when()
@@ -116,14 +116,14 @@ public class TrainerApiIT extends TestBase {
     @DisplayName("Delete trainer")
     void shouldDeleteTrainer() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .delete("/api/trainers/1")
                 .then()
                 .statusCode(204);
 
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .get("/api/trainers/1")
                 .then()

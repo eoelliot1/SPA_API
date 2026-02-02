@@ -17,7 +17,7 @@ public class CourseApiTests extends TestBase {
     @DisplayName("Get all courses")
     void shouldReturnAllCourses() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .accept(ContentType.JSON)
                 .when()
                 .get("/api/courses")
@@ -32,7 +32,7 @@ public class CourseApiTests extends TestBase {
     void shouldReturnCourseById() {
         Response response =
                 given()
-                        .auth().preemptive().basic("trainer", "trainerpass")
+                        .auth().preemptive().basic("sarah", "sarahpass")
                         .accept(ContentType.JSON)
                         .when()
                         .get("/api/courses/1")
@@ -48,7 +48,7 @@ public class CourseApiTests extends TestBase {
     @DisplayName("Return 404 when course does not exist")
     void shouldReturn404ForInvalidCourseId() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .accept(ContentType.JSON)
                 .when()
                 .get("/api/courses/999")
@@ -73,7 +73,7 @@ public class CourseApiTests extends TestBase {
                 """;
 
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .when()
@@ -95,7 +95,7 @@ public class CourseApiTests extends TestBase {
                 """;
 
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .when()
@@ -117,7 +117,7 @@ public class CourseApiTests extends TestBase {
                 """;
 
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .when()
@@ -137,7 +137,7 @@ public class CourseApiTests extends TestBase {
                 """;
 
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .when()
@@ -153,7 +153,7 @@ public class CourseApiTests extends TestBase {
     @DisplayName("Delete a course")
     void shouldDeleteCourse() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .delete("/api/courses/2")
                 .then()
@@ -164,7 +164,7 @@ public class CourseApiTests extends TestBase {
     @DisplayName("Return 404 when deleting non-existent course")
     void shouldReturn404WhenDeletingInvalidCourse() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .delete("/api/courses/99")
                 .then()
