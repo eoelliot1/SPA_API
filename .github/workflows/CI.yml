@@ -1,0 +1,53 @@
+name: Run Junit & API tests Pipeline and merge
+
+on:
+  pull_request:
+    branches: ["master"]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  unit-tests:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Run unit tests
+        run: mvn -B clean test
+
+  api-tests:
+    name: API tests (RestAssured)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Run API tests
+        run: mvn -B -Papi verify
+
+  auto-merge:
+    name: Auto Merge PR
+    needs: [unit-tests, api-tests]
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    steps:
+      - name: Merge pull request
+        uses: pascalgn/automerge-action@v0.16.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

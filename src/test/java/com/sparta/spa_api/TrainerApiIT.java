@@ -1,42 +1,36 @@
 package com.sparta.spa_api;
 
-
-import com.sparta.spa_api.TestBase;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
-public class TrainerApiTests extends TestBase {
+public class TrainerApiIT extends TestBase {
 
     @Test
     void testGetTrainers() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .get("/api/trainers")
                 .then()
                 .statusCode(200);
     }
 
-
-
     @Test
-    @DisplayName("Get course by ID")
+    @DisplayName("Get trainer by ID")
     void shouldReturnTrainerById() {
         Response response =
                 given()
-                        .auth().preemptive().basic("trainer", "trainerpass")
+                        .auth().preemptive().basic("sarah", "sarahpass")
                         .when()
                         .get("/api/trainers/1")
                         .then()
@@ -49,9 +43,8 @@ public class TrainerApiTests extends TestBase {
     @Test
     @DisplayName("Return 404 when trainer does not exist")
     void shouldReturn404ForInvalidTrainerId() {
-
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .accept(ContentType.JSON)
                 .when()
                 .get("/api/trainers/999")
@@ -63,31 +56,28 @@ public class TrainerApiTests extends TestBase {
                 .body("path", equalTo("/api/trainers/999"));
     }
 
-
     @Test
     @DisplayName("Get trainer by invalid ID → 404")
     void shouldReturn404WhenTrainerNotFound() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .get("/api/trainers/50")
                 .then()
                 .statusCode(404);
     }
 
-
-
     @Test
     @DisplayName("Create new trainer")
     void shouldCreateTrainer() {
         Map<String, Object> newTrainer = new HashMap<>();
-        newTrainer.put("id", 5);
+        newTrainer.put("id", 8);
         newTrainer.put("trainerName", "Philip");
         newTrainer.put("courseId", 1);
 
         Response response =
                 given()
-                        .auth().preemptive().basic("trainer", "trainerpass")
+                        .auth().preemptive().basic("sarah", "sarahpass")
                         .contentType(ContentType.JSON)
                         .body(newTrainer)
                         .when()
@@ -97,7 +87,7 @@ public class TrainerApiTests extends TestBase {
                         .extract().response();
 
         assertThat(response.jsonPath().getString("trainerName"), is("Philip"));
-        assertThat(response.jsonPath().getInt("id"), is(5));
+        assertThat(response.jsonPath().getInt("id"), is(8));
     }
 
     @Test
@@ -109,7 +99,7 @@ public class TrainerApiTests extends TestBase {
 
         Response response =
                 given()
-                        .auth().preemptive().basic("trainer", "trainerpass")
+                        .auth().preemptive().basic("sarah", "sarahpass")
                         .contentType(ContentType.JSON)
                         .body(updatedTrainer)
                         .when()
@@ -122,29 +112,21 @@ public class TrainerApiTests extends TestBase {
         assertThat(response.jsonPath().getInt("courseId"), is(2));
     }
 
-
     @Test
     @DisplayName("Delete trainer")
     void shouldDeleteTrainer() {
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .delete("/api/trainers/1")
                 .then()
                 .statusCode(204);
 
-        // Verify deletion
         given()
-                .auth().preemptive().basic("trainer", "trainerpass")
+                .auth().preemptive().basic("sarah", "sarahpass")
                 .when()
                 .get("/api/trainers/1")
                 .then()
                 .statusCode(404);
     }
 }
-
-
-
-
-
-

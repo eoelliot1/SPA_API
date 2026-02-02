@@ -16,9 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDate;
 import java.util.List;
-
 
 @Configuration
 public class AppConfig {
@@ -34,7 +34,6 @@ public class AppConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .httpBasic(basic -> {})
-
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/")
@@ -67,9 +66,9 @@ public class AppConfig {
             );
 
             Spartan trainerUser = new Spartan(
-                    "trainer@spartaglobal.com",
-                    "trainer",
-                    encoder.encode("trainerpass"),
+                    "sarah@spartaglobal.com",
+                    "sarah",
+                    encoder.encode("sarahpass"),
                     "TRAINER"
             );
 
@@ -80,36 +79,35 @@ public class AppConfig {
                     "STUDENT"
             );
 
-
-            spartanRepo.saveAll(
-                    List.of(admin, trainerUser, studentUser)
-            );
-
+            spartanRepo.saveAll(List.of(admin, trainerUser, studentUser));
             System.out.println("Seeded Spartans for login");
 
-            // Courses details
+            // ===== COURSES =====
             Course course1 = new Course("Software Testing");
             Course course2 = new Course("Data");
+            Course course3 = new Course("Java Development");
+            Course course4 = new Course("DevOps");
 
-            LocalDate startDate = LocalDate.of(2024, 9, 1);
-            LocalDate startDate2 = LocalDate.of(2025, 5, 7);
-            LocalDate endDate = LocalDate.of(2026, 1, 1);
-            course1.setStartDate(startDate);
-            course2.setStartDate(startDate2);
-            course1.setEndDate(endDate);
+            course1.setStartDate(LocalDate.of(2024, 9, 1));
+            course1.setEndDate(LocalDate.of(2026, 1, 1));
 
+            course2.setStartDate(LocalDate.of(2025, 5, 7));
+            course2.setEndDate(LocalDate.of(2026, 6, 1));
 
-            courseRepository.save(course1);
-            courseRepository.save(course2);
+            course3.setStartDate(LocalDate.of(2024, 11, 1));
+            course3.setEndDate(LocalDate.of(2025, 8, 1));
 
-            // Students' details
+            course4.setStartDate(LocalDate.of(2025, 2, 1));
+            course4.setEndDate(LocalDate.of(2025, 12, 1));
+
+            courseRepository.saveAll(List.of(course1, course2, course3, course4));
+
+            // ===== STUDENTS =====
             Student student1 = new Student();
             student1.setStudentName("Alice Johnson");
             student1.setHasGraduated(false);
             student1.setCourse(course1);
             student1.setSpartan(studentUser);
-            studentRepository.save(student1);
-
 
             Student student2 = new Student();
             student2.setStudentName("Bob Smith");
@@ -126,12 +124,64 @@ public class AppConfig {
             student4.setHasGraduated(true);
             student4.setCourse(course2);
 
-            studentRepository.save(student1);
-            studentRepository.save(student2);
-            studentRepository.save(student3);
-            studentRepository.save(student4);
+            Student student5 = new Student();
+            student5.setStudentName("Ethan Wright");
+            student5.setHasGraduated(false);
+            student5.setCourse(course3);
 
-            // Trainers' details
+            Student student6 = new Student();
+            student6.setStudentName("Fiona Green");
+            student6.setHasGraduated(false);
+            student6.setCourse(course3);
+
+            Student student7 = new Student();
+            student7.setStudentName("George King");
+            student7.setHasGraduated(true);
+            student7.setCourse(course3);
+
+            Student student8 = new Student();
+            student8.setStudentName("Hannah Lee");
+            student8.setHasGraduated(false);
+            student8.setCourse(course4);
+
+            Student student9 = new Student();
+            student9.setStudentName("Ian Moore");
+            student9.setHasGraduated(false);
+            student9.setCourse(course4);
+
+            Student student10 = new Student();
+            student10.setStudentName("Julia Adams");
+            student10.setHasGraduated(true);
+            student10.setCourse(course4);
+
+            Student student11 = new Student();
+            student11.setStudentName("Kevin Turner");
+            student11.setHasGraduated(false);
+            student11.setCourse(course1);
+
+            Student student12 = new Student();
+            student12.setStudentName("Laura Scott");
+            student12.setHasGraduated(true);
+            student12.setCourse(course2);
+
+            Student student13 = new Student();
+            student13.setStudentName("Mark Phillips");
+            student13.setHasGraduated(false);
+            student13.setCourse(course3);
+
+            Student student14 = new Student();
+            student14.setStudentName("Nina Carter");
+            student14.setHasGraduated(false);
+            student14.setCourse(course4);
+
+            studentRepository.saveAll(List.of(
+                    student1, student2, student3, student4,
+                    student5, student6, student7, student8,
+                    student9, student10, student11, student12,
+                    student13, student14
+            ));
+
+            // ===== TRAINERS =====
             Trainers trainer1 = new Trainers();
             trainer1.setTrainerName("John Trainer");
             trainer1.setCourse(course1);
@@ -148,10 +198,22 @@ public class AppConfig {
             trainer4.setTrainerName("Emma Instructor");
             trainer4.setCourse(course2);
 
-            trainersRepository.save(trainer1);
-            trainersRepository.save(trainer2);
-            trainersRepository.save(trainer3);
-            trainersRepository.save(trainer4);
+            Trainers trainer5 = new Trainers();
+            trainer5.setTrainerName("Daniel Architect");
+            trainer5.setCourse(course3);
+
+            Trainers trainer6 = new Trainers();
+            trainer6.setTrainerName("Olivia Dev");
+            trainer6.setCourse(course3);
+
+            Trainers trainer7 = new Trainers();
+            trainer7.setTrainerName("Chris Ops");
+            trainer7.setCourse(course4);
+
+            trainersRepository.saveAll(List.of(
+                    trainer1, trainer2, trainer3, trainer4,
+                    trainer5, trainer6, trainer7
+            ));
 
             System.out.println("Seed data added");
         };

@@ -1,20 +1,28 @@
-#Feature: Student course management
-#  As a Student
-#  I want to enrol and unenrol from courses
-#  So that I can manage my learning
-#
-#  Scenario: Student enrols in a course
-#    Given I am logged in as a Student
-#    When I enrol in course "Data"
-#    Then I should see a student confirmation message
-#
-#  Scenario: Student unenrols from a course
-#    Given I am logged in as a Student
-#    And I am enrolled in course "Software Testing" as a Student
-#    When I unenrol from course "Software Testing"
-#    Then I should see a student confirmation message
-#
-#  Scenario: Student tries to unenrol from a course they are not enrolled in
-#    Given I am logged in as a Student
-#    When I unenrol from course "Python"
-#    Then I should see a student error message
+Feature: Student
+  As a Student I want to be able to see all courses that are available to enrol and unenroll from courses
+  So that I can manage my profile
+
+  Background:
+    Given I am logged in as a Student
+
+  @Happy
+  Scenario: There are courses in the system
+    When I click on my course
+    Then I should see a the course that i am enrolled in and what other courses available
+
+  @Happy
+  Scenario: Change to different course
+    When I click on my profile
+    Then I should be able to edit to change to the course I want
+    Then I should be redirected to the student dashboard
+
+  @Happy
+  Scenario: Change my name
+    When I click on my profile
+    Then I should be able to edit my name
+    Then I should be redirected to the student dashboard
+
+  @Happy
+  Scenario: Student tries to unenroll from a course they are enrolled in
+    When I unenroll from course
+    Then I should see a student error message

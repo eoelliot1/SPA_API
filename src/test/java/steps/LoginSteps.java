@@ -1,13 +1,11 @@
 package steps;
 
 import actions.LoginPageActions;
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import locators.LoginPageLocators;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -42,7 +40,7 @@ public class LoginSteps {
         WebElement trainerDashboard = loginPageLocators.getTrainerDashboard();
         wait.until(ExpectedConditions.visibilityOf(trainerDashboard));
 
-        Assert.assertTrue(trainerDashboard.getText().contains("Trainer"));
+        Assertions.assertTrue(trainerDashboard.getText().contains("Trainer"));
     }
 
 
@@ -51,7 +49,7 @@ public class LoginSteps {
         WebElement studentDashboard = loginPageLocators.getStudentDashboard();
         wait.until(ExpectedConditions.visibilityOf(studentDashboard));
 
-        Assert.assertTrue(studentDashboard.getText().contains("Student"));
+        Assertions.assertTrue(studentDashboard.getText().contains("Student"));
 
     }
 
@@ -72,8 +70,8 @@ public class LoginSteps {
 
     @Given("I am logged in as a Trainer")
     public void iAmLoggedInAsATrainer() {
-        String email = "trainer";
-        String password = "trainerpass";
+        String email = "sarah";
+        String password = "sarahpass";
 
         loginPageActions.signIn(email, password);
     }
@@ -97,7 +95,7 @@ public class LoginSteps {
         WebElement trainerDashboard = loginPageLocators.getTrainerDashboard();
         wait.until(ExpectedConditions.visibilityOf(trainerDashboard));
 
-        Assert.assertTrue(trainerDashboard.getText().contains("Trainer"));
+        Assertions.assertTrue(trainerDashboard.getText().contains("Trainer"));
     }
 
 }
