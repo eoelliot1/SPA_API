@@ -3,6 +3,8 @@ name: Run Junit & API tests Pipeline
 on:
   pull_request:
     branches: ["master"]
+  push:
+    branches: [ "master" ]
 
 permissions:
   contents: write
@@ -51,3 +53,12 @@ jobs:
         uses: pascalgn/automerge-action@v0.16.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-to-render:
+    name: Deploy to Render
+    needs: [ unit-tests, api-tests ]
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && success() }}
+    steps:
+      - name: Trigger Render deploy hook
+        run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
