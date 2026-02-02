@@ -58,7 +58,7 @@ jobs:
     name: Deploy to Render
     needs: [ unit-tests, api-tests ]
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && success() }}
+    if: ${{ (github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged)) && success() }}
     steps:
       - name: Trigger Render deploy hook
         run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
