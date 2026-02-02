@@ -150,7 +150,7 @@ public class StudentViewController {
     public String viewStudents(Model model) {
         List<Student> students = studentService.getAllStudentEntities();
         model.addAttribute("students", students);
-        return "students";
+        return "students/";
     }
 
     @GetMapping("/student-details/{id}")
@@ -170,13 +170,13 @@ public class StudentViewController {
     @PostMapping("/save")
     public String saveStudent(@ModelAttribute("newStudent") StudentDTO newStudent) {
         studentService.saveStudent(newStudent);
-        return "redirect:/students";
+        return "redirect:/students/";
     }
 
     @PostMapping("/{id}/delete")
     public String deleteStudent(@PathVariable Integer id) {
         studentService.deleteStudent(id);
-        return "redirect:/students";
+        return "redirect:/students/";
     }
 
     @GetMapping("/update-student/{id}")
@@ -191,7 +191,7 @@ public class StudentViewController {
     public String updateStudent(@PathVariable Integer id,
                                 @ModelAttribute("updatedStudent") StudentDTO studentDto) {
         studentService.updateStudent(id, studentDto);
-        return "redirect:/students";
+        return "redirect:/students/profile";
     }
 
     @GetMapping("/courses")
@@ -239,6 +239,7 @@ public class StudentViewController {
         model.addAttribute("student", student);
         return "students/profile";
     }
+
 
 
 }
