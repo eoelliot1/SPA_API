@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Courses List')"></head>
+<body class="bg-light">
+
+<!-- Header -->
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-4">Courses List</h1>
+
+    <h3>Enrolled Courses</h3>
+    <ul>
+        <li th:each="course : ${enrolledCourses}" th:text="${course.courseName}">Course Name</li>
+        <li th:if="${#lists.isEmpty(enrolledCourses)}">You are not enrolled in any courses.</li>
+    </ul>
+
+    <h3>Available Courses</h3>
+    <ul>
+        <li th:each="course : ${availableCourses}" th:text="${course.courseName}">Course Name</li>
+        <li th:if="${#lists.isEmpty(availableCourses)}">No other courses available.</li>
+    </ul>
+
+
+
+</div>
+
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

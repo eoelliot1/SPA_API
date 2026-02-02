@@ -1,17 +1,19 @@
 package com.sparta.spa_api.entities;
 
 import jakarta.persistence.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Entity
+
 @Table(name = "student")
 public class Student {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", nullable = false)
+  @Column(name = "student_id")
   private Integer id;
 
-  @Column(name = "student_name", length = 45)
+  @Column(name = "student_name", length = 45, nullable = false)
   private String studentName;
 
   @Column(name = "has_graduated", nullable = false)
@@ -21,14 +23,22 @@ public class Student {
   @JoinColumn(name = "course_id", nullable = false)
   private Course course;
 
+  @ManyToOne
+  @JoinColumn(name = "trainer_id", nullable = true)
+  private Trainers trainer;
+
+  @ManyToOne
+  @JoinColumn(name = "spartan_id", unique = true)
+  private Spartan spartan;
+
   public Student() {}
 
-  public Student(String studentName, boolean hasGraduated, Course course) {
+  public Student(String studentName, boolean hasGraduated) {
     this.studentName = studentName;
     this.hasGraduated = hasGraduated;
-    this.course = course;
   }
 
+  // Getters & setters
   public Integer getId() {
     return id;
   }
@@ -53,12 +63,36 @@ public class Student {
     return course;
   }
 
-  public Integer getCourseId(){
-    return course.getId();
-  }
-
-
   public void setCourse(Course course) {
     this.course = course;
   }
+
+  public Trainers getTrainer() {
+    return trainer;
+  }
+
+  public void setTrainer(Trainers trainer) {
+    this.trainer = trainer;
+  }
+
+  @Override
+  public String toString() {
+    return "Student{" +
+            "id=" + id +
+            ", studentName='" + studentName + '\'' +
+            ", hasGraduated=" + hasGraduated +
+            ", course=" + (course != null ? course.getCourseName() : "null") +
+            ", trainer=" + (trainer != null ? trainer.getTrainerName() : "null") +
+            '}';
+  }
+
+
+  public Spartan getSpartan() {
+    return spartan;
+  }
+
+  public void setSpartan(Spartan spartan) {
+    this.spartan = spartan;
+  }
 }
+

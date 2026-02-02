@@ -1,28 +1,10 @@
 package com.sparta.spa_api.dtos;
 
-import com.sparta.spa_api.entities.Course;
-
 public class TrainersDTO {
 
     private Integer id;
-    private String trainer_name;
-    private Course course_id;
-
-    public Course getCourse_id() {
-        return course_id;
-    }
-
-    public void setCourse_id(Course course_id) {
-        this.course_id = course_id;
-    }
-
-    public String getTrainer_name() {
-        return trainer_name;
-    }
-
-    public void setTrainer_name(String trainer_name) {
-        this.trainer_name = trainer_name;
-    }
+    private String trainerName;
+    private Integer courseId; // ID only
 
     public Integer getId() {
         return id;
@@ -32,6 +14,19 @@ public class TrainersDTO {
         this.id = id;
     }
 
+    public String getTrainerName() {
+        return trainerName;
+    }
 
+    public void setTrainerName(String trainerName) {
+        this.trainerName = trainerName;
+    }
 
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
 }

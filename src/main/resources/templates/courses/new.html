@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Create Course')"></head>
+<body class="bg-light">
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Create Course</h2>
+
+    <form th:action="@{/courses/new}" th:object="${course}" method="post">
+        <div class="mb-3">
+            <label class="form-label">Course Name</label>
+            <input type="text" th:field="*{courseName}" class="form-control" placeholder="Enter course name" required>
+            <div class="text-danger" th:errors="*{courseName}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">startDate Eg: 1999-06-03</label>
+            <input type="text" th:field="*{startDate}" class="form-control" placeholder="Enter start Date" required>
+            <div class="text-danger" th:errors="*{startDate}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Create</button>
+        <a th:href="@{/courses/}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

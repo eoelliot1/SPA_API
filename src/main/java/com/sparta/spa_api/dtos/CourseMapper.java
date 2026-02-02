@@ -7,6 +7,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CourseMapper {
 
+    @Mapping(target = "durationInDays", expression = "java(course.getDurationInDays())")
     CourseDTO toDTO(Course course);
+
+    @Mapping(target = "startDate", source = "startDate")
+    @Mapping(target = "endDate", source = "endDate")
     Course toEntity(CourseDTO courseDTO);
 }

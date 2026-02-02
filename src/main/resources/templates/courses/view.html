@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Course Details')"></head>
+<body class="bg-light">
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+    <h2>Course Details</h2>
+
+    <p><strong>ID:</strong> <span th:text="${course.id}"></span></p>
+    <p><strong>Name:</strong> <span th:text="${course.courseName}"></span></p>
+    <p><strong>Start Date:</strong> <span th:text="${course.startDate}"></span></p>
+    <p><Strong>End Date:</Strong><span th:text="${course.endDate != null ? course.endDate : ' Ongoing'}"></span></p>
+
+    <a th:href="@{/courses/{id}/edit(id=${course.id})}" class="btn btn-warning">Edit</a>
+    <a href="/courses/" class="btn btn-secondary">Back</a>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

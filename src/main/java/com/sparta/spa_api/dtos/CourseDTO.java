@@ -1,10 +1,12 @@
 package com.sparta.spa_api.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sparta.spa_api.entities.Course;
 import com.sparta.spa_api.entities.Student;
 import jakarta.validation.constraints.NotBlank;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class CourseDTO {
@@ -15,6 +17,27 @@ public class CourseDTO {
 
     @JsonIgnore
     private List<Student> students;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
+
+    private long durationInDays;
+
+    public CourseDTO(Course course) {
+    }
+
+    public CourseDTO() {
+
+    }
+
+    public long getDurationInDays() {
+        return durationInDays;
+    }
+
+    public void setDurationInDays(long durationInDays) {
+        this.durationInDays = durationInDays;
+    }
 
     public Integer getId() {
         return id;
@@ -39,6 +62,23 @@ public class CourseDTO {
     public void setStudents(List<Student> students) {
         this.students = students;
     }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
 
 
 }

@@ -1,6 +1,8 @@
 package com.sparta.spa_api.entities;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "trainers")
@@ -8,33 +10,46 @@ public class Trainers {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "trainer_id")
     private Integer id;
 
-    @Column(name = "trainer_name", length = 45)
-    private String trainer_name;
+    @Column(name = "trainer_name", length = 45, nullable = false)
+    private String trainerName;
 
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
+    @OneToMany(
+            mappedBy = "trainer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Student> students = new ArrayList<>();
+
     public Trainers() {}
 
-    public Trainers(String trainer_name, Course course) {
-        this.trainer_name = trainer_name;
-        this.course = course;
+    public Trainers(String trainerName) {
+        this.trainerName = trainerName;
     }
 
+    // Helper method
+    public void addStudent(Student student) {
+        students.add(student);
+        student.setTrainer(this);
+    }
+
+    // Getters & setters
     public Integer getId() {
         return id;
     }
 
-    public String getTrainer_name() {
-        return trainer_name;
+    public String getTrainerName() {
+        return trainerName;
     }
 
-    public void setTrainer_name(String trainer_name) {
-        this.trainer_name = trainer_name;
+    public void setTrainerName(String trainerName) {
+        this.trainerName = trainerName;
     }
 
     public Course getCourse() {
@@ -43,5 +58,18 @@ public class Trainers {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    @Override
+    public String toString() {
+        return "Trainers{" +
+                "id=" + id +
+                ", trainerName='" + trainerName + '\'' +
+                ", course=" + (course != null ? course.getCourseName() : "null") +
+                '}';
     }
 }

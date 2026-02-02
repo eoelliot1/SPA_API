@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Create Trainer')"></head>
+<body class="bg-light">
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Create Trainer</h2>
+
+    <form th:action="@{/trainers/new-trainer}" th:object="${newTrainer}" method="post">
+        <div class="mb-3">
+            <label class="form-label fw-bold">Full Name</label>
+            <input type="text"
+                   class="form-control"
+                   th:field="*{trainerName}"
+                   placeholder="Enter full name"
+                   required>
+        </div>
+
+        <div class="mb-4">
+            <label for="courseId" class="form-label fw-bold">Select Course</label>
+            <select id="courseId" class="form-select" th:field="*{courseId}" required>
+                <option value="" selected disabled>-- Choose a Course --</option>
+                <option th:each="c : ${courses}"
+                        th:value="${c.id}"
+                        th:text="${c.courseName}">
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Create</button>
+        <a th:href="@{/trainers}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
