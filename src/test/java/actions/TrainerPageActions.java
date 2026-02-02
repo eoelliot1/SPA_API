@@ -38,7 +38,7 @@ public class TrainerPageActions {
 
 
 
-    // ================= SEARCH ACTION =================
+
     public void searchCoursesLongerThan(String duration) {
         WebElement input = wait.until(
                 ExpectedConditions.visibilityOf(trainerPageLocators.getSearchInput())
@@ -51,42 +51,15 @@ public class TrainerPageActions {
         );
         searchBtn.click();
 
-        // Wait for table rows to update
+
         wait.until(ExpectedConditions.visibilityOfAllElements(trainerPageLocators.getTrainerRows()));
     }
+
     public void goToTrainersPage() {
         HelperClass.openPage("http://localhost:8091/trainers");
         wait.until(ExpectedConditions.visibilityOf(trainerPageLocators.getTrainersTable()));
     }
 
-    public void clickEditTrainer(String trainerName) {
-
-            // Wait for the trainers table to be present
-            wait.until(ExpectedConditions.visibilityOf(trainerPageLocators.getTrainersTable()));
-
-            // Find the edit button using a fresh lookup each time
-            WebElement editButton = driver.findElement(By.xpath(
-                    "//tr[td[text()='" + trainerName + "']]//a[contains(text(),'Edit')]"
-            ));
-
-            // Scroll into view first
-            ((JavascriptExecutor) driver).executeScript(
-                    "arguments[0].scrollIntoView({block:'center', behavior:'smooth'});",
-                    editButton
-            );
-
-            // Wait for the element to be clickable after scrolling
-            wait.until(ExpectedConditions.elementToBeClickable(editButton));
-
-            // Click using JavaScript (more reliable)
-            ((JavascriptExecutor) driver).executeScript(
-                    "arguments[0].click();",
-                    editButton
-            );
-
-            // Wait for the edit page to load
-            wait.until(ExpectedConditions.urlContains("/update-trainer"));
-        }
 
     public void updateTrainerName(String newName) {
         trainerPageLocators.getEditTrainerNameInput().clear();
@@ -121,10 +94,7 @@ public class TrainerPageActions {
         return driver.getCurrentUrl().contains("/trainers/new-trainer");
     }
 
-    // Get all trainer rows after search
-//    public List<WebElement> getTrainerRows() {
-//        return trainerPageLocators.getTrainerRows();
-//    }
+
 
 
     public void clickAddTrainer() {
@@ -154,44 +124,48 @@ public class TrainerPageActions {
     }
 
     public boolean isNoCoursesMessageDisplayed() {
+
         return driver.getPageSource().contains("No courses found.");
     }
 
-    public void updateTrainer(String newName, String newCourse) {
-        // Update name
-        wait.until(ExpectedConditions.visibilityOf(trainerPageLocators.getEditTrainerNameInput()))
-                .clear();
-        trainerPageLocators.getEditTrainerNameInput().sendKeys(newName);
 
-        // Update course
-        Select selectCourse = new Select(trainerPageLocators.getEditCourseDropdown());
-        selectCourse.selectByVisibleText(newCourse);
-
-        // Click Update
-        wait.until(ExpectedConditions.elementToBeClickable(trainerPageLocators.getUpdateTrainerButton()))
-                .click();
-
-        // Wait for redirect back to Trainers page
-        wait.until(ExpectedConditions.urlContains("/trainers"));
-    }
-
-    public boolean isCourseAssigned1(String trainerName, String expectedCourse) {
-        // Wait for the trainers table to be visible
-        List<WebElement> rows = trainerPageLocators.getTrainerRows();
-        for (WebElement row : rows) {
-            String name = row.findElement(By.xpath("./td[1]")).getText();
-            String course = row.findElement(By.xpath("./td[3]")).getText();
-            if (name.equals(trainerName) && course.equals(expectedCourse)) {
-                return true;
-            }
-        }
-        return false;
-
-    }
 
     public List<WebElement> getTrainerRows() {
         wait.until(ExpectedConditions.visibilityOf(trainerPageLocators.getTrainersTable()));
         return trainerPageLocators.getTrainerRows();
+    }
+
+    public void clickEditTrainer(String trainerName) {
+//        WebElement editButton = trainerPageLocators.getEditButtonForTrainer(trainerName);
+//        wait.until(ExpectedConditions.elementToBeClickable(editButton));
+//        editButton.click();
+//        wait.until(ExpectedConditions.visibilityOf(trainerPageLocators.getEditTrainerNameInput()));
+
+        WebElement editButton = driver.findElement(
+                By.xpath("//tr[td[text()='" + trainerName + "']]//a[contains(text(),'Edit')]")
+        );
+
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block:'center'});", editButton
+        );
+
+        wait.until(ExpectedConditions.visibilityOf(editButton));
+
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].click();", editButton
+        );
+
+        wait.until(ExpectedConditions.urlContains("/update-trainer"));
+    }
+
+    public boolean isCourseAssignedToTrainer(String trainerName, String courseName) {
+        List<WebElement> rows = trainerPageLocators.getTrainerRows();
+        for (WebElement row : rows) {
+            if (row.getText().contains(trainerName)) {
+                return row.getText().contains(courseName);
+            }
+        }
+        return false;
     }
 
 }

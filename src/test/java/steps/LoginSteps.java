@@ -70,8 +70,8 @@ public class LoginSteps {
 
     @Given("I am logged in as a Trainer")
     public void iAmLoggedInAsATrainer() {
-        String email = "trainer";
-        String password = "trainerpass";
+        String email = "sarah";
+        String password = "sarahpass";
 
         loginPageActions.signIn(email, password);
     }
