@@ -46,6 +46,8 @@ public class CourseWebController {
     @GetMapping("/")
     public String listCourses(Model model) {
         model.addAttribute("courses", courseService.getAllCourses());
+        model.addAttribute("students", studentService.getAllStudents());
+        model.addAttribute("trainersList", trainerService.getAllTrainers());
         return "courses/index";
     }
 

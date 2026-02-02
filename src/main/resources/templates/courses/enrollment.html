@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head('Update Course')"></head>
-<body class="bg-light">
+<head>
+    <meta charset="UTF-8">
+        <title>Enrolment</title>
+</head>
 
+<body class="bg-light">
+<div th:replace="fragments/head :: head('Update Course')"></div>
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container mt-5">
-    <h2 class="mb-4">Enrollment :)</h2>
+    <h2 class="mb-4">Enrolment</h2>
 
 <!--    <form th:action="@{/courses/enrol}" th:object="${courses}" method="post">-->
 <!--        <div class="mb-3">-->

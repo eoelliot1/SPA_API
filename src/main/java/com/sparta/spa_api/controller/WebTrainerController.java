@@ -3,6 +3,7 @@ package com.sparta.spa_api.controller;
 import com.sparta.spa_api.dtos.CourseDTO;
 import com.sparta.spa_api.dtos.StudentMapper;
 import com.sparta.spa_api.dtos.TrainersDTO;
+import com.sparta.spa_api.entities.Course;
 import com.sparta.spa_api.entities.Student;
 import com.sparta.spa_api.services.CourseService;
 import com.sparta.spa_api.services.TrainerService;
@@ -92,6 +93,17 @@ public class WebTrainerController {
 
         trainerService.updateTrainer(id, trainer);
         return "redirect:/trainers";
+    }
+
+    // Handle Add Course form submit
+    @GetMapping("/{id}/view-trainer")
+    public String viewTrainer(@PathVariable Integer id, Model model) {
+        model.addAttribute("trainer", trainerService.getTrainerById(id));
+        CourseDTO course = trainerService.getTrainerCourse(id);
+        String courseName = course.getCourseName();
+        model.addAttribute("courseName", courseName);
+
+        return "trainers/view-trainer";
     }
 
 
