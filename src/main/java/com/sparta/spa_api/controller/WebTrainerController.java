@@ -4,6 +4,7 @@ import com.sparta.spa_api.dtos.CourseDTO;
 import com.sparta.spa_api.dtos.StudentMapper;
 import com.sparta.spa_api.dtos.TrainersDTO;
 import com.sparta.spa_api.entities.Student;
+import com.sparta.spa_api.entities.Trainers;
 import com.sparta.spa_api.services.CourseService;
 import com.sparta.spa_api.services.TrainerService;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,14 @@ public class WebTrainerController {
     private final TrainerService trainerService;
     private final CourseService courseService;
     private final StudentMapper studentMapper;
+
+
     public WebTrainerController(TrainerService trainerService, CourseService courseService, StudentMapper studentMapper) {
         this.trainerService = trainerService;
         this.courseService = courseService;
         this.studentMapper = studentMapper;
     }
+
 
     // Spring creates the Model
     // Controller assigns values to attributes within that model
