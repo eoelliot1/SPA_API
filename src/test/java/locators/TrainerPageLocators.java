@@ -29,14 +29,14 @@ public class TrainerPageLocators {
     @FindBy(xpath = "//h2[text()='All trainers detail']/following-sibling::table//tbody/tr/td[3]")
     private List<WebElement> trainerCourseCells;
 
-    // ================= SEARCH LOCATORS =================
+
     @FindBy(name = "query")
     private WebElement searchInput;
 
     @FindBy(xpath = "//form[@class='mb-4']//button[@type='submit']")
     private WebElement searchButton;
 
-// ================= ADD TRAINER LOCATORS =================
+
     @FindBy(linkText = "Add new Trainer")
     private WebElement addTrainerButton;
 
@@ -54,11 +54,11 @@ public class TrainerPageLocators {
 //    @FindBy(xpath = "//tr[td[text()='John Trainer']]//a[contains(text(),'Edit')]")
 //    private WebElement editTrainerButton;
 
-//public WebElement getEditButtonForTrainer(String trainerName) {
-//    return driver.findElement(By.xpath(
-//            "//tr[td[text()='" + trainerName + "']]//a[contains(text(),'Edit')]"
-//    ));
-//}
+    public WebElement getEditButtonForTrainer(String trainerName) {
+        return driver.findElement(By.xpath(
+                "//tr[td[text()='" + trainerName + "']]//a[contains(text(),'Edit')]"
+        ));
+    }
 
 
 
@@ -78,14 +78,14 @@ public class TrainerPageLocators {
     public WebElement getEditCourseDropdown() { return editCourseDropdown; }
     public WebElement getUpdateTrainerButton() { return updateTrainerButton; }
 
-    // Getters
+
     public WebElement getAddTrainerButton() { return addTrainerButton; }
     public WebElement getTrainerNameInput() { return trainerNameInput; }
     public WebElement getCourseDropdown() { return courseDropdown; }
     public WebElement getSaveTrainerButton() { return saveTrainerButton; }
 
 
-    // ================= GETTERS =================
+
     public WebElement getTrainersNavButton() { return trainersNavButton; }
     public WebElement getTrainersTable() { return trainersTable; }
     public List<WebElement> getTrainerRows() { return trainerRows; }

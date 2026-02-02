@@ -4,9 +4,11 @@ import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import utils.Config;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class TestBase {
+    private static final String BASE_URI = Config.getBaseUri();
 
     @LocalServerPort
     int port;
@@ -14,7 +16,7 @@ public abstract class TestBase {
     @BeforeEach
     void setup() {
         RestAssured.reset();              // IMPORTANT
-        RestAssured.baseURI = "http://localhost";
+        RestAssured.baseURI = BASE_URI;
         RestAssured.port = port;
         RestAssured.basePath = "";        // IMPORTANT (prevents weird path concatenation)
 

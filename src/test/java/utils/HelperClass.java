@@ -80,7 +80,7 @@ public class HelperClass {
 
         ChromeOptions options = new ChromeOptions();
 
-        // 🔴 CRITICAL: disable Chrome password popup & breach warnings
+
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("credentials_enable_service", false);
         prefs.put("profile.password_manager_enabled", false);
@@ -89,7 +89,7 @@ public class HelperClass {
         options.addArguments("--disable-save-password-bubble");
         options.addArguments("--disable-password-manager-reauthentication");
 
-        // Your existing options (kept)
+
         options.addArguments("--user-data-dir=/tmp/chrome-profile-" + UUID.randomUUID());
         options.addArguments("--incognito");
         options.addArguments("--no-sandbox");
