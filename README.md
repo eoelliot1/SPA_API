@@ -270,26 +270,7 @@ To run this pipeline:
 
 4. Access Swagger UI to explore endpoints
 
----
-
-## Definition of Done
-
-A user story is considered complete when:
-
-* The endpoint is implemented and functional
-* DTOs are used correctly
-* Validation and error handling are in place
-* Unit tests are written and passing
-* Swagger documentation is complete
-* Code is reviewed and merged into the main branch
+ Code is reviewed and merged into the main branch
 
 ---
 
-## Lessons Learned
-
-* Importance of clear user stories and acceptance criteria
-* Benefits of DTOs in API design
-* Writing tests early improves confidence
-* Communication is critical in short sprints
-
----
