@@ -191,7 +191,7 @@ public class StudentViewController {
     public String updateStudent(@PathVariable Integer id,
                                 @ModelAttribute("updatedStudent") StudentDTO studentDto) {
         studentService.updateStudent(id, studentDto);
-        return "redirect:/students";
+        return "redirect:/students/profile";
     }
 
     @GetMapping("/courses")

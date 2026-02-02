@@ -21,16 +21,7 @@
              required>
     </div>
 
-    <div class="mb-4">
-      <label for="courseId" class="form-label fw-bold">Select Course</label>
-      <select id="courseId" class="form-select" th:field="*{courseId}" required>
-        <option th:each="c : ${courses}"
-                th:value="${c.id}"
-                th:text="${c.courseName}">
-        </option>
-      </select>
-      <input type="checkbox" th:field="*{graduated}" class="form-check-input">
-    </div>
+
 
     <hr>
 

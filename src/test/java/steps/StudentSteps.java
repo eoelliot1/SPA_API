@@ -1,14 +1,31 @@
 package steps;
-import actions.LoginPageActions;
+import actions.*;
+
 import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.serenitybdd.annotations.Managed;
+import org.openqa.selenium.WebDriver;
+import org.junit.Assert;
+import utils.HelperClass;
 
 public class StudentSteps {
-    @Managed
+    WebDriver driver;
     LoginPageActions loginPageActions;
+    StudentPageActions studentPageActions;
+    MyProfilePageActions myProfilePageActions;
+    UpdateProfileActions updateProfileActions;
+
+
+    public StudentSteps() {
+
+        HelperClass.setUpDriver();
+        this.driver = HelperClass.getDriver();
+        this.loginPageActions = new LoginPageActions();
+        this.studentPageActions = new StudentPageActions();
+        this.myProfilePageActions = new MyProfilePageActions();
+        this.updateProfileActions = new UpdateProfileActions();
+    }
 
 
     @Given("I am logged in as a Student")
@@ -21,43 +38,29 @@ public class StudentSteps {
 
     @When("I click on my course")
     public void iClickOnMyCourse() {
-
-        throw new PendingException();
+        studentPageActions.clickMyCoursesButton();
     }
 
     @Then("I should see a the course that i am enrolled in and what other courses available")
     public void iShouldSeeATheCourseThatIAmEnrolledInAndWhatOtherCoursesAvailable() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        Assert.assertTrue(driver.getCurrentUrl().contains("/courses"));
     }
 
     @When("I click on my profile")
     public void iClickOnMyProfile() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
+        studentPageActions.clickMyProfileButton();
 
-    @Then("I should be able to edit to change to the course I want")
-    public void iShouldBeAbleToEditToChangeToTheCourseIWant() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
     }
 
     @Then("I should be able to edit my name")
     public void iShouldBeAbleToEditMyName() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        myProfilePageActions.clickEditProfile();
+        updateProfileActions.clearStudentName();
+        updateProfileActions.updateStudentName("Tor");
+        updateProfileActions.saveChanges();
+        Assert.assertTrue(driver.getCurrentUrl().contains("/profile"));
+
     }
 
-    @When("I unenroll from course")
-    public void iUnenrollFromCourse() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
 
-    @Then("I should see a student error message")
-    public void iShouldSeeAStudentErrorMessage() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
 }
