@@ -15,10 +15,10 @@ public class StudentPageLocators  {
     public StudentPageLocators(){this.driver = HelperClass.getDriver();}
 
 
-    @FindBy(linkText = "My Profile")
+    @FindBy(xpath="//a[contains(text(),'Profile')]")
     private WebElement myProfileNavButton;
 
-    @FindBy(linkText = "My Course")
+    @FindBy(xpath="//a[contains(text(),'My Course')]")
     private WebElement myCourseNavButton;
 
 

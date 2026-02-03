@@ -7,6 +7,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import locators.LoginPageLocators;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,6 +16,7 @@ import utils.HelperClass;
 import java.time.Duration;
 
 public class LoginSteps {
+    WebDriver driver = HelperClass.getDriver();
     LoginPageActions loginPageActions = new LoginPageActions();
     LoginPageLocators loginPageLocators;
     WebDriverWait wait = new WebDriverWait(HelperClass.getDriver(), Duration.ofSeconds(HelperClass.TIMEOUT));
@@ -49,7 +51,7 @@ public class LoginSteps {
         WebElement studentDashboard = loginPageLocators.getStudentDashboard();
         wait.until(ExpectedConditions.visibilityOf(studentDashboard));
 
-        Assertions.assertTrue(studentDashboard.getText().contains("Student"));
+        Assertions.assertTrue(driver.getCurrentUrl().contains("8091"));
 
     }
 

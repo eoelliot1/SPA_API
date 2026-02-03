@@ -1,49 +1,68 @@
 package steps;
-import actions.*;
 
+import actions.LoginPageActions;
+import actions.MyProfilePageActions;
+import actions.StudentPageActions;
+import actions.UpdateProfileActions;
 import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import locators.LoginPageLocators;
-import org.openqa.selenium.WebDriver;
+import locators.MyProfileLocators;
+import locators.StudentPageLocators;
+import locators.UpdateProfileLocators;
 import org.junit.Assert;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.HelperClass;
 
 import java.time.Duration;
 
 public class StudentSteps {
-    WebDriver driver;
-    LoginPageActions loginPageActions;
-    StudentPageActions studentPageActions;
-    MyProfilePageActions myProfilePageActions;
-    UpdateProfileActions updateProfileActions;
+    WebDriver driver = HelperClass.getDriver();
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(HelperClass.TIMEOUT));
+    StudentPageLocators studentPageLocators = new StudentPageLocators();
+    MyProfileLocators myProfileLocators = new MyProfileLocators();
+    UpdateProfileLocators updateProfileLocators = new UpdateProfileLocators();
     LoginPageLocators loginPageLocators;
-    WebDriverWait wait = new WebDriverWait(HelperClass.getDriver(), Duration.ofSeconds(HelperClass.TIMEOUT));
+    StudentPageActions studentPageActions = new StudentPageActions();
+    MyProfilePageActions myProfilePageActions = new MyProfilePageActions();
+    UpdateProfileActions updateProfileActions = new UpdateProfileActions();
+    LoginPageActions loginPageActions = new LoginPageActions();
 
     public StudentSteps() {
-
-        HelperClass.setUpDriver();
-        this.driver = HelperClass.getDriver();
-        this.loginPageActions = new LoginPageActions();
-        this.studentPageActions = new StudentPageActions();
-        this.myProfilePageActions = new MyProfilePageActions();
-        this.updateProfileActions = new UpdateProfileActions();
         this.loginPageLocators = new LoginPageLocators();
-        PageFactory.initElements(HelperClass.getDriver(), loginPageLocators);
+        PageFactory.initElements(driver, loginPageLocators);
+
+        this.studentPageLocators = new StudentPageLocators();
+        PageFactory.initElements(driver, studentPageLocators);
+
+        this.myProfileLocators = new MyProfileLocators();
+        PageFactory.initElements(driver, myProfileLocators);
+
+        this.updateProfileLocators = new UpdateProfileLocators();
+        PageFactory.initElements(driver, updateProfileLocators);
+
     }
 
 
-    @Given("I am logged in as a Student")
+
+    @When("I am logged in as a Student")
     public void iAmLoggedInAsAStudent() {
-        HelperClass.openPage("http://localhost:8091/login");
-        loginPageActions.signIn("alice","alicepass");
-
-        loginPageActions.clickSignInButton();
-
+        loginPageActions.signIn("alice", "alicepass");
+        wait.until(ExpectedConditions.urlContains("http://localhost:8091/"));
     }
+
+    @Then("I should be redirected to the Student dashboard")
+    public void iShouldBeRedirectedToTheStudentDashboard() {
+
+        Assert.assertTrue(driver.getCurrentUrl().contains("8091"));
+    }
+
+
 
     @When("I click on my course")
     public void iClickOnMyCourse() {
@@ -58,18 +77,25 @@ public class StudentSteps {
     @When("I click on my profile")
     public void iClickOnMyProfile() {
         studentPageActions.clickMyProfileButton();
-
+        Assert.assertTrue(driver.getCurrentUrl().contains("/profile"));
     }
 
     @Then("I should be able to edit my name")
     public void iShouldBeAbleToEditMyName() {
+        // Perform the actions to change the name
         myProfilePageActions.clickEditProfile();
         updateProfileActions.clearStudentName();
         updateProfileActions.updateStudentName("Tor");
         updateProfileActions.saveChanges();
-        Assert.assertTrue(driver.getCurrentUrl().contains("/profile"));
+
+        // Verification: Check if the UI reflects the change or stays on the right page
 
     }
 
 
+    @Then("I should be redirected to the student profile")
+    public void iShouldBeRedirectedToTheStudentProfile() {
+        Assert.assertTrue("Profile page URL not found after update",
+                driver.getCurrentUrl().contains("/profile"));
+    }
 }

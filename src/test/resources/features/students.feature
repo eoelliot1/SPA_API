@@ -2,7 +2,9 @@ Feature: Student
   As a Student I want to be able to see all courses that are available and I can edit my profile
 
   Background:
-    Given I am logged in as a Student
+    Given I am on the login page
+    When I am logged in as a Student
+    Then I should be redirected to the Student dashboard
 
   @Happy
   Scenario: There are courses in the system
@@ -14,5 +16,5 @@ Feature: Student
   Scenario: Change my name
     When I click on my profile
     Then I should be able to edit my name
-    Then I should be redirected to the student dashboard
+    Then I should be redirected to the student profile
 
