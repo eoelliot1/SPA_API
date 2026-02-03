@@ -37,7 +37,7 @@ public class HelperClass {
         options.addArguments("--incognito");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--headless=new"); // optional
+       // options.addArguments("--headless=new"); // optional
 
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver(options);
