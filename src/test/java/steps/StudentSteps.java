@@ -5,9 +5,14 @@ import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import locators.LoginPageLocators;
 import org.openqa.selenium.WebDriver;
 import org.junit.Assert;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.HelperClass;
+
+import java.time.Duration;
 
 public class StudentSteps {
     WebDriver driver;
@@ -15,7 +20,8 @@ public class StudentSteps {
     StudentPageActions studentPageActions;
     MyProfilePageActions myProfilePageActions;
     UpdateProfileActions updateProfileActions;
-
+    LoginPageLocators loginPageLocators;
+    WebDriverWait wait = new WebDriverWait(HelperClass.getDriver(), Duration.ofSeconds(HelperClass.TIMEOUT));
 
     public StudentSteps() {
 
@@ -25,13 +31,16 @@ public class StudentSteps {
         this.studentPageActions = new StudentPageActions();
         this.myProfilePageActions = new MyProfilePageActions();
         this.updateProfileActions = new UpdateProfileActions();
+        this.loginPageLocators = new LoginPageLocators();
+        PageFactory.initElements(HelperClass.getDriver(), loginPageLocators);
     }
 
 
     @Given("I am logged in as a Student")
     public void iAmLoggedInAsAStudent() {
-        loginPageActions.setEmail("alice");
-        loginPageActions.setPassword("alicepass");
+        HelperClass.openPage("http://localhost:8091/login");
+        loginPageActions.signIn("alice","alicepass");
+
         loginPageActions.clickSignInButton();
 
     }

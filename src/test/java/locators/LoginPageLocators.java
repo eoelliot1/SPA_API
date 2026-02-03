@@ -22,7 +22,7 @@ public class LoginPageLocators {
 //    @FindBy(id = "email-input")
 //    private WebElement emailField;
 
-    @FindBy(xpath="/html/body/div/div/div/form/div[1]/input")
+    @FindBy(id="email-input")
   private WebElement emailField;
 
     public WebElement getEmailField() {
