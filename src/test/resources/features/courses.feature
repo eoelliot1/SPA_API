@@ -1,24 +1,26 @@
-#Feature: Course Management
-#  As a trainer
-#  I want to manage courses (view, search, add, edit, and delete)
-#  So that I can effectively organize and maintain them
-#
-#  Background:
-#    Given I am logged in as a Trainer
-#    And I navigate to the courses page
-#
-#  Scenario: View all available courses
-#    When I navigate to the courses page
-#    Then I should see all available courses listed
-#
-#  Scenario: Search for an existing course
-#    When I search for a course named "Data"
-#    Then I should see course "Data" listed
-#
+Feature: Course Management
+  As a trainer
+  I want to manage courses (view, search, add, edit, and delete)
+  So that I can effectively organize and maintain them
+
+  Background:
+    Given I am on the login page
+    When I am logged in as a Trainer
+    Then I should be redirected to the trainer dashboard
+
+  Scenario: View all available courses
+    When I click on manage courses
+    Then I should see all available courses listed
+
+  Scenario: Search for an existing course
+    When I click on manage courses
+    When I search for a course named "Data"
+    Then I should see course "2 Data View Edit Delete" listed
+
 #  Scenario: Search for a course that does not exist
 #    When I search for a course named "Python"
 #    Then I should see no courses listed
-#
+
 #  # Editing Course Scenarios
 #  Scenario: Edit an existing course
 #    Given there is an existing course named "Data"
@@ -67,6 +69,6 @@
 #    Then I should see a success message "Course added successfully"
 #    And I should see "Advanced JavaScript" in the courses list
 #    And I should see "2024-12-15" displayed for "Advanced JavaScript"
-#
-#
-#    # Add enrollment features
+
+
+    # Add enrollment features
