@@ -97,5 +97,4 @@ public class LoginSteps {
 
         Assertions.assertTrue(trainerDashboard.getText().contains("Trainer"));
     }
-
 }

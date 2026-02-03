@@ -4,9 +4,6 @@ import org.openqa.selenium.support.FindBy;
 
 public class CourseLocators {
     // Courses List Page
-    @FindBy(xpath = "/html/body/nav/div/div/a[1]")
-    private WebElement coursesItem;
-
     @FindBy(name = "keyword")
     private WebElement searchField;
 
@@ -51,7 +48,57 @@ public class CourseLocators {
     @FindBy(xpath = "//p[contains(., 'Start Date:')]/span")
     private WebElement startDateDetail;
 
+    //Neww
 
+    @FindBy(xpath = "//nav//a[normalize-space()='Manage Courses' and @href='/courses/']")
+    private WebElement navigateCourseButton;
+
+    @FindBy(xpath = "//h1[contains(@class,'text-center') and contains(@class,'mb-4')]")
+    private WebElement courseIndexHeader;
+
+    @FindBy(xpath = "//table//td[normalize-space()='Data']")
+    private WebElement courseTable;
+
+    @FindBy(css = "input[placeholder='Search courses by name']")
+    private WebElement courseSearchField;
+
+    //Data text field search has been done
+    @FindBy(xpath = "//table//tr[td[normalize-space()='Data']]")
+    private WebElement dataCell;
+
+    //Data text field search has been done
+    @FindBy(xpath = "//table//tr[td[normalize-space()='Software Testing']]")
+    private WebElement softare_testingCell;
+
+    @FindBy(xpath = "//table//tr[td[normalize-space()='Swimming']]")
+    private WebElement swimmingCell;
+
+    @FindBy(xpath = "//form[@action='/courses/search']//button[@type='submit']")
+    private WebElement searchFilterButton;
+    // NEW:
+
+    public WebElement getSearchFilterButton() {return searchFilterButton;}
+    public WebElement getSwimmingCell() {return swimmingCell;}
+
+    public WebElement getSoftare_testing_Cell() {return softare_testingCell;}
+
+    public WebElement getDataCell() {return dataCell;}
+
+    public WebElement getCourseIndexHeader() {return courseIndexHeader;}
+
+    public WebElement getCourseButton() {return navigateCourseButton;}
+
+    public WebElement getCourseTable() { return courseTable;}
+
+    public WebElement getCourseSearchField() {
+        return courseSearchField;
+    }
+
+    public WebElement searchButton() {
+        return searchButton;
+    }
+
+    // OLD:
 
     public WebElement getSearchField() {
         return searchField;

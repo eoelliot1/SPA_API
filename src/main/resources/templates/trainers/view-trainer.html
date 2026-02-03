@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:insert="fragments/head :: head(' Trainer details')"></div>
+
+<body class="bg-light">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0">Trainer Profile</h2>
+                </div>
+
+                <div class="card-body">
+                    <div class="mb-3 border-bottom pb-2">
+                        <label class="form-label text-muted small d-block">Trainer ID</label>
+                        <span class="h6" th:text="${trainer.id}"></span>
+                    </div>
+
+                    <div class="mb-3 border-bottom pb-2">
+                        <label class="form-label text-muted small d-block">Full Name</label>
+                        <span class="h5" th:text="${trainer.trainerName}"></span>
+                    </div>
+
+                    <div class="mb-3 border-bottom pb-2">
+                        <label class="form-label text-muted small d-block">Course</label>
+                        <span class="h6" th:text="${courseName != null ? courseName : 'Not teaching any course'}"></span>
+                        <span class="h6" th:text="${trainer.courseId != null ? trainer.courseId : 'Null'}"></span>
+                    </div>
+
+
+                </div>
+
+                <div class="card-footer bg-transparent border-top-0 pb-4 text-center">
+                    <a href="/courses/" class="btn btn-secondary">
+                        Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
