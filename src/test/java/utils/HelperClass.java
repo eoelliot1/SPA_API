@@ -33,7 +33,7 @@ public class HelperClass {
         options.addArguments("--disable-password-manager-reauthentication");
 
 
-        //options.addArguments("--user-data-dir=/tmp/chrome-profile-" + UUID.randomUUID());
+        options.addArguments("--user-data-dir=/tmp/chrome-profile-" + UUID.randomUUID());
         options.addArguments("--incognito");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");

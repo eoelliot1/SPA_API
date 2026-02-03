@@ -11,11 +11,10 @@ public class LoginPageLocators {
     @FindBy(css = "button[type='submit']")
     private WebElement signInButton;
 
-
-    @FindBy(xpath = "//button[@type='submit' and normalize-space(.)='Logout']")
+    @FindBy(xpath = "/html/body/nav/div/div/form")
     private WebElement logoutButton;
 
-    @FindBy(xpath = "//h2[@id='trainer-dashboard']")
+    @FindBy(xpath = "/html/body/div[2]/div[1]/div")
     private WebElement trainerDashboard;
 
     @FindBy(xpath = "/html/body/div[2]/div[1]/div")
