@@ -8,7 +8,6 @@ import com.sparta.spa_api.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class CourseService {
@@ -112,6 +111,7 @@ public class CourseService {
                 .map(courseMapper::toDTO)
                 .toList();
     }
+
     public List<CourseDTO> searchCourses(String keyword) {
         return courseRepository
                 .findByCourseNameContainingIgnoreCase(keyword)

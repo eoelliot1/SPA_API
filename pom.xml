@@ -8,6 +8,17 @@
         <version>4.0.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-bom</artifactId>
+                <version>4.14.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <groupId>com.sparta</groupId>
     <artifactId>SPA_API</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -26,11 +37,7 @@
         <tag/>
         <url/>
     </scm>
-    <properties>
-        <java.version>21</java.version>
-        <serenity.version>4.1.17</serenity.version>
-        <selenium.version>4.12.1</selenium.version>
-    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -52,7 +59,19 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.10.2</version>
-            <scope>test</scope>
+
+        </dependency>
+
+
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>slf4j-simple</artifactId>-->
+<!--            <version>2.0.7</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.2</version>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -210,35 +229,56 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.40.0</version>
+            <version>4.14.1</version>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>net.serenity-bdd</groupId>-->
-        <!--            <artifactId>serenity-junit5</artifactId>-->
-        <!--            <version>3.9.8</version>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
 
-<!--        <dependency>-->
-<!--            <groupId>net.serenity-bdd</groupId>-->
-<!--            <artifactId>serenity-cucumber</artifactId>-->
-<!--            <version>3.9.8</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-core</artifactId>
+            <version>3.9.8</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-java</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>net.serenity-bdd</groupId>-->
-<!--            <artifactId>serenity-rest-assured</artifactId>-->
-<!--            <version>3.9.8</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-cucumber</artifactId>
+            <version>3.9.8</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-junit5</artifactId>
+            <version>3.9.8</version>
+            <scope>test</scope>
+
+        </dependency>
+
+
+
 
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>5.8.0</version>
         </dependency>
+
+
+
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -261,18 +301,9 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-core</artifactId>
-            <version>4.0.15</version> <scope>test</scope>
-        </dependency>
 
-        <dependency>
-            <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-cucumber</artifactId>
-            <version>4.0.15</version>
-            <scope>test</scope>
-        </dependency>
+
+
 
         <dependency>
             <groupId>net.java.dev.jna</groupId>
@@ -378,26 +409,26 @@
         </profile>
 
         <!-- Web (Selenium/Cucumber) tests -->
-        <profile>
-            <id>web</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <configuration>
-                            <includes>
-                                <!-- your runner should match this, e.g. CucumberIT.java -->
-                                <include>**/*UiIT.java</include>
-                                <include>**/*E2EIT.java</include>
-                                <include>**/*CucumberIT.java</include>
-                                <include>**/runners/**</include>
-                            </includes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+<!--        <profile>-->
+<!--            <id>web</id>-->
+<!--            <build>-->
+<!--                <plugins>-->
+<!--                    <plugin>-->
+<!--                        <groupId>org.apache.maven.plugins</groupId>-->
+<!--                        <artifactId>maven-failsafe-plugin</artifactId>-->
+<!--                        <configuration>-->
+<!--                            <includes>-->
+<!--                                &lt;!&ndash; your runner should match this, e.g. CucumberIT.java &ndash;&gt;-->
+<!--                                <include>**/*UiIT.java</include>-->
+<!--                                <include>**/*E2EIT.java</include>-->
+<!--                                <include>**/*CucumberIT.java</include>-->
+<!--                                <include>**/runners/**</include>-->
+<!--                            </includes>-->
+<!--                        </configuration>-->
+<!--                    </plugin>-->
+<!--                </plugins>-->
+<!--            </build>-->
+<!--        </profile>-->
     </profiles>
 
 </project>

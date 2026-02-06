@@ -46,4 +46,5 @@ public class StudentsPage extends PageObject {
     public void acceptAlert() {
         getDriver().switchTo().alert().accept();
     }
+
 }

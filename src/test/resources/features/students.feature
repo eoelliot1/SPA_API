@@ -9,7 +9,7 @@ Feature: Student
   @Happy
   Scenario: There are courses in the system
     When I click on my course
-    Then I should see a the course that i am enrolled in and what other courses available
+    Then I should see a the course that I am enrolled in and what other courses available
 
 
   @Happy
