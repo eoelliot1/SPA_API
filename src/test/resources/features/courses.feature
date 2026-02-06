@@ -9,27 +9,36 @@ Feature: Course Management
     Then I should be redirected to the trainer dashboard
 
   Scenario: View all available courses
-    When I click on manage courses
-    Then I should see all available courses listed
+    When I open the courses page
+    Then I should see a list of all available courses
 
-  Scenario: Search for an existing course
-    When I click on manage courses
-    When I search for a course named "Data"
-    Then I should see course "2 Data View Edit Delete" listed
+  Scenario Outline: Search for an existing course
+    When I open the courses page
+    And I search for a course named "<course>"
+    Then I should see the course listed
 
-#  Scenario: Search for a course that does not exist
-#    When I search for a course named "Python"
-#    Then I should see no courses listed
+    Examples:
+      | course |
+      | Data   |
 
-#  # Editing Course Scenarios
-#  Scenario: Edit an existing course
-#    Given there is an existing course named "Data"
-#    When I click "Edit" for course "Data"
-#    And I update course name to "Advanced Data Analysis"
-#    And I click "Update"
-#    Then I should see "Advanced Data Analysis" in the courses list
-#    And I should not see "Data" in the courses list
-#
+  Scenario Outline: Search for a course that does not exist
+    When I open the courses page
+    And I search for a course named "<course>"
+    Then I should see no courses listed
+
+    Examples:
+      | course  |
+      | Python  |
+
+  # Editing Course Scenarios
+  Scenario: Edit an existing course
+    Given I open the courses page
+    When I click Edit for course "Data"
+    And I am on update course page
+    And I update course name to "Advanced Data Analysis"
+    Then I should see "Advanced Data Analysis" in the courses list
+    And I should not see "Data" in the courses list
+
 #  Scenario: Cancel course editing
 #    Given there is an existing course named "Software Testing"
 #    When I click "Edit" for course "Software Testing"
@@ -69,6 +78,6 @@ Feature: Course Management
 #    Then I should see a success message "Course added successfully"
 #    And I should see "Advanced JavaScript" in the courses list
 #    And I should see "2024-12-15" displayed for "Advanced JavaScript"
-
-
-    # Add enrollment features
+#
+#
+#    # Add enrollment features

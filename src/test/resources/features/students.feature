@@ -24,8 +24,6 @@ Feature: Student
     Then I should be redirected to my profile
 
 
-
-
   @Happy
     Scenario: Go back to Dashboard
       When I am on my profile page click back to dashboard
