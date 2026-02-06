@@ -1,7 +1,6 @@
 package com.sparta.spa_api.entities;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

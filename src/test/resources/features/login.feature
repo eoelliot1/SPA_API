@@ -6,16 +6,18 @@ Feature: User Authentication
   Scenario Outline: Successful login with valid credentials as a trainer
     Given I am on the login page
     When I enter email "<email>" and password "<password>"
+    And I click the log in button
     Then I should be redirected to the trainer dashboard
 
     Examples:
       | email                     | password |
-      | trainer                   | trainerpass |
+      | sarah                     | sarahpass |
 
 
   Scenario Outline: Successful login with valid credentials as a trainee
     Given I am on the login page
     When I enter email "<email>" and password "<password>"
+    And I click the log in button
     Then I should be redirected to the student dashboard
 
     Examples:
@@ -29,13 +31,13 @@ Feature: User Authentication
 
 
     Examples:
-      | wrong_email              | wrong_password |
-      | wrongemail@gmail.com     |  wrongpass |
+      | wrong_email                        | wrong_password |
+      | wrongemail@nonexistentmail.com     |  wrongpass |
 
 
-//  Scenario: Successful logout
-//    Given I am on the login page
-//    And I am logged in as a Trainer
- //   And I am on the trainer dashboard
- //   When I press the logout button
- //   Then I should be redirected to the login page
+  Scenario: Successful logout
+    Given I am on the login page
+    And I am logged in as a Trainer
+    And I am on the trainer dashboard
+    When I press the logout button
+    Then I should be redirected to the login page
