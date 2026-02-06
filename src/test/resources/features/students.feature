@@ -18,3 +18,16 @@ Feature: Student
     Then I should be able to edit my name
     Then I should be redirected to the student profile
 
+  @Happy
+  Scenario:Cancel editing my name
+    When I am updating my name and click cancel
+    Then I should be redirected to my profile
+
+
+
+
+  @Happy
+    Scenario: Go back to Dashboard
+      When I am on my profile page click back to dashboard
+      Then I should be redirected to the student dashboard
+

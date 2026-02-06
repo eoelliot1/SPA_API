@@ -73,4 +73,26 @@ public class StudentSteps {
 
         assertTrue(driver.getCurrentUrl().contains("/profile"));
     }
+
+    @When("I am updating my name and click cancel")
+    public void iAmUpdatingMyNameAndClickCancel() {
+        studentDashBoardPage.clickMyProfile();
+        myProfile.clickEditProfile();
+        updateStudentPage.clickCancelButton();
+    }
+
+    @Then("I should be redirected to my profile")
+    public void iShouldBeRedirectedToMyProfile() {
+        new PageObject(driver) {}.waitForCondition()
+                .until(d -> d.getCurrentUrl().contains("/profile"));
+
+        assertTrue(driver.getCurrentUrl().contains("/profile"));
+    }
+
+    @When("I am on my profile page click back to dashboard")
+    public void iAmOnMyProfilePageClickBackToDashboard() {
+        studentDashBoardPage.clickMyProfile();
+        myProfile.clickBackToDashBoard();
+
+    }
 }
