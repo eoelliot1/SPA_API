@@ -19,7 +19,7 @@ Feature: Trainer Management
   Scenario: Search trainers by course duration
     When I search for courses longer than "120" days
     Then I should see trainers assigned to long courses
-#
+
   Scenario: Search trainers with no matching course duration
     When I search for courses longer than "1000" days
     Then I should see no trainers listed
@@ -37,13 +37,22 @@ Feature: Trainer Management
     Then I should see trainer "Philip Windridge" listed
 
 
-  Scenario: Edit an existing trainer
-    Given there is an existing trainer named "Sarah Coach"
-    When I click "Edit" for trainer "Sarah Coach"
-    And I update trainer name to "Sarah Senior Trainer"
-    And I change course to "Software Testing"
-    And I click Update Trainer
-    Then I should be redirected to the trainers page
+  Scenario: View trainer details
+    Given I am on the trainers page
+    And there is an existing trainer named "Sarah Coach"
+    When I click "View Trainer" for trainer "Sarah Coach"
+    Then I should be redirected to the view trainer page
+    And I should see trainer name "Sarah Coach"
+
+
+  Scenario: Navigate back to trainers list from trainer details
+    Given I am on the trainers page
+    And there is an existing trainer named "Sarah Coach"
+    When I click "View Trainer" for trainer "Sarah Coach"
+    Then I should be redirected to the view trainer page
+    And I should see trainer name "Sarah Coach"
+    When I click on the "Back to list" button
+    Then I should see the trainers list
 
 
 

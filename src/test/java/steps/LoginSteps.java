@@ -1,101 +1,77 @@
 package steps;
 
-import actions.LoginPageActions;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import locators.LoginPageLocators;
-import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.HelperClass;
-import java.time.Duration;
+import net.thucydides.core.annotations.Managed;
+import net.thucydides.core.annotations.Steps;
+import org.openqa.selenium.WebDriver;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import pages.LoginPage;
 
 public class LoginSteps {
-    LoginPageActions loginPageActions = new LoginPageActions();
-    LoginPageLocators loginPageLocators;
-    WebDriverWait wait = new WebDriverWait(HelperClass.getDriver(), Duration.ofSeconds(HelperClass.TIMEOUT));
 
-    public LoginSteps() {
-        // Initialize the locators with PageFactory
-        this.loginPageLocators = new LoginPageLocators();
-        PageFactory.initElements(HelperClass.getDriver(), loginPageLocators);
-    }
+    @Managed
+    WebDriver driver;
+
+    LoginPage loginPage;
 
     @Given("I am on the login page")
     public void iAmOnTheLoginPage() {
-        HelperClass.openPage("http://localhost:8091/login");
+        loginPage.open();
     }
 
     @When("I enter email {string} and password {string}")
-    public void iEnterEmailAndPassword(String email, String password) {
-        loginPageActions.signIn(email, password);
+    public void iEnterEmailAndPassword(String username, String password) {
+        loginPage.enterUserName(username);
+        loginPage.enterPassword(password);
+    }
+
+    @And("I click the log in button")
+    public void iClickTheLogInButton() {
+        loginPage.clickLoginButton();
     }
 
     @Then("I should be redirected to the trainer dashboard")
     public void iShouldBeRedirectedToTheTrainerDashboard() {
-        WebElement trainerDashboard = loginPageLocators.getTrainerDashboard();
-        wait.until(ExpectedConditions.visibilityOf(trainerDashboard));
-
-        Assertions.assertTrue(trainerDashboard.getText().contains("Trainer"));
+        assertTrue(loginPage.isTrainerDashboardVisible());
     }
-
 
     @Then("I should be redirected to the student dashboard")
     public void iShouldBeRedirectedToTheStudentDashboard() {
-        WebElement studentDashboard = loginPageLocators.getStudentDashboard();
-        wait.until(ExpectedConditions.visibilityOf(studentDashboard));
-
-        Assertions.assertTrue(studentDashboard.getText().contains("Student"));
-
+        assertTrue(loginPage.isStudentDashboardVisible());
     }
 
     @Then("I should remain on the login page")
     public void iShouldRemainOnTheLoginPage() {
-
-        String currentUrl = HelperClass.getDriver().getCurrentUrl();
-        boolean isOnLoginPage = currentUrl.contains("/login");
-
-        // Also check if error parameter is present
-        if (!isOnLoginPage && currentUrl.contains("error")) {
-            isOnLoginPage = true;
-        }
-
-        Assertions.assertTrue(isOnLoginPage,
-                "Expected to remain on the login page, but URL was: " + currentUrl);
+       assertTrue(driver.getCurrentUrl().contains("/login"));
     }
 
-    @Given("I am logged in as a Trainer")
+    @And("I am logged in as a Trainer")
     public void iAmLoggedInAsATrainer() {
-        String email = "sarah";
-        String password = "sarahpass";
-
-        loginPageActions.signIn(email, password);
-    }
-
-    @When("I press the logout button")
-    public void iPressTheLogoutButton() {
-        loginPageActions.clickLogoutButton();
-        wait.until(ExpectedConditions.urlContains("/login"));
-    }
-
-    @Then("I should be redirected to the login page")
-    public void iShouldBeRedirectedToTheLoginPage() {
-        String currentUrl = HelperClass.getDriver().getCurrentUrl();
-        boolean isOnLoginPage = currentUrl.contains("/login");
-        Assertions.assertTrue(isOnLoginPage,
-                "Expected to remain on the login page, but URL was: " + currentUrl);
+      loginPage.open();
+      loginPage.enterUserName("sarah");
+      loginPage.enterPassword("sarahpass");
+      loginPage.clickLoginButton();
+      loginPage.isTrainerDashboardVisible();
     }
 
     @And("I am on the trainer dashboard")
     public void iAmOnTheTrainerDashboard() {
-        WebElement trainerDashboard = loginPageLocators.getTrainerDashboard();
-        wait.until(ExpectedConditions.visibilityOf(trainerDashboard));
+        assertTrue(loginPage.isTrainerDashboardVisible());
+    }
 
-        Assertions.assertTrue(trainerDashboard.getText().contains("Trainer"));
+    @When("I press the logout button")
+    public void iPressTheLogoutButton() {
+       loginPage.clickLogout();
+    }
+
+    @Then("I should be redirected to the login page")
+    public void iShouldBeRedirectedToTheLoginPage() {
+
+        assertTrue(driver.getCurrentUrl().contains("/login"));
     }
 
 }

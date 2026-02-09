@@ -1,63 +1,98 @@
 package steps;
-import actions.LoginPageActions;
+
 import io.cucumber.java.PendingException;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.serenitybdd.annotations.Managed;
+import io.cucumber.java.it.Ma;
+import net.thucydides.core.annotations.Managed;
+import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.WebDriver;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import net.serenitybdd.core.pages.PageObject;
+
+import pages.LoginPage;
+import pages.UpdateStudentPage;
+import pages.MyProfile;
+import pages.StudentDashBoardPage;
+import  pages.StudentCoursesPage;
+
 
 public class StudentSteps {
     @Managed
-    LoginPageActions loginPageActions;
+    WebDriver driver;
+    LoginPage loginPage;
+    UpdateStudentPage updateStudentPage;
+    MyProfile myProfile;
+    StudentDashBoardPage studentDashBoardPage;
+    StudentCoursesPage studentCoursesPage;
 
 
-    @Given("I am logged in as a Student")
+    @When("I am logged in as a Student")
     public void iAmLoggedInAsAStudent() {
-        loginPageActions.setEmail("alice");
-        loginPageActions.setPassword("alicepass");
-        loginPageActions.clickSignInButton();
+        loginPage.open();
+        loginPage.enterUserName("alice");
+        loginPage.enterPassword("alicepass");
+        loginPage.clickLoginButton();
+        loginPage.isStudentDashboardVisible();
+    }
+
+    @Then("I should be redirected to the Student dashboard")
+    public void iShouldBeRedirectedToTheStudentDashboard() {
+        assertTrue(loginPage.isStudentDashboardVisible());
 
     }
 
     @When("I click on my course")
     public void iClickOnMyCourse() {
-
-        throw new PendingException();
+      studentDashBoardPage.clickMyCourses();
     }
 
-    @Then("I should see a the course that i am enrolled in and what other courses available")
+    @Then("I should see a the course that I am enrolled in and what other courses available")
     public void iShouldSeeATheCourseThatIAmEnrolledInAndWhatOtherCoursesAvailable() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        assertTrue(studentCoursesPage.isCourseListVisible());
     }
 
     @When("I click on my profile")
     public void iClickOnMyProfile() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Then("I should be able to edit to change to the course I want")
-    public void iShouldBeAbleToEditToChangeToTheCourseIWant() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+       studentDashBoardPage.clickMyProfile();
     }
 
     @Then("I should be able to edit my name")
     public void iShouldBeAbleToEditMyName() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        myProfile.clickEditProfile();
+        updateStudentPage.clickStudentNameField();
+        updateStudentPage.clickSaveButton();
+
     }
 
-    @When("I unenroll from course")
-    public void iUnenrollFromCourse() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @Then("I should be redirected to the student profile")
+    public void iShouldBeRedirectedToTheStudentProfile() {
+        new PageObject(driver) {}.waitForCondition()
+                .until(d -> d.getCurrentUrl().contains("/profile"));
+
+        assertTrue(driver.getCurrentUrl().contains("/profile"));
     }
 
-    @Then("I should see a student error message")
-    public void iShouldSeeAStudentErrorMessage() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @When("I am updating my name and click cancel")
+    public void iAmUpdatingMyNameAndClickCancel() {
+        studentDashBoardPage.clickMyProfile();
+        myProfile.clickEditProfile();
+        updateStudentPage.clickCancelButton();
+    }
+
+    @Then("I should be redirected to my profile")
+    public void iShouldBeRedirectedToMyProfile() {
+        new PageObject(driver) {}.waitForCondition()
+                .until(d -> d.getCurrentUrl().contains("/profile"));
+
+        assertTrue(driver.getCurrentUrl().contains("/profile"));
+    }
+
+    @When("I am on my profile page click back to dashboard")
+    public void iAmOnMyProfilePageClickBackToDashboard() {
+        studentDashBoardPage.clickMyProfile();
+        myProfile.clickBackToDashBoard();
+
     }
 }
