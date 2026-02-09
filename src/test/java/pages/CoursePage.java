@@ -14,6 +14,11 @@ import java.util.List;
 @DefaultUrl("http://localhost:8091/courses/")
 public class CoursePage extends PageObject {
 
+
+
+    @FindBy(xpath="//a[contains(text(),'Manage Courses')]")
+    private WebElementFacade manageCoursesButton;
+
     @FindBy(xpath = "//h1[normalize-space()='Courses List']")
     private WebElementFacade allCourses;
 
@@ -35,6 +40,14 @@ public class CoursePage extends PageObject {
     @FindBy(xpath = "//button[normalize-space()='View']")
     private WebElementFacade viewButton;
 
+    @FindBy (xpath="//td[contains(.,'Java Development')]")
+    private WebElementFacade javaDevelopmentCourse;
+
+    @FindBy(xpath="//a[contains(@href, '/courses/3')]")
+    private WebElementFacade viewJavaDevButton;
+
+
+
     @FindBy(xpath = "//button[normalize-space()='Delete']")
     private WebElementFacade deleteButton;
 
@@ -54,6 +67,8 @@ public class CoursePage extends PageObject {
         editButton.click();
     }
 
+    public void clickManageCourse(){manageCoursesButton.click();}
+
     public void searchForCourse(String courseName) {
         searchBox.clear();
         searchBox.type(courseName);
@@ -69,10 +84,24 @@ public class CoursePage extends PageObject {
         searchButton.waitUntilClickable().click();
     }
 
+    public boolean isJavaDevelopmentVisible(){
+        return waitForCondition().until(webDriver -> javaDevelopmentCourse.isVisible());
+    }
+    public void clickViewJavaDevButton (){
+        viewJavaDevButton.click();
+    }
+
+
+
+
+    public void acceptAlert() {
+        getDriver().switchTo().alert().accept();
+    }
     public boolean isNoCoursesMessageDisplayed() {
         noCoursesMessage.waitUntilVisible();
         return noCoursesMessage.isVisible();
     }
+
 
 
 

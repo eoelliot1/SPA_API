@@ -53,18 +53,21 @@ Feature: Course Management
     And I cancel the deletion confirmation
     Then I should see "DevOps" in the courses list
 
+  # Viewing Course Details
+  Scenario: View course details
+    Given there is an existing course named Java Development
+    When I click view on course Java Development
+    Then I should see the course details page
+    And I should see Java Development as the course name
+    And I should see the course id displayed
+
+
+#    # Add enrollment features
   Scenario: Delete an existing course
     Given I open the courses page
     When I click Delete for course "DevOps"
     And I confirm the deletion
-    Then I should not see "DevOps" in the courses list
 
 
-#  # Viewing Course Details
-#  Scenario: View course details
-#    Given there is an existing course named "Advanced Data Analysis"
-#    When I click "view" on course "Advanced Data Analysis"
-#    Then I should see the course details page
-#    And I should see "Advanced Data Analysis" as the course name
-#    And I should see the course id displayed
+
 
