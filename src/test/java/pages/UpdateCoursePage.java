@@ -16,14 +16,13 @@ public class UpdateCoursePage extends PageObject {
     @FindBy(xpath = "//button[normalize-space()='Update']")
     private WebElementFacade updateButton;
 
-    @FindBy(xpath = "//button[normalize-space()='Cancel']")
+    @FindBy(xpath = "/html/body/div/form/a")
     private WebElementFacade cancelButton;
 
 
-    public void updateCourse(String newName) {
+    public void updateCourseName(String newName) {
         courseNameInput.clear();
         courseNameInput.type(newName);
-        updateButton.click();
     }
 
     public boolean isUpdateCoursePageVisible() {
@@ -32,6 +31,15 @@ public class UpdateCoursePage extends PageObject {
 
     public void openUpdateCoursePage() {
         open();
+    }
+
+    public void clickUpdateButton() {
+        updateButton.click();
+
+    }
+    public void clickCancelButton() {
+        cancelButton.click();
+
     }
 
 

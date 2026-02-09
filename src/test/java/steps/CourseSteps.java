@@ -1,13 +1,19 @@
 package steps;
 
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.Managed;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import pages.CoursePage;
+import pages.DeleteCoursePage;
 import pages.UpdateCoursePage;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CourseSteps {
@@ -17,6 +23,7 @@ public class CourseSteps {
 
     CoursePage coursePage;
     UpdateCoursePage updateCoursePage;
+    DeleteCoursePage deleteCoursePage;
 
     @When("I open the courses page")
     public void iOpenTheCoursesPage() {
@@ -40,9 +47,8 @@ public class CourseSteps {
     }
 
     @Then("I should see no courses listed")
-    public boolean iShouldSeeNoCoursesListed() {
-        return coursePage.getCourseTableRows().stream()
-                .anyMatch(row -> !row.getText().contains("No courses found."));
+    public void iShouldSeeNoCoursesListed() {
+        Assertions.assertTrue(coursePage.isNoCoursesMessageDisplayed());
     }
 
     @When("I click Edit for course {string}")
@@ -58,7 +64,8 @@ public class CourseSteps {
 
     @And("I update course name to {string}")
     public void iUpdateCourseNameTo(String updatedName) {
-        updateCoursePage.updateCourse(updatedName);
+        updateCoursePage.updateCourseName(updatedName);
+        updateCoursePage.clickUpdateButton();
     }
 
     @Then("I should see {string} in the courses list")
@@ -68,9 +75,43 @@ public class CourseSteps {
     }
 
     @And("I should not see {string} in the courses list")
-    public boolean iShouldNotSeeInTheCoursesList(String courseName) {
+    public void iShouldNotSeeInTheCoursesList(String courseName) {
         coursePage.searchForCourse(courseName);
-        return coursePage.getCourseTableRows().stream()
-                .anyMatch(row -> !row.getText().contains("No courses found."));
+
+        List<WebElementFacade> rows = coursePage.getCourseTableRows(); // Get fresh elements
+
+        if (rows.isEmpty()) {
+            return;
+        }
+
+        rows.forEach(row ->
+                Assertions.assertFalse(row.getText().contains(courseName))
+        );
+    }
+
+    @And("I attempt to update course name to {string}")
+    public void iAttemptToUpdateCourseNameTo(String updatedCourse) {
+        updateCoursePage.updateCourseName(updatedCourse);
+    }
+
+    @And("I click Cancel")
+    public void iClickCancel() {
+        updateCoursePage.clickCancelButton();
+    }
+
+
+    @When("I click Delete for course {string}")
+    public void iClickDeleteForCourse(String course) {
+        deleteCoursePage.clickDelete();
+    }
+
+    @And("I cancel the deletion confirmation")
+    public void iCancelTheDeletionConfirmation() {
+        deleteCoursePage.dismissAlert();
+    }
+
+    @And("I confirm the deletion")
+    public void iConfirmTheDeletion() {
+        deleteCoursePage.acceptAlert();
     }
 }

@@ -23,6 +23,9 @@ public class CoursePage extends PageObject {
     @FindBy(xpath = "//button[normalize-space()='Search']")
     private WebElementFacade searchButton;
 
+    @FindBy(xpath = "//td[normalize-space()='No courses found.']")
+    WebElementFacade noCoursesMessage;
+
     @FindBy(css = "table.table-striped:nth-of-type(1) tbody tr")
     List<WebElementFacade> courseTableRows;
 
@@ -44,9 +47,8 @@ public class CoursePage extends PageObject {
     }
 
     public List<WebElementFacade> getCourseTableRows() {
-        return courseTableRows;
+        return findAll("table.table-striped tbody tr");
     }
-
     public void clickEditButton()
     {
         editButton.click();
@@ -59,7 +61,7 @@ public class CoursePage extends PageObject {
     }
 
     public boolean courseTableHasCourse() {
-        return courseTableRows.size() > 0;
+        return getCourseTableRows().size() > 0;
     }
 
     public void clickSearchButton()
@@ -67,23 +69,10 @@ public class CoursePage extends PageObject {
         searchButton.waitUntilClickable().click();
     }
 
-
-    public String getAlertText() {
-        waitForAlert();
-        Alert alert = getDriver().switchTo().alert();
-        return alert.getText();
+    public boolean isNoCoursesMessageDisplayed() {
+        noCoursesMessage.waitUntilVisible();
+        return noCoursesMessage.isVisible();
     }
-
-    public void acceptAlert() {
-        getDriver().switchTo().alert().accept();
-    }
-
-    protected void waitForAlert() {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(10))
-                .until(ExpectedConditions.alertIsPresent());
-    }
-
-
 
 
 
