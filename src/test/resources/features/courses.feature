@@ -39,6 +39,14 @@ Feature: Course Management
     Then I should see "Advanced Data Analysis" in the courses list
     And I should not see "Data" in the courses list
 
+  # Viewing Course Details
+  Scenario: View course details
+    Given there is an existing course named Java Development
+    When I click view on course Java Development
+    Then I should see the course details page
+    And I should see Java Development as the course name
+    And I should see the course id displayed
+
 #  Scenario: Cancel course editing
 #    Given there is an existing course named "Software Testing"
 #    When I click "Edit" for course "Software Testing"
@@ -60,13 +68,7 @@ Feature: Course Management
 #    And I cancel the deletion confirmation
 #    Then I should still see "Advanced Data Analysis" in the courses list
 #
-#  # Viewing Course Details
-#  Scenario: View course details
-#    Given there is an existing course named "Advanced Data Analysis"
-#    When I click "view" on course "Advanced Data Analysis"
-#    Then I should see the course details page
-#    And I should see "Advanced Data Analysis" as the course name
-#    And I should see the course id displayed
+#
 #
 #
 ##      # Adding Course Scenarios

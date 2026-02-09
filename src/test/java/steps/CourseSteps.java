@@ -1,11 +1,14 @@
 package steps;
 
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.thucydides.core.annotations.Managed;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
+import pages.CourseDetailPage;
 import pages.CoursePage;
 import pages.UpdateCoursePage;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,6 +20,7 @@ public class CourseSteps {
 
     CoursePage coursePage;
     UpdateCoursePage updateCoursePage;
+    CourseDetailPage courseDetailPage;
 
     @When("I open the courses page")
     public void iOpenTheCoursesPage() {
@@ -72,5 +76,31 @@ public class CourseSteps {
         coursePage.searchForCourse(courseName);
         return coursePage.getCourseTableRows().stream()
                 .anyMatch(row -> !row.getText().contains("No courses found."));
+    }
+
+    @Given("there is an existing course named Java Development")
+    public void thereIsAnExistingCourseNamed() {
+        coursePage.clickManageCourse();
+       assertTrue(coursePage.isJavaDevelopmentVisible());
+    }
+
+    @When("I click view on course Java Development")
+    public void iClickOnCourse() {
+        coursePage.clickViewJavaDevButton();
+    }
+
+    @Then("I should see the course details page")
+    public void iShouldSeeTheCourseDetailsPage() {
+        assertTrue(courseDetailPage.isCourseDetailsVisible());
+    }
+
+    @And("I should see Java Development as the course name")
+    public void iShouldSeeAsTheCourseName() {
+        assertTrue(courseDetailPage.isCourseNameVisible());
+    }
+
+    @And("I should see the course id displayed")
+    public void iShouldSeeTheCourseIdDisplayed() {
+        assertTrue(courseDetailPage.isCourseIdVisible());
     }
 }
