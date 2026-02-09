@@ -1,19 +1,16 @@
 package pages;
 
 import net.serenitybdd.core.pages.WebElementFacade;
+import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.pages.PageObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+@DefaultUrl("http://localhost:8091/trainers/new-trainer")
 public class AddTrainerPage extends PageObject {
 
-    public AddTrainerPage() {
-        super();
-    }
 
-    public AddTrainerPage(WebDriver driver) {
-        setDriver(driver); // allows injection in step def
-    }
+
 
     @FindBy(name = "trainerName")
     private WebElementFacade trainerNameInput;
@@ -21,7 +18,7 @@ public class AddTrainerPage extends PageObject {
     @FindBy(name = "courseId")
     private WebElementFacade courseDropdown;
 
-    @FindBy(css = "button[type='submit']")
+    @FindBy(xpath = "/html/body/div/form/button")
     private WebElementFacade saveButton;
 
     public void enterTrainerName(String name) {
@@ -33,6 +30,6 @@ public class AddTrainerPage extends PageObject {
     }
 
     public void saveTrainer() {
-        saveButton.click();
+        saveButton.waitUntilClickable().click();
     }
 }

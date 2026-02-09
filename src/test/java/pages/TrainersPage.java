@@ -5,56 +5,51 @@ import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.pages.PageObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.Duration;
 import java.util.List;
 
-@DefaultUrl("http://localhost:8091/trainers") // keep this
+@DefaultUrl("http://localhost:8091/trainers")
 public class TrainersPage extends PageObject {
 
-    public TrainersPage() {
-        super();
-    }
 
-    public TrainersPage(WebDriver driver) {
-        setDriver(driver); // allows us to inject driver in step def
-    }
 
-    // === My Details table ===
+    private static final String ALL_TRAINERS_TABLE_XPATH = "//h2[contains(text(),'All trainers detail')]/following::table[1]//tbody/tr";
+    private static final By TRAINER_ROWS =
+            By.xpath("//h2[text()='All trainers detail']/following-sibling::table//tbody/tr");
+
     @FindBy(xpath = "//h2[text()='My Details']/following-sibling::table//tbody/tr")
     private WebElementFacade myDetailsRow;
 
-    // === All Trainers table ===
-    @FindBy(xpath = "//h2[text()='All trainers detail']/following-sibling::table//tbody/tr")
+    @FindBy(xpath = ALL_TRAINERS_TABLE_XPATH)
     private List<WebElementFacade> allTrainerRows;
 
-    // === Search ===
+
     @FindBy(name = "query")
     private WebElementFacade searchInput;
 
-    @FindBy(css = "form button[type='submit']")
+    @FindBy(xpath = "//button[text()='Search']")
     private WebElementFacade searchButton;
 
-    // === Add Trainer ===
+
     @FindBy(linkText = "Add new Trainer")
     private WebElementFacade addNewTrainerButton;
 
-    public boolean isTrainerListed(String trainerName) {
-        List<WebElementFacade> rows = findAll("//h2[text()='All trainers detail']/following-sibling::table//tbody/tr");
-        return rows.stream().anyMatch(row -> row.getText().contains(trainerName));
+
+
+
+    public void waitForTrainerRows(int expectedMinimum) {
+        waitFor(
+                ExpectedConditions.numberOfElementsToBeMoreThan(
+                        By.xpath("//h2[text()='All trainers detail']/following-sibling::table//tbody/tr"),
+                        expectedMinimum - 1
+                )
+        );
     }
 
-    public int getTrainerCount() {
-        List<WebElementFacade> rows = findAll("//h2[text()='All trainers detail']/following-sibling::table//tbody/tr");
-        System.out.println(rows);
-        return rows.size();
-    }
 
-    public void searchForCoursesLongerThan(int days) {
-        searchInput.type(String.valueOf(days));
-        searchButton.click();
-        withTimeoutOf(Duration.ofSeconds(10)).waitFor(allTrainerRows);
-    }
 
     public void clickAddNewTrainer() {
         addNewTrainerButton.click();
@@ -67,5 +62,28 @@ public class TrainersPage extends PageObject {
                 break;
             }
         }
+    }
+
+    public void waitForTrainerTableToLoad() {
+        withTimeoutOf(Duration.ofSeconds(15))
+                .waitForPresenceOf(TRAINER_ROWS);
+    }
+
+    public boolean isTrainerListed(String trainerName) {
+        waitForTrainerTableToLoad();
+        return findAll(TRAINER_ROWS)
+                .stream()
+                .anyMatch(row -> row.getText().contains(trainerName));
+    }
+
+    public int getTrainerCount() {
+        waitForTrainerTableToLoad();
+        return findAll(TRAINER_ROWS).size();
+    }
+
+    public void searchForCoursesLongerThan(int days) {
+        searchInput.type(String.valueOf(days));
+        searchButton.click();
+        waitForTrainerTableToLoad();
     }
 }
